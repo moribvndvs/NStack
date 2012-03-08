@@ -132,5 +132,17 @@ namespace MG.Models
             Assert.That(a.IsTransient(), Is.False);
 
         }
+
+        [Test]
+        public void Transients_should_not_be_equal()
+        {
+            // Arrange
+            var a1 = new EntityA();
+            var a2 = new EntityA();
+
+            // Act/Assert
+            a1.Should().NotBe(a2);
+
+        }
     }
 }

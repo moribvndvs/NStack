@@ -53,7 +53,11 @@
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Entity[TId].cs" />
     <Compile Include="Persistence\IRepository.cs" />
+    <Compile Include="Persistence\IUnitOfWork.cs" />
+    <Compile Include="Persistence\IUnitOfWorkContext.cs" />
+    <Compile Include="Persistence\IUnitOfWorkScope.cs" />
     <Compile Include="Persistence\Repository.cs" />
+    <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

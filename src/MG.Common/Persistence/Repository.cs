@@ -95,6 +95,18 @@ namespace MG.Persistence
         /// <returns>The total number of entities in the repository.</returns>
         public abstract int Count();
 
+        /// <summary>
+        /// Ensures the repository watches for changes to the entity so changes can be persisted.
+        /// </summary>
+        /// <param name="entity">The entity/</param>
+        public abstract void Attach(TEntity entity);
+
+        /// <summary>
+        /// Prevents the repository from watching for changes to the entity, so the entity can be modified without changes being persisted.
+        /// </summary>
+        /// <param name="entity"></param>
+        public abstract void Detach(TEntity entity);
+
         #endregion
     }
 }
