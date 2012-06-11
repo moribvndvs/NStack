@@ -1,5 +1,5 @@
 ﻿#region header
-// <copyright file="Repository.cs" company="mikegrabski.com">
+// <copyright file="Repository[TEntity,TId].cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,8 +17,7 @@
 #endregion
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace MG.Persistence
 {
@@ -29,35 +28,11 @@ namespace MG.Persistence
     /// <typeparam name="TId">The type of the entity's ID property.</typeparam>
     public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
     {
-        #region Implementation of IEnumerable
-
-        /// <summary>
-        /// Returns an enumerator that iterates through the collection.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
-        /// </returns>
-        /// <filterpriority>1</filterpriority>
-        public abstract IEnumerator<TEntity> GetEnumerator();
-
-        /// <summary>
-        /// Returns an enumerator that iterates through a collection.
-        /// </summary>
-        /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
-        /// </returns>
-        /// <filterpriority>2</filterpriority>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        #endregion
 
         #region Implementation of IRepository<TEntity,in TId>
 
         /// <summary>
-        /// Attaches the specified entity to the repository.
+        /// Adds the specified entity to the repository.
         /// </summary>
         /// <param name="entity">The entity to attach.</param>
         public abstract void Add(TEntity entity);
@@ -118,6 +93,12 @@ namespace MG.Persistence
         /// </summary>
         /// <param name="entity"></param>
         public abstract void Detach(TEntity entity);
+
+        /// <summary>
+        /// Begins a LINQ query against the repository.
+        /// </summary>
+        /// <returns>A LINQ query.</returns>
+        public abstract IQueryable<TEntity> Query();
 
         #endregion
     }

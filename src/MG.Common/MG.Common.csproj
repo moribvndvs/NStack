@@ -53,11 +53,16 @@
     <Compile Include="Guard.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Entity[TId].cs" />
-    <Compile Include="Persistence\IRepository.cs" />
+    <Compile Include="Persistence\ICommand.cs" />
+    <Compile Include="Persistence\ICommandFactory.cs" />
+    <Compile Include="Persistence\ICommandNoResult.cs" />
+    <Compile Include="Persistence\ICommandWithResult.cs" />
+    <Compile Include="Persistence\IQuery.cs" />
+    <Compile Include="Persistence\IRepository[TEntity,TId].cs" />
     <Compile Include="Persistence\IUnitOfWork.cs" />
     <Compile Include="Persistence\IUnitOfWorkContext.cs" />
     <Compile Include="Persistence\IUnitOfWorkScope.cs" />
-    <Compile Include="Persistence\Repository.cs" />
+    <Compile Include="Persistence\Repository[TEntity,TId].cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

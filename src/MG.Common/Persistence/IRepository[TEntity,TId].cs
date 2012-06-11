@@ -1,5 +1,5 @@
 ﻿#region header
-// <copyright file="IRepository.cs" company="mikegrabski.com">
+// <copyright file="IRepository[TEntity,TId].cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,7 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace MG.Persistence
 {
@@ -26,7 +26,7 @@ namespace MG.Persistence
     /// </summary>
     /// <typeparam name="TEntity">The type of the entity the repository contains.</typeparam>
     /// <typeparam name="TId">The type of the identifier property on the entity, used to identify a particular instance. </typeparam>
-    public interface IRepository<TEntity, in TId> : IEnumerable<TEntity>
+    public interface IRepository<TEntity, in TId>
     {
         /// <summary>
         /// Attaches the specified entity to the repository.
@@ -90,5 +90,11 @@ namespace MG.Persistence
         /// </summary>
         /// <param name="entity"></param>
         void Detach(TEntity entity);
+
+        /// <summary>
+        /// Begins a LINQ query against the repository.
+        /// </summary>
+        /// <returns>A LINQ query.</returns>
+        IQueryable<TEntity> Query();
     }
 }
