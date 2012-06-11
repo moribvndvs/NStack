@@ -47,6 +47,7 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Annotations\Annotations.cs" />
+    <Compile Include="Collections\BiDictionary.cs" />
     <Compile Include="Extensions\StringExtensions.ConvertTo.cs" />
     <Compile Include="Extensions\StringExtensions.Formatted.cs" />
     <Compile Include="Guard.cs" />
