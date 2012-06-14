@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.Common", "NStack.Common\NStack.Common.csproj", "{647D81A7-01E7-4074-B28A-D5284A1C4196}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.Common.Tests", "NStack.Common.Tests\NStack.Common.Tests.csproj", "{C4F4B854-12FF-49FB-BD80-3B6DB7FF3142}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{03EDE2D3-F66E-4955-8FBB-9F72D5E12A8F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{87DE6C7B-A6FE-45E1-956E-0F9109683BB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.Data.NHibernate", "NStack.Data.NHibernate\NStack.Data.NHibernate.csproj", "{4ED046DC-68AF-4851-B9F4-F40F25739E0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.Data.NHibernate.Tests", "NStack.Data.NHibernate.Tests\NStack.Data.NHibernate.Tests.csproj", "{3C7BD1B2-F051-41F2-BA01-5CBA3103A2EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{716D97F9-B417-43C0-AE4D-B59041DCCDC1}"
+	ProjectSection(SolutionItems) = preProject
+		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{647D81A7-01E7-4074-B28A-D5284A1C4196}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{647D81A7-01E7-4074-B28A-D5284A1C4196}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{647D81A7-01E7-4074-B28A-D5284A1C4196}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{647D81A7-01E7-4074-B28A-D5284A1C4196}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4F4B854-12FF-49FB-BD80-3B6DB7FF3142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4F4B854-12FF-49FB-BD80-3B6DB7FF3142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4F4B854-12FF-49FB-BD80-3B6DB7FF3142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4F4B854-12FF-49FB-BD80-3B6DB7FF3142}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ED046DC-68AF-4851-B9F4-F40F25739E0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ED046DC-68AF-4851-B9F4-F40F25739E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ED046DC-68AF-4851-B9F4-F40F25739E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ED046DC-68AF-4851-B9F4-F40F25739E0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C7BD1B2-F051-41F2-BA01-5CBA3103A2EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C7BD1B2-F051-41F2-BA01-5CBA3103A2EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C7BD1B2-F051-41F2-BA01-5CBA3103A2EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C7BD1B2-F051-41F2-BA01-5CBA3103A2EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{647D81A7-01E7-4074-B28A-D5284A1C4196} = {03EDE2D3-F66E-4955-8FBB-9F72D5E12A8F}
+		{4ED046DC-68AF-4851-B9F4-F40F25739E0F} = {03EDE2D3-F66E-4955-8FBB-9F72D5E12A8F}
+		{C4F4B854-12FF-49FB-BD80-3B6DB7FF3142} = {87DE6C7B-A6FE-45E1-956E-0F9109683BB9}
+		{3C7BD1B2-F051-41F2-BA01-5CBA3103A2EB} = {87DE6C7B-A6FE-45E1-956E-0F9109683BB9}
+	EndGlobalSection
+EndGlobal
