@@ -13,6 +13,10 @@ Who are you?
 -
 Mike Grabski (me@mikegrabski.com)
 
+Status
+-
+I'm currently writing this at my own pleasure. I will welcome collaborators and contributors, and when such folks present themselves, I'll be happy to create a formal plan for features and begin milestones. Until then, use whatevery you'd like, and send me any issues or pull requests you come up with along the way.
+
 Licensing
 -
 See LICENSE.txt for licensing info
