@@ -1,5 +1,6 @@
 ﻿#region header
-// <copyright file="IUnitOfWorkContext.cs" company="mikegrabski.com">
+
+// <copyright file="ICommand.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,14 +15,15 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
-namespace MG.Persistence
+namespace MG.Data
 {
     /// <summary>
-    /// A contract for classes that maintains the context for one or more units of work.
+    ///   A base contract for types that execute a command against the persistence layer.
     /// </summary>
-    public interface IUnitOfWorkContext
+    public interface ICommand
     {
     }
 }

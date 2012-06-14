@@ -18,7 +18,7 @@
 
 #endregion
 
-namespace MG.Persistence
+namespace MG.Data
 {
     /// <summary>
     ///   A contract for factory types that create <see cref="ICommand" />.

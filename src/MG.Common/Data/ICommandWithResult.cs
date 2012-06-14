@@ -1,6 +1,6 @@
 ﻿#region header
 
-// <copyright file="ICommandNoResult.cs" company="mikegrabski.com">
+// <copyright file="ICommandWithResult.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,16 +18,18 @@
 
 #endregion
 
-namespace MG.Persistence
+namespace MG.Data
 {
     /// <summary>
-    ///   A contract for <see cref="ICommand" />s that return no result.
+    ///   A contract for <see cref="ICommand" />s that return a result when executed.
     /// </summary>
-    public interface ICommandNoResult : ICommand
+    /// <typeparam name="TResult">The result type.</typeparam>
+    public interface ICommandWithResult<out TResult> : ICommand
     {
         /// <summary>
-        ///   Executes the command in its current state.
+        /// Executes the command in its current state, and returns <typeparamref name="TResult"/>.
         /// </summary>
-        void Execute();
+        /// <returns>The result of the command.</returns>
+        TResult Execute();
     }
 }

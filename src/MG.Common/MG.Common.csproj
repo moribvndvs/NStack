@@ -53,17 +53,17 @@
     <Compile Include="Guard.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Entity[TId].cs" />
-    <Compile Include="Persistence\ICommand.cs" />
-    <Compile Include="Persistence\ICommandFactory.cs" />
-    <Compile Include="Persistence\ICommandNoResult.cs" />
-    <Compile Include="Persistence\ICommandWithResult.cs" />
-    <Compile Include="Persistence\IQuery.cs" />
-    <Compile Include="Persistence\IRepository[TEntity,TId].cs" />
-    <Compile Include="Persistence\IUnitOfWork.cs" />
-    <Compile Include="Persistence\IUnitOfWorkContext.cs" />
-    <Compile Include="Persistence\IUnitOfWorkScope.cs" />
-    <Compile Include="Persistence\Repository[TEntity,TId].cs" />
-    <Compile Include="Persistence\UnitOfWork.cs" />
+    <Compile Include="Data\ICommand.cs" />
+    <Compile Include="Data\ICommandFactory.cs" />
+    <Compile Include="Data\ICommandNoResult.cs" />
+    <Compile Include="Data\ICommandWithResult.cs" />
+    <Compile Include="Data\IQuery.cs" />
+    <Compile Include="Data\IRepository[TEntity,TId].cs" />
+    <Compile Include="Data\IUnitOfWork.cs" />
+    <Compile Include="Data\IUnitOfWorkContext.cs" />
+    <Compile Include="Data\IUnitOfWorkScope.cs" />
+    <Compile Include="Data\Repository[TEntity,TId].cs" />
+    <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

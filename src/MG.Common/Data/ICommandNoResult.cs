@@ -1,5 +1,6 @@
 ﻿#region header
-// <copyright file="IUnitOfWorkScope.cs" company="mikegrabski.com">
+
+// <copyright file="ICommandNoResult.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,20 +15,19 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
-using System;
-
-namespace MG.Persistence
+namespace MG.Data
 {
     /// <summary>
-    /// A contract for a class that helps a code block enlist in a unit of work.
+    ///   A contract for <see cref="ICommand" />s that return no result.
     /// </summary>
-    public interface IUnitOfWorkScope : IDisposable
+    public interface ICommandNoResult : ICommand
     {
         /// <summary>
-        /// Gets the <see cref="IUnitOfWork"/> the scope belongs to.
+        ///   Executes the command in its current state.
         /// </summary>
-        IUnitOfWork UnitOfWork { get; }
+        void Execute();
     }
 }

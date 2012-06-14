@@ -1,5 +1,5 @@
 ﻿#region header
-// <copyright file="UnitOfWork.cs" company="mikegrabski.com">
+// <copyright file="IUnitOfWorkScope.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,10 +16,18 @@
 // </copyright>
 #endregion
 
-namespace MG.Persistence
+using System;
+
+namespace MG.Data
 {
-    public class UnitOfWork
+    /// <summary>
+    /// A contract for a class that helps a code block enlist in a unit of work.
+    /// </summary>
+    public interface IUnitOfWorkScope : IDisposable
     {
-         
+        /// <summary>
+        /// Gets the <see cref="IUnitOfWork"/> the scope belongs to.
+        /// </summary>
+        IUnitOfWork UnitOfWork { get; }
     }
 }

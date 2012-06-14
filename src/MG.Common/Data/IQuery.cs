@@ -18,7 +18,7 @@
 
 using System.Collections.Generic;
 
-namespace MG.Persistence
+namespace MG.Data
 {
     /// <summary>
     /// A contract for <see cref="ICommand"/>s that return an enumeration of entities.

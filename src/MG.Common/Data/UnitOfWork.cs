@@ -1,5 +1,5 @@
 ﻿#region header
-// <copyright file="IUnitOfWork.cs" company="mikegrabski.com">
+// <copyright file="UnitOfWork.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,19 +16,10 @@
 // </copyright>
 #endregion
 
-using System;
-using System.Collections.Generic;
-
-namespace MG.Persistence
+namespace MG.Data
 {
-    /// <summary>
-    /// A contract for a unit of work.
-    /// </summary>
-    public interface IUnitOfWork : IDisposable
+    public class UnitOfWork
     {
-        /// <summary>
-        /// Gets an enumeration of active <see cref="IUnitOfWorkScope"/> that belong to this unit of work.
-        /// </summary>
-        IEnumerable<IUnitOfWorkScope> ActiveScopes { get; }
+         
     }
 }

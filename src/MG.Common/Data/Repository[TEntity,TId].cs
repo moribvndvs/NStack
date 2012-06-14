@@ -1,5 +1,5 @@
 ﻿#region header
-// <copyright file="IRepository[TEntity,TId].cs" company="mikegrabski.com">
+// <copyright file="Repository[TEntity,TId].cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,27 +19,30 @@
 using System;
 using System.Linq;
 
-namespace MG.Persistence
+namespace MG.Data
 {
     /// <summary>
-    /// A contract implemented by classes that act as a repository of objects.
+    /// A generic base class for implementing <see cref="IRepository{TEntity,TId}"/>.
     /// </summary>
-    /// <typeparam name="TEntity">The type of the entity the repository contains.</typeparam>
-    /// <typeparam name="TId">The type of the identifier property on the entity, used to identify a particular instance. </typeparam>
-    public interface IRepository<TEntity, in TId>
+    /// <typeparam name="TEntity">The type of the entity.</typeparam>
+    /// <typeparam name="TId">The type of the entity's ID property.</typeparam>
+    public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
     {
+
+        #region Implementation of IRepository<TEntity,in TId>
+
         /// <summary>
-        /// Attaches the specified entity to the repository.
+        /// Adds the specified entity to the repository.
         /// </summary>
         /// <param name="entity">The entity to attach.</param>
-        void Add(TEntity entity);
+        public abstract void Add(TEntity entity);
 
         /// <summary>
         /// Returns the entity with the specified <paramref name="id"/> from the repository.
         /// </summary>
         /// <param name="id">The ID of the desired entity.</param>
         /// <returns>The entity with the specified <paramref name="id"/>; otherwise, null.</returns>
-        TEntity Get(TId id);
+        public abstract TEntity Get(TId id);
 
         /// <summary>
         /// Returns an instance of the entity with the specified <paramref name="id"/>, which can be used in operations where the object does not have to be fully loaded from the underlying store.
@@ -52,49 +55,51 @@ namespace MG.Persistence
         /// at least the ID property is set, can be used to efficiently complete the operation. Preferrably, repositories should return an object that when any other member on the returned entity
         /// than Id, GetHashCode, or Equals is invoked, it should then load the object from the underlying store before continuing.
         /// 
-        /// DeferredGet differs from <see cref="Get"/>, in that <see cref="Get"/> should always return the entity after retrieving it from the underlying store.
+        /// DeferredGet differs from <see cref="IRepository{TEntity,TId}.Get"/>, in that <see cref="IRepository{TEntity,TId}.Get"/> should always return the entity after retrieving it from the underlying store.
         /// 
         /// Finally, if this method is supported by the implementation, it should always return an entity with the specified ID set, even if an entity with that ID does not exist in the repository.
         /// The repository should wait to check for the existence of the specified entity when changes are actually made to the repository (such as when an item is deleted).
         /// </remarks>
         /// <exception cref="NotSupportedException">Deferred loading is not supported by the implementation.</exception>
-        TEntity DeferredGet(TId id);
+        public abstract TEntity DeferredGet(TId id);
 
         /// <summary>
         /// Removes the specified entity from the repository.
         /// </summary>
         /// <param name="entity">The entity to remove.</param>
-        void Remove(TEntity entity);
+        public abstract void Remove(TEntity entity);
 
         /// <summary>
         /// Returns whether or not the specified entity exists in the repository.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns>True if the entity exists in the repository; otherwise, false.</returns>
-        bool Contains(TEntity entity);
+        public abstract bool Contains(TEntity entity);
 
         /// <summary>
         /// Returns the total number of entities in the repository.
         /// </summary>
         /// <returns>The total number of entities in the repository.</returns>
-        int Count();
+        public abstract int Count();
 
         /// <summary>
         /// Ensures the repository watches for changes to the entity so changes can be persisted.
         /// </summary>
         /// <param name="entity">The entity/</param>
-        void Attach(TEntity entity);
+        public abstract void Attach(TEntity entity);
 
         /// <summary>
         /// Prevents the repository from watching for changes to the entity, so the entity can be modified without changes being persisted.
         /// </summary>
         /// <param name="entity"></param>
-        void Detach(TEntity entity);
+        public abstract void Detach(TEntity entity);
 
         /// <summary>
         /// Begins a LINQ query against the repository.
         /// </summary>
         /// <returns>A LINQ query.</returns>
-        IQueryable<TEntity> Query();
+        public abstract IQueryable<TEntity> Query();
+
+        #endregion
     }
 }

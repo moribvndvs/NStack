@@ -1,6 +1,5 @@
 ﻿#region header
-
-// <copyright file="ICommandWithResult.cs" company="mikegrabski.com">
+// <copyright file="IUnitOfWork.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,21 +14,21 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
-
 #endregion
 
-namespace MG.Persistence
+using System;
+using System.Collections.Generic;
+
+namespace MG.Data
 {
     /// <summary>
-    ///   A contract for <see cref="ICommand" />s that return a result when executed.
+    /// A contract for a unit of work.
     /// </summary>
-    /// <typeparam name="TResult">The result type.</typeparam>
-    public interface ICommandWithResult<out TResult> : ICommand
+    public interface IUnitOfWork : IDisposable
     {
         /// <summary>
-        /// Executes the command in its current state, and returns <typeparamref name="TResult"/>.
+        /// Gets an enumeration of active <see cref="IUnitOfWorkScope"/> that belong to this unit of work.
         /// </summary>
-        /// <returns>The result of the command.</returns>
-        TResult Execute();
+        IEnumerable<IUnitOfWorkScope> ActiveScopes { get; }
     }
 }
