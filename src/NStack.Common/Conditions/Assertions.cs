@@ -1,5 +1,5 @@
 ﻿#region header
-// <copyright file="Guard.cs" company="mikegrabski.com">
+// <copyright file="Assertions.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,12 +20,12 @@ using System;
 
 using NStack.Annotations;
 
-namespace NStack
+namespace NStack.Conditions
 {
     /// <summary>
-    /// A utility for enforcing preconditions.
+    /// A utility containing assertions.
     /// </summary>
-    public static class Guard
+    public static class Assertions
     {
         /// <summary>
         /// Asserts that the condition is true.
@@ -33,10 +33,10 @@ namespace NStack
         /// <param name="assertion">The assertion.</param>
         /// <param name="message">Exception message.</param>
         [AssertionMethod]
-        public static void That([AssertionCondition(AssertionConditionType.IS_FALSE)] bool assertion,
+        public static void IsTrue([AssertionCondition(AssertionConditionType.IS_FALSE)] bool assertion,
                                 string message = null)
         {
-            That<ArgumentException>(assertion, message);
+            IsTrue<ArgumentException>(assertion, message);
         }
 
         /// <summary>
@@ -45,13 +45,14 @@ namespace NStack
         /// <typeparam name="TException">The type of exception to throw if the assertion is false.</typeparam>
         /// <param name="assertion">The assertion.</param>
         /// <param name="message">Exception message.</param>
-        public static void That<TException>([AssertionCondition(AssertionConditionType.IS_FALSE)] bool assertion,
+        [AssertionMethod]
+        public static void IsTrue<TException>([AssertionCondition(AssertionConditionType.IS_FALSE)] bool assertion,
                                             string message = null)
             where TException : Exception
         {
             if (!assertion)
                 throw (TException)
-                      Activator.CreateInstance(typeof (TException), message ?? "The assertion must result in true.");
+                      Activator.CreateInstance(typeof(TException), message ?? "The assertion must result in true.");
         }
 
         /// <summary>
@@ -60,10 +61,10 @@ namespace NStack
         /// <param name="assertion">The assertion.</param>
         /// <param name="message">Exception message.</param>
         [AssertionMethod]
-        public static void Against([AssertionCondition(AssertionConditionType.IS_FALSE)] bool assertion,
+        public static void IsFalse([AssertionCondition(AssertionConditionType.IS_FALSE)] bool assertion,
                                    string message = null)
         {
-            Against<ArgumentException>(assertion, message);
+            IsFalse<ArgumentException>(assertion, message);
         }
 
         /// <summary>
@@ -73,13 +74,13 @@ namespace NStack
         /// <param name="assertion">The assertion.</param>
         /// <param name="message">Exception message.</param>
         [AssertionMethod]
-        public static void Against<TException>([AssertionCondition(AssertionConditionType.IS_FALSE)] bool assertion,
+        public static void IsFalse<TException>([AssertionCondition(AssertionConditionType.IS_FALSE)] bool assertion,
                                                string message = null)
             where TException : Exception
         {
             if (assertion)
                 throw (TException)
-                      Activator.CreateInstance(typeof (TException), message ?? "The assertion must result in false.");
+                      Activator.CreateInstance(typeof(TException), message ?? "The assertion must result in false.");
         }
 
         /// <summary>
@@ -89,10 +90,23 @@ namespace NStack
         /// <param name="parameterName">The name of the parameter.</param>
         /// <param name="message">The exception message.</param>
         [AssertionMethod]
-        public static void AgainstNull([AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object value,
+        public static void IsNotNull([AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object value,
                                        string parameterName = null, string message = null)
         {
             if (value == null) throw new ArgumentNullException(parameterName, message);
+        }
+
+        /// <summary>
+        /// Asserts that the specified parameter value is null.
+        /// </summary>
+        /// <param name="value">The value of the parameter.</param>
+        /// <param name="parameterName">The name of the parameter.</param>
+        /// <param name="message">The exception message.</param>
+        [AssertionMethod]
+        public static void IsNull([AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object value,
+                                       string parameterName = null, string message = null)
+        {
+            if (value != null) throw new ArgumentNullException(parameterName, message);
         }
 
         /// <summary>
@@ -102,7 +116,7 @@ namespace NStack
         /// <param name="parameterName">The name of the parameter.</param>
         /// <param name="message">The exception message.</param>
         [AssertionMethod]
-        public static void AgainstEmpty([AssertionCondition(AssertionConditionType.IS_NOT_NULL)] string value,
+        public static void IsNotNullOrEmpty([AssertionCondition(AssertionConditionType.IS_NOT_NULL)] string value,
                                         string parameterName = null, string message = null)
         {
             if (string.IsNullOrEmpty(value))
@@ -116,12 +130,30 @@ namespace NStack
         /// <param name="instance">The instance being asserted.</param>
         /// <param name="message">The exception message.</param>
         [AssertionMethod]
-        public static void InstanceOf<T>(object instance, string message = null)
+        public static void IsInstanceOf<T>(object instance, string message = null)
         {
+            IsNotNull(instance);
+
             if (!(instance is T))
                 throw new InvalidOperationException(message ??
                                                     string.Format("Object must be an instance of {0}.",
-                                                                  typeof (T).FullName));
+                                                                  typeof(T).FullName));
+        }
+
+        /// <summary>
+        /// Asserts that the object is not an instance of the specified type.
+        /// </summary>
+        /// <typeparam name="T">A type.</typeparam>
+        /// <param name="instance">The instance being asserted.</param>
+        /// <param name="message">The exception message.</param>
+        [AssertionMethod]
+        public static void IsNotInstanceOf<T>(object instance, string message = null)
+        {
+            IsNotNull(instance);
+
+            if ((instance is T))
+                throw new InvalidOperationException(message ?? string.Format("Object must not be an instance of {0}",
+                                                                             typeof(T).FullName));
         }
 
         /// <summary>

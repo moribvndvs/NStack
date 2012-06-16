@@ -59,8 +59,8 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Collections\BiDictionaryTests.cs" />
+    <Compile Include="Conditions\ObjectArgumentTests.cs" />
     <Compile Include="Extensions\StringConvertToTests.cs" />
-    <Compile Include="GuardTests.cs" />
     <Compile Include="Models\EntityTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

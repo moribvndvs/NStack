@@ -48,10 +48,16 @@
     </Compile>
     <Compile Include="Annotations\Annotations.cs" />
     <Compile Include="Collections\BiDictionary.cs" />
+    <Compile Include="Conditions\ArgumentBase.cs" />
+    <Compile Include="Conditions\Assertions.cs" />
+    <Compile Include="Conditions\NullableArgumentBase.cs" />
+    <Compile Include="Conditions\ObjectArgument.cs" />
+    <Compile Include="Conditions\StringArgument.cs" />
+    <Compile Include="Expressions\ExpressionUtil.cs" />
     <Compile Include="Extensions\ByteArray.ToHex.cs" />
     <Compile Include="Extensions\StringExtensions.ConvertTo.cs" />
     <Compile Include="Extensions\StringExtensions.Formatted.cs" />
-    <Compile Include="Guard.cs" />
+    <Compile Include="Fluent\IFluent.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Entity[TId].cs" />
     <Compile Include="Data\ICommand.cs" />
@@ -66,6 +72,7 @@
     <Compile Include="Data\Repository[TEntity,TId].cs" />
     <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Require.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\NStack.snk">

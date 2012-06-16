@@ -250,8 +250,8 @@ namespace NStack.Collections
         ///   is read-only.</exception>
         public void Add(TLeft key, TRight value)
         {
-            Guard.Against(Right.Dictionary.ContainsKey(value),
-                          "The specified value has already been mapped to another key.");
+            Require.That(value).IsMet(!Right.Dictionary.ContainsKey(value),
+                                      "The specified value has already been mapped to another key.");
 
             Left.Dictionary.Add(key, value);
             Right.Dictionary.Add(value, key);
