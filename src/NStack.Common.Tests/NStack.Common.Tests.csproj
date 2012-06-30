@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="Collections\BiDictionaryTests.cs" />
     <Compile Include="Conditions\ObjectArgumentTests.cs" />
+    <Compile Include="Conditions\StringArgumentTests.cs" />
     <Compile Include="Extensions\StringConvertToTests.cs" />
     <Compile Include="Models\EntityTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

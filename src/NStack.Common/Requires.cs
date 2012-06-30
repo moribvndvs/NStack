@@ -1,6 +1,6 @@
 ﻿#region header
 
-// <copyright file="Require.cs" company="mikegrabski.com">
+// <copyright file="Requires.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +29,7 @@ namespace NStack
     /// <summary>
     /// A facade for asserting preconditions.
     /// </summary>
-    public static class Require
+    public static class Requires
     {
         /// <summary>
         /// Begins fluent assertion of preconditions.
@@ -51,6 +51,16 @@ namespace NStack
         /// <param name="reference">An expression used to find the argument's name in code.</param>
         /// <returns></returns>
         public static ObjectArgument<T> That<T>(T value, Expression<Func<T>> reference)
+        {
+            return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
+        }
+
+        public static StringArgument That(string value, string argumentName = null)
+        {
+            return new StringArgument(value, argumentName);
+        }
+
+        public static StringArgument That(string value, Expression<Func<string>> reference)
         {
             return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
         }

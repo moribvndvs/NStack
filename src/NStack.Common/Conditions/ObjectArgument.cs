@@ -65,5 +65,33 @@ namespace NStack.Conditions
 
             return this;
         }
+
+        /// <summary>
+        /// Asserts that the object is the same instance as the specified object.
+        /// </summary>
+        /// <param name="other">The object.</param>
+        /// <param name="message">The exception message.</param>
+        /// <returns></returns>
+        [AssertionMethod]
+        public ObjectArgument<T> IsSameAs(T other, string message = null)
+        {
+            if (!ReferenceEquals(Value, other)) throw new ArgumentException(message ?? "Must be the same instance.", Name);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Asserts that the object is not the same instance as the specified object.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public ObjectArgument<T> IsNotSameAs(T other, string message = null)
+        {
+            if (ReferenceEquals(Value, other))
+                throw new ArgumentException(message ?? "Must not be the same instance.", Name);
+
+            return this;
+        }
     }
 }

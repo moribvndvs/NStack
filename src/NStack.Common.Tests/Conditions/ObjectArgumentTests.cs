@@ -2,6 +2,8 @@
 
 using System;
 
+using NStack.Extensions;
+
 using NUnit.Framework;
 
 using FluentAssertions;
@@ -14,6 +16,7 @@ namespace NStack.Conditions
     public class ObjectArgumentTests
     {
         private const int Number = 0;
+        private static readonly object Obj = new object();
 
         #region Setup/Teardown for fixture
 
@@ -47,7 +50,7 @@ namespace NStack.Conditions
         public void IsEqualTo_should_pass()
         {
             // Act / Assert
-            Number.Invoking(value => Require.That(value)
+            Number.Invoking(value => Requires.That(value)
                 .IsEqualTo(0))
                 .ShouldNotThrow();
         }
@@ -56,7 +59,7 @@ namespace NStack.Conditions
         public void IsEqualTo_should_throw()
         {
             // Act / Assert
-            Number.Invoking(value => Require.That(value)
+            Number.Invoking(value => Requires.That(value)
                 .IsEqualTo(1))
                 .ShouldThrow<ArgumentException>();
 
@@ -66,7 +69,7 @@ namespace NStack.Conditions
         public void IsNotEqualTo_should_pass()
         {
             // Act / Assert
-            Number.Invoking(value => Require.That(value)
+            Number.Invoking(value => Requires.That(value)
                 .IsNotEqualTo(1))
                 .ShouldNotThrow();
         }
@@ -75,8 +78,41 @@ namespace NStack.Conditions
         public void IsNotEqualTo_should_fail()
         {
             // Act / Assert
-            Number.Invoking(value => Require.That(value)
+            Number.Invoking(value => Requires.That(value)
                 .IsNotEqualTo(0))
+                .ShouldThrow<ArgumentException>();
+        }
+
+        [Test]
+        public void IsSameAs_should_pass()
+        {
+            // act / Assert
+            Obj.Invoking(value => Requires.That(value).IsSameAs(Obj))
+                .ShouldNotThrow();
+        }
+
+        [Test]
+        public void IsSameAs_should_fail()
+        {
+            // Act / Assert
+            Obj.Invoking(value => Requires.That(value).IsSameAs(new object()))
+                .ShouldThrow<ArgumentException>();
+
+        }
+
+        [Test]
+        public void IsNotSameAs_should_pass()
+        {
+            // Act / Assert
+            Obj.Invoking(value => Requires.That(value).IsNotSameAs(new object()))
+                .ShouldNotThrow();
+        }
+        
+        [Test]
+        public void IsNotSameAs_should_fail()
+        {
+            // Act / Assert
+            Obj.Invoking(value => Requires.That(value).IsNotSameAs(Obj))
                 .ShouldThrow<ArgumentException>();
         }
     }

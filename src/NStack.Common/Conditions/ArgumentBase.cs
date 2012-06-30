@@ -66,6 +66,7 @@ namespace NStack.Conditions
             return (TThis)this;
         }
 
+        [AssertionMethod]
         public TThis IsMet(bool condition, string message = null)
         {
             if (!condition) throw new ArgumentException(message ?? "A condition was not met.", Name);
