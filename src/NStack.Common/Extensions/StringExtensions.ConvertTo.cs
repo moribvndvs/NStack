@@ -38,6 +38,8 @@ namespace NStack.Extensions
         /// <returns>The value of the string converted to the desired type, or the default value if conversion failed.</returns>
         public static T ConvertTo<T>(this string value, T defaultValue = default(T), IFormatProvider provider = null)
         {
+            if (string.IsNullOrEmpty(value)) return defaultValue;
+
             try
             {
                 if (typeof(T) == typeof(Guid)) return (T) (object) (new Guid(value));
