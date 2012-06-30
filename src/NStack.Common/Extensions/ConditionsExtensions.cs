@@ -18,6 +18,8 @@
 
 #endregion
 
+using System.Collections.Generic;
+
 using NStack.Conditions;
 
 namespace NStack.Extensions
@@ -27,11 +29,10 @@ namespace NStack.Extensions
         /// <summary>
         /// Begins fluent assertion of a precondition.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
         /// <returns></returns>
-        public static ObjectArgument<T> Requires<T>(this T value, string argumentName = null)
+        public static ObjectArgument Requires(this object value, string argumentName = null)
         {
             return NStack.Requires.That(value, argumentName);
         }
@@ -46,5 +47,11 @@ namespace NStack.Extensions
         {
             return NStack.Requires.That(value, argumentName);
         }
+
+        public static GenericCollectionArgument<T> Requires<T>(this IEnumerable<T> collection,
+                                                               string argumentName = null)
+        {
+            return NStack.Requires.That(collection, argumentName);
+        } 
     }
 }

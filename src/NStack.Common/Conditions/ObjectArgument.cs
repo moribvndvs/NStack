@@ -22,12 +22,12 @@ using NStack.Annotations;
 
 namespace NStack.Conditions
 {
-    public class ObjectArgument<T> : NullableArgumentBase<T, ObjectArgument<T>>
+    public class ObjectArgument : NullableArgumentBase<object, ObjectArgument>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
-        public ObjectArgument(T value, string name, bool postCondition) : base(value, name, postCondition)
+        public ObjectArgument(object value, string name, bool postCondition) : base(value, name, postCondition)
         {
         }
 
@@ -37,11 +37,11 @@ namespace NStack.Conditions
         /// <typeparam name="TType">A type.</typeparam>
         /// <param name="message">The exception message.</param>
         [AssertionMethod]
-        public ObjectArgument<T> IsInstanceOf<TType>(string message = null)
+        public ObjectArgument IsInstanceOf<TType>(string message = null)
         {
             IsNotNull();
 
-            ThrowOnFail(Value is TType, message ?? "Must be an instance of {0}.", typeof (T).FullName);
+            ThrowOnFail(Value is TType, message ?? "Must be an instance of {0}.", Value.GetType().FullName);
 
             return this;
         }
@@ -52,11 +52,11 @@ namespace NStack.Conditions
         /// <typeparam name="TType">A type.</typeparam>
         /// <param name="message">The exception message.</param>
         [AssertionMethod]
-        public ObjectArgument<T> IsNotInstanceOf<TType>( string message = null)
+        public ObjectArgument IsNotInstanceOf<TType>( string message = null)
         {
             IsNotNull();
 
-            ThrowOnSuccess(Value is TType, message ?? "Must not be an instance of {0}", typeof (T).FullName);
+            ThrowOnSuccess(Value is TType, message ?? "Must not be an instance of {0}", Value.GetType().FullName);
 
             return this;
         }

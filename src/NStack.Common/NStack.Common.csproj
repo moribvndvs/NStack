@@ -49,6 +49,9 @@
     <Compile Include="Annotations\Annotations.cs" />
     <Compile Include="Collections\BiDictionary.cs" />
     <Compile Include="Conditions\ArgumentBase.cs" />
+    <Compile Include="Conditions\CollectionArgument.cs" />
+    <Compile Include="Conditions\GenericCollectionArgument.cs" />
+    <Compile Include="Conditions\NonGenericCollectionArgument.cs" />
     <Compile Include="Conditions\NullableArgumentBase.cs" />
     <Compile Include="Conditions\ObjectArgument.cs" />
     <Compile Include="Conditions\PostConditionException.cs" />

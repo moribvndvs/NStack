@@ -2,6 +2,8 @@
 
 using System;
 
+using NStack.Extensions;
+
 using NUnit.Framework;
 
 using FluentAssertions;

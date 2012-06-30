@@ -19,6 +19,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 using NStack.Conditions;
@@ -38,9 +39,9 @@ namespace NStack
         /// <param name="value">The value of the argument.</param>
         /// <param name="argumentName">The name of the argument.</param>
         /// <returns></returns>
-        public static ObjectArgument<T> That<T>(T value, string argumentName = null)
+        public static ObjectArgument That(object value, string argumentName = null)
         {
-            return new ObjectArgument<T>(value, argumentName, false);
+            return new ObjectArgument(value, argumentName, false);
         }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace NStack
         /// <param name="value">THe value of the argument.</param>
         /// <param name="reference">An expression used to find the argument's name in code.</param>
         /// <returns></returns>
-        public static ObjectArgument<T> That<T>(T value, Expression<Func<T>> reference)
+        public static ObjectArgument That<T>(T value, Expression<Func<T>> reference)
         {
             return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
         }
@@ -64,5 +65,15 @@ namespace NStack
         {
             return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
         }
+
+        public static GenericCollectionArgument<T> That<T>(IEnumerable<T> collection, string argumentName = null)
+        {
+            return new GenericCollectionArgument<T>(collection, argumentName, false);
+        } 
+        
+        public static GenericCollectionArgument<T> That<T>(IEnumerable<T> collection, Expression<Func<IEnumerable<T>>> reference)
+        {
+            return That(collection, ExpressionUtil.GetFieldOrPropertyName(reference));
+        } 
     }
 }
