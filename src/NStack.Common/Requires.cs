@@ -40,7 +40,7 @@ namespace NStack
         /// <returns></returns>
         public static ObjectArgument<T> That<T>(T value, string argumentName = null)
         {
-            return new ObjectArgument<T>(value, argumentName);
+            return new ObjectArgument<T>(value, argumentName, false);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace NStack
 
         public static StringArgument That(string value, string argumentName = null)
         {
-            return new StringArgument(value, argumentName);
+            return new StringArgument(value, argumentName, false);
         }
 
         public static StringArgument That(string value, Expression<Func<string>> reference)

@@ -51,6 +51,7 @@
     <Compile Include="Conditions\ArgumentBase.cs" />
     <Compile Include="Conditions\NullableArgumentBase.cs" />
     <Compile Include="Conditions\ObjectArgument.cs" />
+    <Compile Include="Conditions\PostConditionException.cs" />
     <Compile Include="Conditions\StringArgument.cs" />
     <Compile Include="Expressions\ExpressionUtil.cs" />
     <Compile Include="Extensions\ByteArray.ToHex.cs" />

@@ -2,21 +2,16 @@
 
 using System;
 
-using NStack.Extensions;
-
 using NUnit.Framework;
 
 using FluentAssertions;
-
-using Moq;
 
 namespace NStack.Conditions
 {
     [TestFixture]
     public class ObjectArgumentTests
     {
-        private const int Number = 0;
-        private static readonly object Obj = new object();
+        private static readonly object Obj = 0;
 
         #region Setup/Teardown for fixture
 
@@ -50,7 +45,7 @@ namespace NStack.Conditions
         public void IsEqualTo_should_pass()
         {
             // Act / Assert
-            Number.Invoking(value => Requires.That(value)
+            Obj.Invoking(value => Requires.That(value)
                 .IsEqualTo(0))
                 .ShouldNotThrow();
         }
@@ -59,7 +54,7 @@ namespace NStack.Conditions
         public void IsEqualTo_should_throw()
         {
             // Act / Assert
-            Number.Invoking(value => Requires.That(value)
+            Obj.Invoking(value => Requires.That(value)
                 .IsEqualTo(1))
                 .ShouldThrow<ArgumentException>();
 
@@ -69,7 +64,7 @@ namespace NStack.Conditions
         public void IsNotEqualTo_should_pass()
         {
             // Act / Assert
-            Number.Invoking(value => Requires.That(value)
+            Obj.Invoking(value => Requires.That(value)
                 .IsNotEqualTo(1))
                 .ShouldNotThrow();
         }
@@ -78,7 +73,7 @@ namespace NStack.Conditions
         public void IsNotEqualTo_should_fail()
         {
             // Act / Assert
-            Number.Invoking(value => Requires.That(value)
+            Obj.Invoking(value => Requires.That(value)
                 .IsNotEqualTo(0))
                 .ShouldThrow<ArgumentException>();
         }
@@ -114,6 +109,90 @@ namespace NStack.Conditions
             // Act / Assert
             Obj.Invoking(value => Requires.That(value).IsNotSameAs(Obj))
                 .ShouldThrow<ArgumentException>();
+        }
+
+        [Test]
+        public void IsNull_should_pass()
+        {
+            // Arrange
+            object o = null;
+
+            // Act / Assert
+            o.Invoking(value => Requires.That(value).IsNull())
+                .ShouldNotThrow();
+
+        }
+        
+        [Test]
+        public void IsNull_should_fail()
+        {
+            // Arrange
+            var o = new object();
+
+            // Act / Assert
+            o.Invoking(value => Requires.That(value).IsNull())
+                .ShouldThrow<ArgumentException>();
+
+        }
+        
+        [Test]
+        public void IsNotNull_should_pass()
+        {
+            // Arrange
+            var o = new object();
+
+            // Act / Assert
+            o.Invoking(value => Requires.That(value).IsNotNull())
+                .ShouldNotThrow();
+
+        }
+        
+        [Test]
+        public void IsNotNull_should_fail()
+        {
+            // Arrange
+            object o = null;
+
+            // Act / Assert
+            o.Invoking(value => Requires.That(value).IsNotNull())
+                .ShouldThrow<ArgumentNullException>();
+
+        }
+
+        [Test]
+        public void IsInstanceOf_should_pass()
+        {
+            // Act / Assert
+            Obj.Invoking(value => Requires.That(value).IsInstanceOf<int>())
+                .ShouldNotThrow();
+
+        }
+        
+        [Test]
+        public void IsInstanceOf_should_fail()
+        {
+            // Act / Assert
+            Obj.Invoking(value => Requires.That(value).IsInstanceOf<string>())
+                .ShouldThrow<ArgumentException>();
+
+        }
+        
+        [Test]
+        public void IsNotInstanceOf_should_pass()
+        {
+            // Act / Assert
+            Obj.Invoking(value => Requires.That(value).IsNotInstanceOf<string>())
+                .ShouldNotThrow();
+
+        }
+        
+        [Test]
+        public void IsNotInstanceOf_should_fail()
+        {
+            // Act / Assert
+            Obj.Invoking(value => Requires.That(value).IsNotInstanceOf<int>())
+                .ShouldThrow<ArgumentException>();
+
         }
     }
 }

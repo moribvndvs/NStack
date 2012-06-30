@@ -27,7 +27,7 @@ namespace NStack.Conditions
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
-        public ObjectArgument(T value, string name) : base(value, name)
+        public ObjectArgument(T value, string name, bool postCondition) : base(value, name, postCondition)
         {
         }
 
@@ -41,10 +41,7 @@ namespace NStack.Conditions
         {
             IsNotNull();
 
-            if (!(Value is TType))
-                throw new ArgumentException(message ??
-                                                    String.Format("Argument must be an instance of {0}.",
-                                                                  typeof(T).FullName), Name);
+            ThrowOnFail(Value is TType, message ?? "Must be an instance of {0}.", typeof (T).FullName);
 
             return this;
         }
@@ -59,37 +56,7 @@ namespace NStack.Conditions
         {
             IsNotNull();
 
-            if ((Value is TType))
-                throw new ArgumentException(message ?? String.Format("Object must not be an instance of {0}",
-                                                                             typeof(T).FullName), Name);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Asserts that the object is the same instance as the specified object.
-        /// </summary>
-        /// <param name="other">The object.</param>
-        /// <param name="message">The exception message.</param>
-        /// <returns></returns>
-        [AssertionMethod]
-        public ObjectArgument<T> IsSameAs(T other, string message = null)
-        {
-            if (!ReferenceEquals(Value, other)) throw new ArgumentException(message ?? "Must be the same instance.", Name);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Asserts that the object is not the same instance as the specified object.
-        /// </summary>
-        /// <param name="other"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public ObjectArgument<T> IsNotSameAs(T other, string message = null)
-        {
-            if (ReferenceEquals(Value, other))
-                throw new ArgumentException(message ?? "Must not be the same instance.", Name);
+            ThrowOnSuccess(Value is TType, message ?? "Must not be an instance of {0}", typeof (T).FullName);
 
             return this;
         }

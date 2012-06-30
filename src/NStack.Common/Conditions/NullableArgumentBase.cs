@@ -28,7 +28,7 @@ namespace NStack.Conditions
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
-        protected NullableArgumentBase(T value, string name) : base(value, name)
+        protected NullableArgumentBase(T value, string name, bool postCondition) : base(value, name, postCondition)
         {
         }
 
@@ -40,7 +40,11 @@ namespace NStack.Conditions
         [AssertionMethod]
         public TThis IsNotNull(string message = null)
         {
-            if (Value.Equals(default(T))) throw new ArgumentNullException(Name, message);
+            if (Equals(Value, default(T)))
+            {
+                if (PostCondition) throw new PostConditionException(message ?? "Must not be null.");
+                throw new ArgumentNullException(Name, message);
+            }
 
             return (TThis)this;
         }
@@ -52,8 +56,8 @@ namespace NStack.Conditions
         [AssertionMethod]
         public TThis IsNull(string message = null)
         {
-            if (!(Value.Equals(default(T)))) throw new ArgumentNullException(Name, message);
-
+            ThrowOnFail(Equals(Value, default(T)), message ?? "Must be null.");
+            
             return (TThis)this;
         }
     }

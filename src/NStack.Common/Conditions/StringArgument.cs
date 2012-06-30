@@ -29,7 +29,7 @@ namespace NStack.Conditions
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
-        public StringArgument(string value, string name) : base(value, name)
+        public StringArgument(string value, string name, bool postCondition) : base(value, name, postCondition)
         {
         }
 
@@ -40,7 +40,7 @@ namespace NStack.Conditions
         /// <returns></returns>
         public StringArgument IsNullOrEmpty(string message = null)
         {
-            if (!string.IsNullOrEmpty(Value)) throw new ArgumentException("Argument must be null or empty.", Name);
+            ThrowOnFail(string.IsNullOrEmpty(Value), message ?? "Must be null or empty.");
 
             return this;
         }
@@ -52,8 +52,7 @@ namespace NStack.Conditions
         [AssertionMethod]
         public StringArgument IsNotNullOrEmpty(string message = null)
         {
-            if (string.IsNullOrEmpty(Value))
-                throw new ArgumentException(message ?? "Argument cannot be null or empty.", Name);
+            ThrowOnSuccess(string.IsNullOrEmpty(Value), message ?? "Must not be null or empty.");
 
             return this;
         }
@@ -81,9 +80,8 @@ namespace NStack.Conditions
         {
             IsNotNull(message);
 
-            if (Value.IndexOf(value, comparisonType) < 0)
-                throw new ArgumentException(
-                    message ?? string.Format("Argument does not contain the value \"{0}\".", value), Name);
+            ThrowOnSuccess(Value.IndexOf(value, comparisonType) < 0,
+                        message ?? "Must contain the value \"{0}\".", value);
 
             return this;
         }
@@ -112,9 +110,8 @@ namespace NStack.Conditions
         {
             IsNotNull(message);
 
-            if (!Value.StartsWith(value, comparisonType))
-                throw new ArgumentException(message ?? string.Format("Argument does not begin with \"{0}\"", value),
-                                            Name);
+            ThrowOnFail(Value.StartsWith(value, comparisonType), message ?? "Argument does not begin with \"{0}\"",
+                        value);
 
             return this;
         }
@@ -143,10 +140,9 @@ namespace NStack.Conditions
         {
             IsNotNull(message);
 
-            if (!Value.EndsWith(value, comparisonType))
-                throw new ArgumentException(message ?? string.Format("Argument does not end with \"{0}\".", value), Name);
+            ThrowOnFail(Value.EndsWith(value, comparisonType), message ?? "Argument does not end with \"{0}\".", value);
 
-            return this;
+           return this;
         }
 
         /// <summary>
@@ -158,13 +154,10 @@ namespace NStack.Conditions
         [AssertionMethod]
         public StringArgument HasLengthOf(int length, string message = null)
         {
-
             IsNotNull(message);
 
-            if (Value.Length != length)
-                throw new ArgumentException(
-                    message ??
-                    string.Format("Argument should have a length of {0} (actual: {1}).", length, Value.Length), Name);
+            ThrowOnFail(Value.Length == length, message ?? "Argument should have a length of {0} (actual: {1}).", length,
+                        Value.Length);
 
             return this;
         }
@@ -184,9 +177,7 @@ namespace NStack.Conditions
         [AssertionMethod]
         public StringArgument IsBlank(string message = null)
         {
-            if (!IsBlankString(Value))
-                throw new ArgumentException(
-                    message ?? string.Format("Argument must be blank (actual value: \"{0}\").", Value), Name);
+            ThrowOnFail(IsBlankString(Value), message ?? "Argument must be blank (actual value: \"{0}\").", Value);
 
             return this;
         }
