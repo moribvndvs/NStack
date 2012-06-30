@@ -11,7 +11,7 @@ using FluentAssertions;
 namespace NStack.Conditions
 {
     [TestFixture]
-    public class StringArgumentTests
+    public class StringVariableTests
     {
         #region Setup/Teardown for fixture
 

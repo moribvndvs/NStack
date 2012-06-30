@@ -12,7 +12,7 @@ using Moq;
 namespace NStack.Conditions
 {
     [TestFixture]
-    public class GenericCollectionArgumentTests
+    public class GenericCollectionVariableTests
     {
         #region Setup/Teardown for fixture
 

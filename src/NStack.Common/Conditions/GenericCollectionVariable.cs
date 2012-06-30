@@ -1,5 +1,5 @@
 ﻿#region header
-// <copyright file="NonGenericCollectionArgument.cs" company="mikegrabski.com">
+// <copyright file="GenericCollectionVariable.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,37 +16,30 @@
 // </copyright>
 #endregion
 
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NStack.Conditions
 {
-    public class NonGenericCollectionArgument : CollectionArgument<IEnumerable, NonGenericCollectionArgument>
+    public class GenericCollectionVariable<T> : CollectionVariable<IEnumerable<T>, GenericCollectionVariable<T>>
     {
-        private IEnumerable<object> _linqValue;
-
-        protected IEnumerable<object> LinqValue
-        {
-            get { return _linqValue ?? (_linqValue = Value.Cast<object>()); }
-        }
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
-        public NonGenericCollectionArgument(IEnumerable value, string name, bool postCondition) : base(value, name, postCondition)
+        public GenericCollectionVariable(IEnumerable<T> value, string name, bool postCondition) : base(value, name, postCondition)
         {
         }
 
-        #region Overrides of CollectionArgument<IEnumerable,NonGenericCollectionArgument>
+        #region Overrides of CollectionVariable<IEnumerable<T>,GenericCollectionVariable<T>>
 
         protected override bool HasAny()
         {
-            return LinqValue.Any();
+            return Value.Any();
         }
 
         protected override int GetCount()
         {
-            return LinqValue.Count();
+            return Value.Count();
         }
 
         #endregion

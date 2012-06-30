@@ -1,5 +1,5 @@
 ﻿#region header
-// <copyright file="CollectionArgument.cs" company="mikegrabski.com">
+// <copyright file="CollectionVariable.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,14 +23,14 @@ using NStack.Annotations;
 
 namespace NStack.Conditions
 {
-    public abstract class CollectionArgument<T, TThis> : NullableArgumentBase<T, TThis>
+    public abstract class CollectionVariable<T, TThis> : NullableVariable<T, TThis>
         where T : IEnumerable
-        where TThis : CollectionArgument<T, TThis>
+        where TThis : CollectionVariable<T, TThis>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
-        protected CollectionArgument(T value, string name, bool postCondition) : base(value, name, postCondition)
+        protected CollectionVariable(T value, string name, bool postCondition) : base(value, name, postCondition)
         {
         }
 

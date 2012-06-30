@@ -48,14 +48,14 @@
     </Compile>
     <Compile Include="Annotations\Annotations.cs" />
     <Compile Include="Collections\BiDictionary.cs" />
-    <Compile Include="Conditions\ArgumentBase.cs" />
-    <Compile Include="Conditions\CollectionArgument.cs" />
-    <Compile Include="Conditions\GenericCollectionArgument.cs" />
-    <Compile Include="Conditions\NonGenericCollectionArgument.cs" />
-    <Compile Include="Conditions\NullableArgumentBase.cs" />
-    <Compile Include="Conditions\ObjectArgument.cs" />
+    <Compile Include="Conditions\Variable.cs" />
+    <Compile Include="Conditions\CollectionVariable.cs" />
+    <Compile Include="Conditions\GenericCollectionVariable.cs" />
+    <Compile Include="Conditions\NonGenericCollectionVariable.cs" />
+    <Compile Include="Conditions\NullableVariable.cs" />
+    <Compile Include="Conditions\ObjectVariable.cs" />
     <Compile Include="Conditions\PostConditionException.cs" />
-    <Compile Include="Conditions\StringArgument.cs" />
+    <Compile Include="Conditions\StringVariable.cs" />
     <Compile Include="Expressions\ExpressionUtil.cs" />
     <Compile Include="Extensions\ByteArray.ToHex.cs" />
     <Compile Include="Extensions\ConditionsExtensions.cs" />

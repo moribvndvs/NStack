@@ -32,7 +32,7 @@ namespace NStack.Extensions
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
         /// <returns></returns>
-        public static ObjectArgument Requires(this object value, string argumentName = null)
+        public static ObjectVariable Requires(this object value, string argumentName = null)
         {
             return NStack.Requires.That(value, argumentName);
         }
@@ -43,12 +43,12 @@ namespace NStack.Extensions
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
         /// <returns></returns>
-        public static StringArgument Requires(this string value, string argumentName = null)
+        public static StringVariable Requires(this string value, string argumentName = null)
         {
             return NStack.Requires.That(value, argumentName);
         }
 
-        public static GenericCollectionArgument<T> Requires<T>(this IEnumerable<T> collection,
+        public static GenericCollectionVariable<T> Requires<T>(this IEnumerable<T> collection,
                                                                string argumentName = null)
         {
             return NStack.Requires.That(collection, argumentName);

@@ -9,7 +9,7 @@ using FluentAssertions;
 namespace NStack.Conditions
 {
     [TestFixture]
-    public class ObjectArgumentTests
+    public class ObjectVariableTests
     {
         private static readonly object Obj = 0;
 

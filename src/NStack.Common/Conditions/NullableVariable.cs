@@ -1,5 +1,5 @@
 ﻿#region header
-// <copyright file="ObjectArgument.cs" company="mikegrabski.com">
+// <copyright file="NullableVariable.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,43 +22,43 @@ using NStack.Annotations;
 
 namespace NStack.Conditions
 {
-    public class ObjectArgument : NullableArgumentBase<object, ObjectArgument>
+    public abstract class NullableVariable<T, TThis> : Variable<T, TThis>
+        where TThis : NullableVariable<T, TThis>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
-        public ObjectArgument(object value, string name, bool postCondition) : base(value, name, postCondition)
+        protected NullableVariable(T value, string name, bool postCondition) : base(value, name, postCondition)
         {
         }
 
+
         /// <summary>
-        /// Asserts that the argument is an instance of the specified type.
+        /// Asserts that the specified argument is not null.
         /// </summary>
-        /// <typeparam name="TType">A type.</typeparam>
         /// <param name="message">The exception message.</param>
         [AssertionMethod]
-        public ObjectArgument IsInstanceOf<TType>(string message = null)
+        public TThis IsNotNull(string message = null)
         {
-            IsNotNull();
+            if (Equals(Value, default(T)))
+            {
+                if (PostCondition) throw new PostConditionException(message ?? "Must not be null.");
+                throw new ArgumentNullException(Name, message);
+            }
 
-            ThrowOnFail(Value is TType, message ?? "Must be an instance of {0}.", Value.GetType().FullName);
-
-            return this;
+            return (TThis)this;
         }
 
         /// <summary>
-        /// Asserts that the object is not an instance of the specified type.
+        /// Asserts that the specified argument is null.
         /// </summary>
-        /// <typeparam name="TType">A type.</typeparam>
         /// <param name="message">The exception message.</param>
         [AssertionMethod]
-        public ObjectArgument IsNotInstanceOf<TType>( string message = null)
+        public TThis IsNull(string message = null)
         {
-            IsNotNull();
-
-            ThrowOnSuccess(Value is TType, message ?? "Must not be an instance of {0}", Value.GetType().FullName);
-
-            return this;
+            ThrowOnFail(Equals(Value, default(T)), message ?? "Must be null.");
+            
+            return (TThis)this;
         }
     }
 }

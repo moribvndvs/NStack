@@ -1,5 +1,5 @@
 ﻿#region header
-// <copyright file="StringArgument.cs" company="mikegrabski.com">
+// <copyright file="StringVariable.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,12 +24,12 @@ using System.Linq;
 
 namespace NStack.Conditions
 {
-    public class StringArgument : NullableArgumentBase<string, StringArgument>
+    public class StringVariable : NullableVariable<string, StringVariable>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
-        public StringArgument(string value, string name, bool postCondition) : base(value, name, postCondition)
+        public StringVariable(string value, string name, bool postCondition) : base(value, name, postCondition)
         {
         }
 
@@ -38,7 +38,7 @@ namespace NStack.Conditions
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public StringArgument IsNullOrEmpty(string message = null)
+        public StringVariable IsNullOrEmpty(string message = null)
         {
             ThrowOnFail(string.IsNullOrEmpty(Value), message ?? "Must be null or empty.");
 
@@ -50,7 +50,7 @@ namespace NStack.Conditions
         /// </summary>
         /// <param name="message">The exception message.</param>
         [AssertionMethod]
-        public StringArgument IsNotNullOrEmpty(string message = null)
+        public StringVariable IsNotNullOrEmpty(string message = null)
         {
             ThrowOnSuccess(string.IsNullOrEmpty(Value), message ?? "Must not be null or empty.");
 
@@ -63,7 +63,7 @@ namespace NStack.Conditions
         /// <param name="value"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public StringArgument ContainsEquivalent(string value, string message = null)
+        public StringVariable ContainsEquivalent(string value, string message = null)
         {
             return Contains(value, StringComparison.CurrentCultureIgnoreCase, message);
         }
@@ -76,7 +76,7 @@ namespace NStack.Conditions
         /// <param name="message"></param>
         /// <returns></returns>
         [AssertionMethod]
-        public StringArgument Contains(string value, StringComparison comparisonType = StringComparison.CurrentCulture, string message = null)
+        public StringVariable Contains(string value, StringComparison comparisonType = StringComparison.CurrentCulture, string message = null)
         {
             IsNotNull(message);
 
@@ -93,7 +93,7 @@ namespace NStack.Conditions
         /// <param name="message"></param>
         /// <returns></returns>
         [AssertionMethod]
-        public StringArgument StartsWithEquivalent(string value, string message = null)
+        public StringVariable StartsWithEquivalent(string value, string message = null)
         {
             return StartsWith(value, StringComparison.CurrentCultureIgnoreCase, message);
         }
@@ -106,7 +106,7 @@ namespace NStack.Conditions
         /// <param name="message"></param>
         /// <returns></returns>
         [AssertionMethod]
-        public StringArgument StartsWith(string value, StringComparison comparisonType = StringComparison.CurrentCulture, string message = null)
+        public StringVariable StartsWith(string value, StringComparison comparisonType = StringComparison.CurrentCulture, string message = null)
         {
             IsNotNull(message);
 
@@ -123,7 +123,7 @@ namespace NStack.Conditions
         /// <param name="message"></param>
         /// <returns></returns>
         [AssertionMethod]
-        public StringArgument EndsWithEquivalent(string value, string message = null)
+        public StringVariable EndsWithEquivalent(string value, string message = null)
         {
             return EndsWith(value, StringComparison.CurrentCultureIgnoreCase, message);
         }
@@ -136,7 +136,7 @@ namespace NStack.Conditions
         /// <param name="message"></param>
         /// <returns></returns>
         [AssertionMethod]
-        public StringArgument EndsWith(string value, StringComparison comparisonType = StringComparison.CurrentCulture, string message = null)
+        public StringVariable EndsWith(string value, StringComparison comparisonType = StringComparison.CurrentCulture, string message = null)
         {
             IsNotNull(message);
 
@@ -152,7 +152,7 @@ namespace NStack.Conditions
         /// <param name="message"></param>
         /// <returns></returns>
         [AssertionMethod]
-        public StringArgument HasLengthOf(int length, string message = null)
+        public StringVariable HasLengthOf(int length, string message = null)
         {
             IsNotNull(message);
 
@@ -175,7 +175,7 @@ namespace NStack.Conditions
         /// <param name="message"></param>
         /// <returns></returns>
         [AssertionMethod]
-        public StringArgument IsBlank(string message = null)
+        public StringVariable IsBlank(string message = null)
         {
             ThrowOnFail(IsBlankString(Value), message ?? "Argument must be blank (actual value: \"{0}\").", Value);
 

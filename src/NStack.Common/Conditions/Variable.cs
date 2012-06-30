@@ -1,6 +1,6 @@
 ﻿#region header
 
-// <copyright file="ArgumentBase.cs" company="mikegrabski.com">
+// <copyright file="Variable.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,8 +29,8 @@ namespace NStack.Conditions
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TThis"></typeparam>
-    public abstract class ArgumentBase<T, TThis>
-        where TThis : ArgumentBase<T, TThis>
+    public abstract class Variable<T, TThis>
+        where TThis : Variable<T, TThis>
     {
         /// <summary>
         /// Gets the argument value.
@@ -50,7 +50,7 @@ namespace NStack.Conditions
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
-        protected ArgumentBase(T value, string name, bool postCondition)
+        protected Variable(T value, string name, bool postCondition)
         {
             Value = value;
             Name = name;

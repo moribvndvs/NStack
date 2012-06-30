@@ -39,9 +39,9 @@ namespace NStack
         /// <param name="value">The value of the argument.</param>
         /// <param name="argumentName">The name of the argument.</param>
         /// <returns></returns>
-        public static ObjectArgument That(object value, string argumentName = null)
+        public static ObjectVariable That(object value, string argumentName = null)
         {
-            return new ObjectArgument(value, argumentName, false);
+            return new ObjectVariable(value, argumentName, false);
         }
 
         /// <summary>
@@ -51,27 +51,27 @@ namespace NStack
         /// <param name="value">THe value of the argument.</param>
         /// <param name="reference">An expression used to find the argument's name in code.</param>
         /// <returns></returns>
-        public static ObjectArgument That<T>(T value, Expression<Func<T>> reference)
+        public static ObjectVariable That<T>(T value, Expression<Func<T>> reference)
         {
             return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
         }
 
-        public static StringArgument That(string value, string argumentName = null)
+        public static StringVariable That(string value, string argumentName = null)
         {
-            return new StringArgument(value, argumentName, false);
+            return new StringVariable(value, argumentName, false);
         }
 
-        public static StringArgument That(string value, Expression<Func<string>> reference)
+        public static StringVariable That(string value, Expression<Func<string>> reference)
         {
             return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
         }
 
-        public static GenericCollectionArgument<T> That<T>(IEnumerable<T> collection, string argumentName = null)
+        public static GenericCollectionVariable<T> That<T>(IEnumerable<T> collection, string argumentName = null)
         {
-            return new GenericCollectionArgument<T>(collection, argumentName, false);
+            return new GenericCollectionVariable<T>(collection, argumentName, false);
         } 
         
-        public static GenericCollectionArgument<T> That<T>(IEnumerable<T> collection, Expression<Func<IEnumerable<T>>> reference)
+        public static GenericCollectionVariable<T> That<T>(IEnumerable<T> collection, Expression<Func<IEnumerable<T>>> reference)
         {
             return That(collection, ExpressionUtil.GetFieldOrPropertyName(reference));
         } 
