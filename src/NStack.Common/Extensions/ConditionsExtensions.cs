@@ -53,5 +53,33 @@ namespace NStack.Extensions
         {
             return NStack.Requires.That(collection, argumentName);
         } 
+        
+        /// <summary>
+        /// Begins fluent assertion of a precondition.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="argumentName"></param>
+        /// <returns></returns>
+        public static ObjectVariable Ensures(this object value, string argumentName = null)
+        {
+            return NStack.Ensures.That(value, argumentName);
+        }
+
+        /// <summary>
+        /// Begins fluent assertion of a precondition on a string.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="argumentName"></param>
+        /// <returns></returns>
+        public static StringVariable Ensures(this string value, string argumentName = null)
+        {
+            return NStack.Ensures.That(value, argumentName);
+        }
+
+        public static GenericCollectionVariable<T> Ensures<T>(this IEnumerable<T> collection,
+                                                               string argumentName = null)
+        {
+            return NStack.Ensures.That(collection, argumentName);
+        } 
     }
 }

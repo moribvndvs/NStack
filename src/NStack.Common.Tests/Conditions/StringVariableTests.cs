@@ -53,6 +53,11 @@ namespace NStack.Conditions
                 .IsNullOrEmpty();
             Requires.That(nullString)
                 .IsNullOrEmpty();
+            
+            Ensures.That(empty)
+                .IsNullOrEmpty();
+            Ensures.That(nullString)
+                .IsNullOrEmpty();
         }
 
         [Test]
@@ -64,6 +69,9 @@ namespace NStack.Conditions
             // Act / Assert
             s.Invoking(value => Requires.That(value).IsNullOrEmpty())
                 .ShouldThrow<ArgumentException>();
+            
+            s.Invoking(value => Ensures.That(value).IsNullOrEmpty())
+                .ShouldThrow<PostConditionException>();
 
         }
 
@@ -75,6 +83,9 @@ namespace NStack.Conditions
 
             // Act / Assert
             s.Invoking(value => Requires.That(s).Contains("some"))
+                .ShouldNotThrow();
+            
+            s.Invoking(value => Ensures.That(s).Contains("some"))
                 .ShouldNotThrow();
 
         }
@@ -88,6 +99,9 @@ namespace NStack.Conditions
             // Act / Assert
             s.Invoking(value => Requires.That(s).Contains("some"))
                 .ShouldThrow<ArgumentException>();
+            
+            s.Invoking(value => Ensures.That(s).Contains("some"))
+                .ShouldThrow<PostConditionException>();
 
         }
 
@@ -99,6 +113,9 @@ namespace NStack.Conditions
 
             // Act / Assert
             s.Invoking(value => Requires.That(s).StartsWith("This"))
+                .ShouldNotThrow();
+            
+            s.Invoking(value => Ensures.That(s).StartsWith("This"))
                 .ShouldNotThrow();
 
         }
@@ -112,6 +129,9 @@ namespace NStack.Conditions
             // Act / Assert
             s.Invoking(value => Requires.That(s).StartsWith("The"))
                 .ShouldThrow<ArgumentException>();
+            
+            s.Invoking(value => Ensures.That(s).StartsWith("The"))
+                .ShouldThrow<PostConditionException>();
 
         }
 
@@ -123,6 +143,10 @@ namespace NStack.Conditions
 
             // Act / Assert
             s.Invoking(value => Requires.That(s).EndsWith("value."))
+                .ShouldNotThrow();
+            
+            
+            s.Invoking(value => Ensures.That(s).EndsWith("value."))
                 .ShouldNotThrow();
 
         }
@@ -136,6 +160,10 @@ namespace NStack.Conditions
             // Act / Assert
             s.Invoking(value => Requires.That(s).EndsWith("value"))
                 .ShouldThrow<ArgumentException>();
+            
+            
+            s.Invoking(value => Ensures.That(s).EndsWith("value"))
+                .ShouldThrow<PostConditionException>();
 
         }
 
@@ -147,6 +175,9 @@ namespace NStack.Conditions
 
             // Act / Assert
             s.Invoking(value => Requires.That(s).HasLengthOf(4))
+                .ShouldNotThrow();
+            
+            s.Invoking(value => Ensures.That(s).HasLengthOf(4))
                 .ShouldNotThrow();
 
         }
@@ -160,6 +191,9 @@ namespace NStack.Conditions
             // Act / Assert
             s.Invoking(value => Requires.That(s).HasLengthOf(4))
                 .ShouldThrow<ArgumentException>();
+            
+            s.Invoking(value => Ensures.That(s).HasLengthOf(4))
+                .ShouldThrow<PostConditionException>();
 
         }
 
@@ -171,6 +205,9 @@ namespace NStack.Conditions
 
             // Act / Assert
             s.Invoking(value => Requires.That(s).IsBlank())
+                .ShouldNotThrow();
+            
+            s.Invoking(value => Ensures.That(s).IsBlank())
                 .ShouldNotThrow();
 
         }
@@ -184,6 +221,9 @@ namespace NStack.Conditions
             // Act / Assert
             s.Invoking(value => Requires.That(s).IsBlank())
                 .ShouldThrow<ArgumentException>();
+            
+            s.Invoking(value => Ensures.That(s).IsBlank())
+                .ShouldThrow<PostConditionException>();
 
         }
     }

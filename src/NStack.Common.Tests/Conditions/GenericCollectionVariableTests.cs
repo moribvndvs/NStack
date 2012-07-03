@@ -51,6 +51,9 @@ namespace NStack.Conditions
             // Act / Assert
             list.Invoking(value => Requires.That(list).IsEmpty())
                 .ShouldNotThrow();
+
+            list.Invoking(value => Ensures.That(list).IsEmpty())
+                .ShouldNotThrow();
         }
         
         [Test]
@@ -62,6 +65,9 @@ namespace NStack.Conditions
             // Act / Assert
             list.Invoking(value => Requires.That(list).IsEmpty())
                 .ShouldThrow<ArgumentException>();
+            
+            list.Invoking(value => Ensures.That(list).IsEmpty())
+                .ShouldThrow<PostConditionException>();
         } 
         
         [Test]
@@ -72,6 +78,9 @@ namespace NStack.Conditions
 
             // Act / Assert
             list.Invoking(value => Requires.That(list).IsNotEmpty())
+                .ShouldNotThrow();
+            
+            list.Invoking(value => Ensures.That(list).IsNotEmpty())
                 .ShouldNotThrow();
         }
         
@@ -84,6 +93,9 @@ namespace NStack.Conditions
             // Act / Assert
             list.Invoking(value => Requires.That(list).IsNotEmpty())
                 .ShouldThrow<ArgumentException>();
+            
+            list.Invoking(value => Ensures.That(list).IsNotEmpty())
+                .ShouldThrow<PostConditionException>();
         }
 
         [Test]
@@ -94,6 +106,9 @@ namespace NStack.Conditions
 
             // Act / Assert
             list.Invoking(value => Requires.That(list).HasCountOf(1))
+                .ShouldNotThrow();
+            
+            list.Invoking(value => Ensures.That(list).HasCountOf(1))
                 .ShouldNotThrow();
 
         }
@@ -107,6 +122,9 @@ namespace NStack.Conditions
             // Act / Assert
             list.Invoking(value => Requires.That(list).HasCountOf(0))
                 .ShouldThrow<ArgumentException>();
+            
+            list.Invoking(value => Ensures.That(list).HasCountOf(0))
+                .ShouldThrow<PostConditionException>();
 
         }
     }
