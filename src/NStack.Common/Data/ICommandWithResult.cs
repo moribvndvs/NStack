@@ -21,15 +21,15 @@
 namespace NStack.Data
 {
     /// <summary>
-    ///   A contract for <see cref="ICommand" />s that return a result when executed.
+    ///   A contract for <see cref="ICommand" /> s that return a result when executed.
     /// </summary>
-    /// <typeparam name="TResult">The result type.</typeparam>
+    /// <typeparam name="TResult"> The result type. </typeparam>
     public interface ICommandWithResult<out TResult> : ICommand
     {
         /// <summary>
-        /// Executes the command in its current state, and returns <typeparamref name="TResult"/>.
+        ///   Executes the command in its current state, and returns <typeparamref name="TResult" /> .
         /// </summary>
-        /// <returns>The result of the command.</returns>
+        /// <returns> The result of the command. </returns>
         TResult Execute();
     }
 }

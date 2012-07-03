@@ -1,4 +1,5 @@
 ﻿#region header
+
 // <copyright file="NullableVariable.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
@@ -14,6 +15,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System;
@@ -26,7 +28,7 @@ namespace NStack.Conditions
         where TThis : NullableVariable<T, TThis>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Object"/> class.
+        ///   Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
         protected NullableVariable(T value, string name, bool postCondition) : base(value, name, postCondition)
         {
@@ -34,9 +36,9 @@ namespace NStack.Conditions
 
 
         /// <summary>
-        /// Asserts that the specified argument is not null.
+        ///   Asserts that the specified argument is not null.
         /// </summary>
-        /// <param name="message">The exception message.</param>
+        /// <param name="message"> The exception message. </param>
         [AssertionMethod]
         public TThis IsNotNull(string message = null)
         {
@@ -46,19 +48,19 @@ namespace NStack.Conditions
                 throw new ArgumentNullException(Name, message);
             }
 
-            return (TThis)this;
+            return (TThis) this;
         }
 
         /// <summary>
-        /// Asserts that the specified argument is null.
+        ///   Asserts that the specified argument is null.
         /// </summary>
-        /// <param name="message">The exception message.</param>
+        /// <param name="message"> The exception message. </param>
         [AssertionMethod]
         public TThis IsNull(string message = null)
         {
             ThrowOnFail(Equals(Value, default(T)), message ?? "Must be null.");
-            
-            return (TThis)this;
+
+            return (TThis) this;
         }
     }
 }

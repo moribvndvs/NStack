@@ -1,4 +1,5 @@
 ﻿#region header
+
 // <copyright file="IQuery.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
@@ -14,6 +15,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System.Collections.Generic;
@@ -21,15 +23,15 @@ using System.Collections.Generic;
 namespace NStack.Data
 {
     /// <summary>
-    /// A contract for <see cref="ICommand"/>s that return an enumeration of entities.
+    ///   A contract for <see cref="ICommand" /> s that return an enumeration of entities.
     /// </summary>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
+    /// <typeparam name="TEntity"> The entity type. </typeparam>
     public interface IQuery<out TEntity> : ICommandWithResult<IEnumerable<TEntity>>
     {
         /// <summary>
-        /// Returns the number of records that would be returned by the query.
+        ///   Returns the number of records that would be returned by the query.
         /// </summary>
-        /// <returns>The number of matching records.</returns>
+        /// <returns> The number of matching records. </returns>
         int Count();
     }
 }

@@ -18,68 +18,109 @@
 
 #endregion
 
+using System.Collections;
 using System.Collections.Generic;
 
 using NStack.Conditions;
 
 namespace NStack.Extensions
 {
-    public static partial class ConditionsExtensions
+    public static class ConditionsExtensions
     {
+        #region RequiresThat
+
         /// <summary>
-        /// Begins fluent assertion of a precondition.
+        ///   Begins fluent assertion of a precondition.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="argumentName"></param>
-        /// <returns></returns>
-        public static ObjectVariable Requires(this object value, string argumentName = null)
+        /// <param name="value"> </param>
+        /// <param name="argumentName"> </param>
+        /// <returns> </returns>
+        public static ObjectVariable RequiresThat(this object value, string argumentName = null)
         {
-            return NStack.Requires.That(value, argumentName);
+            return Requires.That(value, argumentName);
         }
 
         /// <summary>
-        /// Begins fluent assertion of a precondition on a string.
+        ///   Begins fluent assertion of a precondition on a string.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="argumentName"></param>
-        /// <returns></returns>
-        public static StringVariable Requires(this string value, string argumentName = null)
+        /// <param name="value"> </param>
+        /// <param name="argumentName"> </param>
+        /// <returns> </returns>
+        public static StringVariable RequiresThat(this string value, string argumentName = null)
         {
-            return NStack.Requires.That(value, argumentName);
+            return Requires.That(value, argumentName);
         }
 
-        public static GenericCollectionVariable<T> Requires<T>(this IEnumerable<T> collection,
-                                                               string argumentName = null)
+        public static GenericCollectionVariable<T> RequiresThat<T>(this IEnumerable<T> collection,
+                                                                   string argumentName = null)
         {
-            return NStack.Requires.That(collection, argumentName);
-        } 
-        
+            return Requires.That(collection, argumentName);
+        }
+
+        public static NonGenericCollectionVariable RequiresThat(this IEnumerable collection, string argumentName = null)
+        {
+            return Requires.That(collection, argumentName);
+        }
+
+        public static GenericDictionaryVariable<TKey, TValue> RequiresThat<TKey, TValue>(
+            this IDictionary<TKey, TValue> dictionary, string argumentName = null)
+        {
+            return Requires.That(dictionary, argumentName);
+        }
+
+        public static NonGenericDictionaryVariable RequiresThat(IDictionary dictionary, string argumentName = null)
+        {
+            return Requires.That(dictionary, argumentName);
+        }
+
+        #endregion
+
+        #region EnsuresThat
+
         /// <summary>
-        /// Begins fluent assertion of a precondition.
+        ///   Begins fluent assertion of a post condition.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="argumentName"></param>
-        /// <returns></returns>
-        public static ObjectVariable Ensures(this object value, string argumentName = null)
+        /// <param name="value"> </param>
+        /// <param name="argumentName"> </param>
+        /// <returns> </returns>
+        public static ObjectVariable EnsuresThat(this object value, string argumentName = null)
         {
-            return NStack.Ensures.That(value, argumentName);
+            return Ensures.That(value, argumentName);
         }
 
         /// <summary>
-        /// Begins fluent assertion of a precondition on a string.
+        ///   Begins fluent assertion of a post condition on a string.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="argumentName"></param>
-        /// <returns></returns>
-        public static StringVariable Ensures(this string value, string argumentName = null)
+        /// <param name="value"> </param>
+        /// <param name="argumentName"> </param>
+        /// <returns> </returns>
+        public static StringVariable EnsuresThat(this string value, string argumentName = null)
         {
-            return NStack.Ensures.That(value, argumentName);
+            return Ensures.That(value, argumentName);
         }
 
-        public static GenericCollectionVariable<T> Ensures<T>(this IEnumerable<T> collection,
-                                                               string argumentName = null)
+        public static GenericCollectionVariable<T> EnsuresThat<T>(this IEnumerable<T> collection,
+                                                                  string argumentName = null)
         {
-            return NStack.Ensures.That(collection, argumentName);
-        } 
+            return Ensures.That(collection, argumentName);
+        }
+
+        public static NonGenericCollectionVariable EnsuresThat(this IEnumerable collection, string argumentName = null)
+        {
+            return Ensures.That(collection, argumentName);
+        }
+
+        public static GenericDictionaryVariable<TKey, TValue> EnsuresThat<TKey, TValue>(
+            this IDictionary<TKey, TValue> dictionary, string argumentName = null)
+        {
+            return Ensures.That(dictionary, argumentName);
+        }
+
+        public static NonGenericDictionaryVariable EnsuresThat(IDictionary dictionary, string argumentName = null)
+        {
+            return Ensures.That(dictionary, argumentName);
+        }
+
+        #endregion
     }
 }

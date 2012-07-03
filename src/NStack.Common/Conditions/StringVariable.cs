@@ -1,4 +1,5 @@
 ﻿#region header
+
 // <copyright file="StringVariable.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
@@ -14,30 +15,30 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System;
+using System.Linq;
 
 using NStack.Annotations;
-
-using System.Linq;
 
 namespace NStack.Conditions
 {
     public class StringVariable : NullableVariable<string, StringVariable>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Object"/> class.
+        ///   Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
         public StringVariable(string value, string name, bool postCondition) : base(value, name, postCondition)
         {
         }
 
         /// <summary>
-        /// Asserts that the argument is null or empty.
+        ///   Asserts that the argument is null or empty.
         /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="message"> </param>
+        /// <returns> </returns>
         public StringVariable IsNullOrEmpty(string message = null)
         {
             ThrowOnFail(string.IsNullOrEmpty(Value), message ?? "Must be null or empty.");
@@ -46,9 +47,9 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        /// Asserts that the argument is not a null or empty string.
+        ///   Asserts that the argument is not a null or empty string.
         /// </summary>
-        /// <param name="message">The exception message.</param>
+        /// <param name="message"> The exception message. </param>
         [AssertionMethod]
         public StringVariable IsNotNullOrEmpty(string message = null)
         {
@@ -58,40 +59,41 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        /// Asserts argument contains the specified string, regardless of case.
+        ///   Asserts argument contains the specified string, regardless of case.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="value"> </param>
+        /// <param name="message"> </param>
+        /// <returns> </returns>
         public StringVariable ContainsEquivalent(string value, string message = null)
         {
             return Contains(value, StringComparison.CurrentCultureIgnoreCase, message);
         }
 
         /// <summary>
-        /// Asserts that the argument contains the specified string.
+        ///   Asserts that the argument contains the specified string.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value"> </param>
         /// <param name="comparisonType"> </param>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="message"> </param>
+        /// <returns> </returns>
         [AssertionMethod]
-        public StringVariable Contains(string value, StringComparison comparisonType = StringComparison.CurrentCulture, string message = null)
+        public StringVariable Contains(string value, StringComparison comparisonType = StringComparison.CurrentCulture,
+                                       string message = null)
         {
             IsNotNull(message);
 
             ThrowOnSuccess(Value.IndexOf(value, comparisonType) < 0,
-                        message ?? "Must contain the value \"{0}\".", value);
+                           message ?? "Must contain the value \"{0}\".", value);
 
             return this;
         }
 
         /// <summary>
-        /// Asserts that the argument starts with the specified string, regardless of case.
+        ///   Asserts that the argument starts with the specified string, regardless of case.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="value"> </param>
+        /// <param name="message"> </param>
+        /// <returns> </returns>
         [AssertionMethod]
         public StringVariable StartsWithEquivalent(string value, string message = null)
         {
@@ -99,14 +101,15 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        /// Asserts that the argument starts with the specified string.
+        ///   Asserts that the argument starts with the specified string.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="comparisonType"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="value"> </param>
+        /// <param name="comparisonType"> </param>
+        /// <param name="message"> </param>
+        /// <returns> </returns>
         [AssertionMethod]
-        public StringVariable StartsWith(string value, StringComparison comparisonType = StringComparison.CurrentCulture, string message = null)
+        public StringVariable StartsWith(string value, StringComparison comparisonType = StringComparison.CurrentCulture,
+                                         string message = null)
         {
             IsNotNull(message);
 
@@ -117,11 +120,11 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        /// Asserts that the argument ends with the specified string, regardless of case.
+        ///   Asserts that the argument ends with the specified string, regardless of case.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="value"> </param>
+        /// <param name="message"> </param>
+        /// <returns> </returns>
         [AssertionMethod]
         public StringVariable EndsWithEquivalent(string value, string message = null)
         {
@@ -129,28 +132,29 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        /// Asserts that the argument ends with the specfied string.
+        ///   Asserts that the argument ends with the specfied string.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="comparisonType"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="value"> </param>
+        /// <param name="comparisonType"> </param>
+        /// <param name="message"> </param>
+        /// <returns> </returns>
         [AssertionMethod]
-        public StringVariable EndsWith(string value, StringComparison comparisonType = StringComparison.CurrentCulture, string message = null)
+        public StringVariable EndsWith(string value, StringComparison comparisonType = StringComparison.CurrentCulture,
+                                       string message = null)
         {
             IsNotNull(message);
 
             ThrowOnFail(Value.EndsWith(value, comparisonType), message ?? "Argument does not end with \"{0}\".", value);
 
-           return this;
+            return this;
         }
 
         /// <summary>
-        /// Asserts that the argument has the specified length.
+        ///   Asserts that the argument has the specified length.
         /// </summary>
-        /// <param name="length"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="length"> </param>
+        /// <param name="message"> </param>
+        /// <returns> </returns>
         [AssertionMethod]
         public StringVariable HasLengthOf(int length, string message = null)
         {
@@ -170,10 +174,10 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        /// Asserts that the argument is a blank string (not null or empty, containing only white space characters).
+        ///   Asserts that the argument is a blank string (not null or empty, containing only white space characters).
         /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="message"> </param>
+        /// <returns> </returns>
         [AssertionMethod]
         public StringVariable IsBlank(string message = null)
         {

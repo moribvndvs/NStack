@@ -1,4 +1,5 @@
 ﻿#region header
+
 // <copyright file="IUnitOfWork.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
@@ -14,6 +15,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System;
@@ -22,12 +24,12 @@ using System.Collections.Generic;
 namespace NStack.Data
 {
     /// <summary>
-    /// A contract for a unit of work.
+    ///   A contract for a unit of work.
     /// </summary>
     public interface IUnitOfWork : IDisposable
     {
         /// <summary>
-        /// Gets an enumeration of active <see cref="IUnitOfWorkScope"/> that belong to this unit of work.
+        ///   Gets an enumeration of active <see cref="IUnitOfWorkScope" /> that belong to this unit of work.
         /// </summary>
         IEnumerable<IUnitOfWorkScope> ActiveScopes { get; }
     }

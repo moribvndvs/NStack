@@ -1,6 +1,5 @@
 ﻿#region header
-
-// <copyright file="PostConditionException.cs" company="mikegrabski.com">
+// <copyright file="NonGenericCollectionTests.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,28 +14,26 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
-
 #endregion
 
-using System;
+using System.Collections;
+
+using NUnit.Framework;
 
 namespace NStack.Conditions
 {
-    public class PostConditionException : Exception
+    [TestFixture]
+    public class NonGenericCollectionVariableTests : CollectionVariableTests<NonGenericCollectionVariable, IEnumerable, object>
     {
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="T:System.Exception" /> class.
-        /// </summary>
-        public PostConditionException()
+        #region Overrides of CollectionVariableTests<NonGenericCollectionVariable,IEnumerable,object,NonGenericCollectionVariable>
+
+        protected override void InitializeCollections()
         {
+            Item = "Test";
+            EmptyCollection = new NonGenericCollectionVariable(new ArrayList(), "EmptyCollection", false);
+            NonEmptyCollection = new NonGenericCollectionVariable(new ArrayList {Item}, "EmptyCollection", false);
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="T:System.Exception" /> class with a specified error message.
-        /// </summary>
-        /// <param name="message"> The message that describes the error. </param>
-        public PostConditionException(string message) : base(message)
-        {
-        }
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿#region header
+
 // <copyright file="ByteArray.ToHex.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
@@ -14,6 +15,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System.Text;
@@ -23,10 +25,10 @@ namespace NStack.Extensions
     public static class ByteArray
     {
         /// <summary>
-        /// Returns the contents of the byte array as a string of hex equivalents.
+        ///   Returns the contents of the byte array as a string of hex equivalents.
         /// </summary>
-        /// <param name="array">The array.</param>
-        /// <returns>A string of hex values representing the original array.</returns>
+        /// <param name="array"> The array. </param>
+        /// <returns> A string of hex values representing the original array. </returns>
         public static string ToHexString(this byte[] array)
         {
             var result = new StringBuilder();

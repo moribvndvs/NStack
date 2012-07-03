@@ -21,7 +21,7 @@
 namespace NStack.Data
 {
     /// <summary>
-    ///   A contract for <see cref="ICommand" />s that return no result.
+    ///   A contract for <see cref="ICommand" /> s that return no result.
     /// </summary>
     public interface ICommandNoResult : ICommand
     {

@@ -1,4 +1,5 @@
 ﻿#region header
+
 // <copyright file="ExpressionUtil.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
@@ -14,6 +15,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System.Linq.Expressions;
@@ -24,7 +26,7 @@ namespace NStack.Expressions
     {
         public static string GetFieldOrPropertyName(LambdaExpression reference)
         {
-            return ((MemberExpression)reference.Body).Member.Name;
+            return ((MemberExpression) reference.Body).Member.Name;
         }
     }
 }

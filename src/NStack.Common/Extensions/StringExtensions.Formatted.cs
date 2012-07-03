@@ -1,4 +1,5 @@
 ﻿#region header
+
 // <copyright file="StringExtensions.Formatted.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
@@ -14,6 +15,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System;
@@ -24,16 +26,15 @@ using NStack.Annotations;
 namespace NStack.Extensions
 {
     /// <summary>
-    /// 
     /// </summary>
     public static partial class StringExtensions
     {
         /// <summary>
-        /// Builds a string using the specified string the format string.
+        ///   Builds a string using the specified string the format string.
         /// </summary>
-        /// <param name="format">The format string.</param>
-        /// <param name="args">The format arguments.</param>
-        /// <returns>The formatted string.</returns>
+        /// <param name="format"> The format string. </param>
+        /// <param name="args"> The format arguments. </param>
+        /// <returns> The formatted string. </returns>
         [StringFormatMethod("format")]
         public static string Formatted(this string format, params object[] args)
         {
@@ -41,12 +42,12 @@ namespace NStack.Extensions
         }
 
         /// <summary>
-        /// Builds a string using the specified string the format string.
+        ///   Builds a string using the specified string the format string.
         /// </summary>
-        /// <param name="format">The format string.</param>
-        /// <param name="provider">The provider. </param>
-        /// <param name="args">The format arguments.</param>
-        /// <returns>The formatted string.</returns>
+        /// <param name="format"> The format string. </param>
+        /// <param name="provider"> The provider. </param>
+        /// <param name="args"> The format arguments. </param>
+        /// <returns> The formatted string. </returns>
         [StringFormatMethod("format")]
         public static string Formatted(this string format, IFormatProvider provider, params object[] args)
         {

@@ -1,4 +1,5 @@
 ﻿#region header
+
 // <copyright file="UnitOfWork.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
@@ -14,12 +15,12 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 namespace NStack.Data
 {
     public class UnitOfWork
     {
-         
     }
 }

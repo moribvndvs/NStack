@@ -59,7 +59,12 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Collections\BiDictionaryTests.cs" />
+    <Compile Include="Conditions\CollectionVariableTests.cs" />
+    <Compile Include="Conditions\DictionaryVariableTests.cs" />
     <Compile Include="Conditions\GenericCollectionVariableTests.cs" />
+    <Compile Include="Conditions\GenericDictionaryVariableTests.cs" />
+    <Compile Include="Conditions\NonGenericCollectionVariableTests.cs" />
+    <Compile Include="Conditions\NonGenericDictionaryVariableTests.cs" />
     <Compile Include="Conditions\ObjectVariableTests.cs" />
     <Compile Include="Conditions\StringVariableTests.cs" />
     <Compile Include="Extensions\StringConvertToTests.cs" />

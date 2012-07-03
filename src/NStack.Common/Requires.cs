@@ -19,6 +19,7 @@
 #endregion
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
@@ -28,52 +29,113 @@ using NStack.Expressions;
 namespace NStack
 {
     /// <summary>
-    /// A facade for asserting preconditions.
+    ///   A facade for asserting preconditions.
     /// </summary>
     public static class Requires
     {
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///   Begins fluent assertion of preconditions.
         /// </summary>
-        /// <typeparam name="T">The type of the argument.</typeparam>
-        /// <param name="value">The value of the argument.</param>
-        /// <param name="argumentName">The name of the argument.</param>
-        /// <returns></returns>
+        /// <param name="value"> The value of the argument. </param>
+        /// <param name="argumentName"> The name of the argument. </param>
+        /// <returns> </returns>
         public static ObjectVariable That(object value, string argumentName = null)
         {
             return new ObjectVariable(value, argumentName, false);
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///   Begins fluent assertion of preconditions.
         /// </summary>
-        /// <typeparam name="T">The type of the argument.</typeparam>
-        /// <param name="value">THe value of the argument.</param>
-        /// <param name="reference">An expression used to find the argument's name in code.</param>
-        /// <returns></returns>
-        public static ObjectVariable That<T>(T value, Expression<Func<T>> reference)
+        /// <param name="value"> THe value of the argument. </param>
+        /// <param name="reference"> An expression used to find the argument's name in code. </param>
+        /// <returns> </returns>
+        public static ObjectVariable That(object value, Expression<Func<object>> reference)
         {
             return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
         }
 
+        /// <summary>
+        ///   Begins fluenet assertion of preconditions on strings.
+        /// </summary>
+        /// <param name="value"> </param>
+        /// <param name="argumentName"> </param>
+        /// <returns> </returns>
         public static StringVariable That(string value, string argumentName = null)
         {
             return new StringVariable(value, argumentName, false);
         }
 
+        /// <summary>
+        ///   Begins fluenet assertion of preconditions on strings.
+        /// </summary>
+        /// <param name="value"> </param>
+        /// <param name="reference"> </param>
+        /// <returns> </returns>
         public static StringVariable That(string value, Expression<Func<string>> reference)
         {
             return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
         }
 
+        /// <summary>
+        ///   Begins fluent assertion of preconditions on generic dictionaries.
+        /// </summary>
+        /// <typeparam name="TKey"> </typeparam>
+        /// <typeparam name="TValue"> </typeparam>
+        /// <param name="dictionary"> </param>
+        /// <param name="argumentName"> </param>
+        /// <returns> </returns>
+        public static GenericDictionaryVariable<TKey, TValue> That<TKey, TValue>(IDictionary<TKey, TValue> dictionary,
+                                                                                 string argumentName = null)
+        {
+            return new GenericDictionaryVariable<TKey, TValue>(dictionary, argumentName, false);
+        }
+
+        /// <summary>
+        ///   Begins fluent assertion of preconditions on non-generic dictionaries.
+        /// </summary>
+        /// <param name="dictionary"> </param>
+        /// <param name="argumentName"> </param>
+        /// <returns> </returns>
+        public static NonGenericDictionaryVariable That(IDictionary dictionary, string argumentName = null)
+        {
+            return new NonGenericDictionaryVariable(dictionary, argumentName, false);
+        }
+
+        /// <summary>
+        ///   Begins fluent assertion of preconditions on generic collections.
+        /// </summary>
+        /// <typeparam name="T"> </typeparam>
+        /// <param name="collection"> </param>
+        /// <param name="argumentName"> </param>
+        /// <returns> </returns>
         public static GenericCollectionVariable<T> That<T>(IEnumerable<T> collection, string argumentName = null)
         {
             return new GenericCollectionVariable<T>(collection, argumentName, false);
-        } 
-        
-        public static GenericCollectionVariable<T> That<T>(IEnumerable<T> collection, Expression<Func<IEnumerable<T>>> reference)
+        }
+
+        /// <summary>
+        ///   Begins fluent assertion of preconditions on generic collections.
+        /// </summary>
+        /// <typeparam name="T"> </typeparam>
+        /// <param name="collection"> </param>
+        /// <param name="reference"> </param>
+        /// <returns> </returns>
+        public static GenericCollectionVariable<T> That<T>(IEnumerable<T> collection,
+                                                           Expression<Func<IEnumerable<T>>> reference)
         {
             return That(collection, ExpressionUtil.GetFieldOrPropertyName(reference));
-        } 
+        }
+
+        /// <summary>
+        ///   Begins fluent assertion of preconditions on non-generic collections.
+        /// </summary>
+        /// <param name="collection"> </param>
+        /// <param name="argumentName"> </param>
+        /// <returns> </returns>
+        public static NonGenericCollectionVariable That(IEnumerable collection, string argumentName = null)
+        {
+            return new NonGenericCollectionVariable(collection, argumentName, false);
+        }
     }
 }

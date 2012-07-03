@@ -48,6 +48,9 @@
     </Compile>
     <Compile Include="Annotations\Annotations.cs" />
     <Compile Include="Collections\BiDictionary.cs" />
+    <Compile Include="Conditions\DictionaryVariable.cs" />
+    <Compile Include="Conditions\GenericDictionaryVariable.cs" />
+    <Compile Include="Conditions\NonGenericDictionaryVariable.cs" />
     <Compile Include="Conditions\Variable.cs" />
     <Compile Include="Conditions\CollectionVariable.cs" />
     <Compile Include="Conditions\GenericCollectionVariable.cs" />

@@ -24,51 +24,46 @@ using System.ComponentModel;
 namespace NStack.Fluent
 {
     /// <summary>
-    /// An interface for types that support a fluent syntax.
+    ///   An interface for types that support a fluent syntax.
     /// </summary>
     /// <remarks>
-    /// Unclutters fluent APIs by hiding signatures inherited by <see cref="Object"/> in IDEs that recognize <see cref="EditorBrowsableAttribute"/>.
+    ///   Unclutters fluent APIs by hiding signatures inherited by <see cref="object" /> in IDEs that recognize <see
+    ///    cref="EditorBrowsableAttribute" /> .
     /// </remarks>
     public interface IFluent
     {
         /// <summary>
-        /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+        ///   Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" /> .
         /// </summary>
-        /// <returns>
-        /// A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
-        /// </returns>
+        /// <returns> A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" /> . </returns>
         /// <filterpriority>2</filterpriority>
         [EditorBrowsable(EditorBrowsableState.Never)]
         string ToString();
 
         /// <summary>
-        /// Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
+        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" /> .
         /// </summary>
-        /// <returns>
-        /// true if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, false.
-        /// </returns>
-        /// <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>. 
-        ///                 </param><exception cref="T:System.NullReferenceException">The <paramref name="obj"/> parameter is null.
-        ///                 </exception><filterpriority>2</filterpriority>
+        /// <returns> true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" /> ; otherwise, false. </returns>
+        /// <param name="obj"> The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" /> . </param>
+        /// <exception cref="T:System.NullReferenceException">The
+        ///   <paramref name="obj" />
+        ///   parameter is null.</exception>
+        /// <filterpriority>2</filterpriority>
         [EditorBrowsable(EditorBrowsableState.Never)]
         bool Equals(object obj);
 
         /// <summary>
-        /// Serves as a hash function for a particular type. 
+        ///   Serves as a hash function for a particular type.
         /// </summary>
-        /// <returns>
-        /// A hash code for the current <see cref="T:System.Object"/>.
-        /// </returns>
+        /// <returns> A hash code for the current <see cref="T:System.Object" /> . </returns>
         /// <filterpriority>2</filterpriority>
         [EditorBrowsable(EditorBrowsableState.Never)]
         int GetHashCode();
 
         /// <summary>
-        /// Gets the <see cref="T:System.Type"/> of the current instance.
+        ///   Gets the <see cref="T:System.Type" /> of the current instance.
         /// </summary>
-        /// <returns>
-        /// The <see cref="T:System.Type"/> instance that represents the exact runtime type of the current instance.
-        /// </returns>
+        /// <returns> The <see cref="T:System.Type" /> instance that represents the exact runtime type of the current instance. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         Type GetType();
     }

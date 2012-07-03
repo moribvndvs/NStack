@@ -1,4 +1,5 @@
 ﻿#region header
+
 // <copyright file="BiDictionary.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
@@ -14,11 +15,14 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
+using NStack.Extensions;
 
 namespace NStack.Collections
 {
@@ -34,22 +38,23 @@ namespace NStack.Collections
     public class BiDictionary<TLeft, TRight> : IDictionary<TLeft, TRight>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BiDictionary{TLeft,TRight}"/> class.
+        ///   Initializes a new instance of the <see cref="BiDictionary{TLeft,TRight}" /> class.
         /// </summary>
-        public BiDictionary(IDictionary<TLeft, TRight> dictionary, IEqualityComparer<TLeft> leftComparer = null, 
-            IEqualityComparer<TRight> rightComparer = null)
+        public BiDictionary(IDictionary<TLeft, TRight> dictionary, IEqualityComparer<TLeft> leftComparer = null,
+                            IEqualityComparer<TRight> rightComparer = null)
             : this(dictionary.Count, leftComparer, rightComparer)
         {
-            foreach (var item in dictionary)
+            foreach (KeyValuePair<TLeft, TRight> item in dictionary)
             {
                 Add(item.Key, item.Value);
             }
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BiDictionary{TLeft,TRight}"/> class.
+        ///   Initializes a new instance of the <see cref="BiDictionary{TLeft,TRight}" /> class.
         /// </summary>
-        public BiDictionary(int capacity = 0, IEqualityComparer<TLeft> leftComparer = null, IEqualityComparer<TRight> rightComparer = null)
+        public BiDictionary(int capacity = 0, IEqualityComparer<TLeft> leftComparer = null,
+                            IEqualityComparer<TRight> rightComparer = null)
         {
             Left = new DictionarySide<TLeft, TRight>(capacity, leftComparer,
                                                      (right, left) => Right.Dictionary[right] = left,
@@ -250,9 +255,7 @@ namespace NStack.Collections
         ///   is read-only.</exception>
         public void Add(TLeft key, TRight value)
         {
-            Requires.That(value)
-                .IsMet(!Right.Dictionary.ContainsKey(value),
-                       "The specified value has already been mapped to another key.");
+            Right.Dictionary.RequiresThat("value").DoesNotContainKey(value);
 
             Left.Dictionary.Add(key, value);
             Right.Dictionary.Add(value, key);

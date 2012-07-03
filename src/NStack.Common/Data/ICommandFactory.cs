@@ -21,7 +21,7 @@
 namespace NStack.Data
 {
     /// <summary>
-    ///   A contract for factory types that create <see cref="ICommand" />.
+    ///   A contract for factory types that create <see cref="ICommand" /> .
     /// </summary>
     public interface ICommandFactory
     {

@@ -25,30 +25,15 @@ using NStack.Annotations;
 namespace NStack.Conditions
 {
     /// <summary>
-    /// A base class for asserting argument conditions.
+    ///   A base class for asserting argument conditions.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <typeparam name="TThis"></typeparam>
+    /// <typeparam name="T"> </typeparam>
+    /// <typeparam name="TThis"> </typeparam>
     public abstract class Variable<T, TThis>
         where TThis : Variable<T, TThis>
     {
         /// <summary>
-        /// Gets the argument value.
-        /// </summary>
-        protected T Value { get; private set; }
-
-        /// <summary>
-        /// Gets the argument name.
-        /// </summary>
-        protected string Name { get; private set; }
-
-        /// <summary>
-        /// Gets whether or not assertions are post-conditions (if false, assertions are pre-conditions).
-        /// </summary>
-        protected bool PostCondition { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Object"/> class.
+        ///   Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
         protected Variable(T value, string name, bool postCondition)
         {
@@ -58,25 +43,39 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        /// Checks that assertion condition is successful, otherwise, throws the appropriate exception.
+        ///   Gets the argument value.
         /// </summary>
-        /// <param name="condition">The condition result.</param>
-        /// <param name="message">The exception message.</param>
-        /// <param name="args">The exception arguments.</param>
+        protected T Value { get; private set; }
+
+        /// <summary>
+        ///   Gets the argument name.
+        /// </summary>
+        protected string Name { get; private set; }
+
+        /// <summary>
+        ///   Gets whether or not assertions are post-conditions (if false, assertions are pre-conditions).
+        /// </summary>
+        protected bool PostCondition { get; private set; }
+
+        /// <summary>
+        ///   Checks that assertion condition is successful, otherwise, throws the appropriate exception.
+        /// </summary>
+        /// <param name="condition"> The condition result. </param>
+        /// <param name="message"> The exception message. </param>
+        /// <param name="args"> The exception arguments. </param>
         protected virtual void ThrowOnFail(bool condition, string message, params object[] args)
         {
             if (condition) return;
 
             Throw(message, args);
-
         }
 
         /// <summary>
-        /// Checks the assertion condition is unsuccessful, otherwise, throws the appropriate exception.
+        ///   Checks the assertion condition is unsuccessful, otherwise, throws the appropriate exception.
         /// </summary>
-        /// <param name="condition">The condition.</param>
-        /// <param name="message">The exception message.</param>
-        /// <param name="args">The exception arguments.</param>
+        /// <param name="condition"> The condition. </param>
+        /// <param name="message"> The exception message. </param>
+        /// <param name="args"> The exception arguments. </param>
         protected virtual void ThrowOnSuccess(bool condition, string message, params object[] args)
         {
             if (!condition) return;
@@ -93,29 +92,29 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        /// Asserts the argument value is equal to the specified value.
+        ///   Asserts the argument value is equal to the specified value.
         /// </summary>
-        /// <param name="other">The other value.</param>
-        /// <param name="message">The exception message.</param>
+        /// <param name="other"> The other value. </param>
+        /// <param name="message"> The exception message. </param>
         [AssertionMethod]
         public TThis IsEqualTo(T other, string message = null)
         {
             if (!Equals(Value, other)) throw new ArgumentException(message ?? "Values must be equal.", Name);
 
-            return (TThis)this;
+            return (TThis) this;
         }
-        
+
         /// <summary>
-        /// Asserts the argument value is not equal to the specified value.
+        ///   Asserts the argument value is not equal to the specified value.
         /// </summary>
-        /// <param name="other">The other value.</param>
-        /// <param name="message">The exception message.</param>
+        /// <param name="other"> The other value. </param>
+        /// <param name="message"> The exception message. </param>
         [AssertionMethod]
         public TThis IsNotEqualTo(T other, string message = null)
         {
             if (Equals(Value, other)) throw new ArgumentException(message ?? "Values must not be equal.", Name);
 
-            return (TThis)this;
+            return (TThis) this;
         }
 
         [AssertionMethod]
@@ -127,11 +126,11 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        /// Asserts that the object is the same instance as the specified object.
+        ///   Asserts that the object is the same instance as the specified object.
         /// </summary>
-        /// <param name="other">The object.</param>
-        /// <param name="message">The exception message.</param>
-        /// <returns></returns>
+        /// <param name="other"> The object. </param>
+        /// <param name="message"> The exception message. </param>
+        /// <returns> </returns>
         [AssertionMethod]
         public TThis IsSameAs(T other, string message = null)
         {
@@ -141,11 +140,11 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        /// Asserts that the object is not the same instance as the specified object.
+        ///   Asserts that the object is not the same instance as the specified object.
         /// </summary>
-        /// <param name="other"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="other"> </param>
+        /// <param name="message"> </param>
+        /// <returns> </returns>
         public TThis IsNotSameAs(T other, string message = null)
         {
             ThrowOnSuccess(ReferenceEquals(Value, other), message ?? "Must not be the same instance.");

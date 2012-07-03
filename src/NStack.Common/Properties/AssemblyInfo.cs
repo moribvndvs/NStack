@@ -1,4 +1,5 @@
 ﻿#region header
+
 // <copyright file="AssemblyInfo.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
@@ -14,6 +15,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System.Reflection;
@@ -21,5 +23,4 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("NStack.Common")]
 [assembly: AssemblyDescription("NStack common library")]
-
 [assembly: InternalsVisibleTo("NStack.Common.Tests, PublicKey=" + AssemblyInfo.PublicKey)]

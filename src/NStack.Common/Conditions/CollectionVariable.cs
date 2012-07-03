@@ -1,4 +1,5 @@
 ﻿#region header
+
 // <copyright file="CollectionVariable.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
@@ -14,6 +15,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System;
@@ -28,17 +30,17 @@ namespace NStack.Conditions
         where TThis : CollectionVariable<T, TItem, TThis>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Object"/> class.
+        ///   Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
         protected CollectionVariable(T value, string name, bool postCondition) : base(value, name, postCondition)
         {
         }
 
         /// <summary>
-        /// Asserts that the collection contains no items.
+        ///   Asserts that the collection contains no items.
         /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="message"> </param>
+        /// <returns> </returns>
         [AssertionMethod]
         public TThis IsEmpty(string message = null)
         {
@@ -50,17 +52,17 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        /// When implemented, returns whether or not any items are in the collection. If <paramref name="predicate"/> is specified, any items must match it.
+        ///   When implemented, returns whether or not any items are in the collection. If <paramref name="predicate" /> is specified, any items must match it.
         /// </summary>
-        /// <param name="predicate">The optional predicate.</param>
-        /// <returns>True if the collection contains any items, or at least one item matching the <paramref name="predicate"/>; otherwise, false.</returns>
+        /// <param name="predicate"> The optional predicate. </param>
+        /// <returns> True if the collection contains any items, or at least one item matching the <paramref name="predicate" /> ; otherwise, false. </returns>
         protected abstract bool HasAny(Func<TItem, bool> predicate = null);
 
         /// <summary>
-        /// Asserts that the collection is not empty.
+        ///   Asserts that the collection is not empty.
         /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="message"> </param>
+        /// <returns> </returns>
         [AssertionMethod]
         public TThis IsNotEmpty(string message = null)
         {
@@ -72,11 +74,11 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        /// Asserts that the collection contains the specified number of items.
+        ///   Asserts that the collection contains the specified number of items.
         /// </summary>
-        /// <param name="count"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="count"> </param>
+        /// <param name="message"> </param>
+        /// <returns> </returns>
         [AssertionMethod]
         public TThis HasCountOf(int count, string message = null)
         {
@@ -90,17 +92,16 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        /// When implemented, returns the total number of items in the collection.
+        ///   When implemented, returns the total number of items in the collection.
         /// </summary>
-        /// <returns>The total number of items in the collection.</returns>
+        /// <returns> The total number of items in the collection. </returns>
         protected abstract int GetCount();
 
         /// <summary>
-        /// 
         /// </summary>
-        /// <param name="item"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="item"> </param>
+        /// <param name="message"> </param>
+        /// <returns> </returns>
         [AssertionMethod]
         public TThis Contains(TItem item, string message = null)
         {
@@ -128,7 +129,8 @@ namespace NStack.Conditions
         {
             IsNotNull(message);
 
-            ThrowOnSuccess(HasAny(it => Equals(it, item)), message ?? "Must not contain the specified item \"{0}\".", item);
+            ThrowOnSuccess(HasAny(it => Equals(it, item)), message ?? "Must not contain the specified item \"{0}\".",
+                           item);
 
             return (TThis) this;
         }

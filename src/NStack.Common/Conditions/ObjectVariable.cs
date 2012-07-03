@@ -1,4 +1,5 @@
 ﻿#region header
+
 // <copyright file="ObjectVariable.cs" company="mikegrabski.com">
 //    Copyright 2012 Mike Grabski
 // 
@@ -14,9 +15,8 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
-#endregion
 
-using System;
+#endregion
 
 using NStack.Annotations;
 
@@ -25,17 +25,17 @@ namespace NStack.Conditions
     public class ObjectVariable : NullableVariable<object, ObjectVariable>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Object"/> class.
+        ///   Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
         public ObjectVariable(object value, string name, bool postCondition) : base(value, name, postCondition)
         {
         }
 
         /// <summary>
-        /// Asserts that the argument is an instance of the specified type.
+        ///   Asserts that the argument is an instance of the specified type.
         /// </summary>
-        /// <typeparam name="TType">A type.</typeparam>
-        /// <param name="message">The exception message.</param>
+        /// <typeparam name="TType"> A type. </typeparam>
+        /// <param name="message"> The exception message. </param>
         [AssertionMethod]
         public ObjectVariable IsInstanceOf<TType>(string message = null)
         {
@@ -47,12 +47,12 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        /// Asserts that the object is not an instance of the specified type.
+        ///   Asserts that the object is not an instance of the specified type.
         /// </summary>
-        /// <typeparam name="TType">A type.</typeparam>
-        /// <param name="message">The exception message.</param>
+        /// <typeparam name="TType"> A type. </typeparam>
+        /// <param name="message"> The exception message. </param>
         [AssertionMethod]
-        public ObjectVariable IsNotInstanceOf<TType>( string message = null)
+        public ObjectVariable IsNotInstanceOf<TType>(string message = null)
         {
             IsNotNull();
 
