@@ -16,12 +16,13 @@
 // </copyright>
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NStack.Conditions
 {
-    public class GenericCollectionVariable<T> : CollectionVariable<IEnumerable<T>, GenericCollectionVariable<T>>
+    public class GenericCollectionVariable<T> : CollectionVariable<IEnumerable<T>, T, GenericCollectionVariable<T>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
@@ -32,9 +33,9 @@ namespace NStack.Conditions
 
         #region Overrides of CollectionVariable<IEnumerable<T>,GenericCollectionVariable<T>>
 
-        protected override bool HasAny()
+        protected override bool HasAny(Func<T, bool> predicate = null)
         {
-            return Value.Any();
+            return predicate == null ? Value.Any() : Value.Any(predicate);
         }
 
         protected override int GetCount()

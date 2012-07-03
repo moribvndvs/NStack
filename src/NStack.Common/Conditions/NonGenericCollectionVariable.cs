@@ -16,13 +16,14 @@
 // </copyright>
 #endregion
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NStack.Conditions
 {
-    public class NonGenericCollectionVariable : CollectionVariable<IEnumerable, NonGenericCollectionVariable>
+    public class NonGenericCollectionVariable : CollectionVariable<IEnumerable, object, NonGenericCollectionVariable>
     {
         private IEnumerable<object> _linqValue;
 
@@ -39,9 +40,9 @@ namespace NStack.Conditions
 
         #region Overrides of CollectionVariable<IEnumerable,NonGenericCollectionVariable>
 
-        protected override bool HasAny()
+        protected override bool HasAny(Func<object, bool> predicate = null)
         {
-            return LinqValue.Any();
+            return predicate == null ? LinqValue.Any() : LinqValue.Any(predicate);
         }
 
         protected override int GetCount()

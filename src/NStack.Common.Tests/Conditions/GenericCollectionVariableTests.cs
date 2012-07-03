@@ -7,8 +7,6 @@ using NUnit.Framework;
 
 using FluentAssertions;
 
-using Moq;
-
 namespace NStack.Conditions
 {
     [TestFixture]
@@ -124,6 +122,93 @@ namespace NStack.Conditions
                 .ShouldThrow<ArgumentException>();
             
             list.Invoking(value => Ensures.That(list).HasCountOf(0))
+                .ShouldThrow<PostConditionException>();
+
+        }
+
+        [Test]
+        public void DoesNotHaveCountOf_should_pass()
+        {
+            // Arrange
+            var list = new List<string>();
+
+            // Act / Assert
+            list.Invoking(value => Requires.That(list).DoesNotHaveCountOf(1))
+                .ShouldNotThrow();
+
+            list.Invoking(value => Ensures.That(list).DoesNotHaveCountOf(1))
+                .ShouldNotThrow();
+        }
+
+        [Test]
+        public void DoesNotHaveCountOf_should_fail()
+        {
+            // Arrange
+            var list = new List<string>();
+
+            // Act / Assert
+            list.Invoking(value => Requires.That(value).DoesNotHaveCountOf(0))
+                .ShouldThrow<ArgumentException>();
+            
+            list.Invoking(value => Ensures.That(value).DoesNotHaveCountOf(0))
+                .ShouldThrow<PostConditionException>();
+        }
+
+        [Test]
+        public void Contains_should_pass()
+        {
+            // Arrange
+            var list = new List<string> { "Test" };
+
+            // Act / Assert
+            list.Invoking(value => Requires.That(list).Contains("Test"))
+                .ShouldNotThrow();
+
+            list.Invoking(value => Ensures.That(list).Contains("Test"))
+                .ShouldNotThrow();
+
+        }
+
+        [Test]
+        public void Contains_should_fail()
+        {
+            // Arrange
+            var list = new List<string>();
+
+            // Act / Assert
+            list.Invoking(value => Requires.That(list).Contains("Test"))
+                .ShouldThrow<ArgumentException>();
+
+            list.Invoking(value => Ensures.That(list).Contains("Test"))
+                .ShouldThrow<PostConditionException>();
+        }
+
+        [Test]
+        public void DoesNotContain_should_pass()
+        {
+            // Arrange
+            var list = new List<string>();
+
+            // Act / Assert
+            list.Invoking(value => Requires.That(list).DoesNotContain("Test"))
+                .ShouldNotThrow();
+
+            list.Invoking(value => Ensures.That(list).DoesNotContain("Test"))
+                .ShouldNotThrow();
+
+        }
+        
+        [Test]
+        public void DoesNotContain_should_fail()
+        {
+            // Arrange
+            var list = new List<string> {"Test"};
+
+            // Act / Assert
+            list.Invoking(value => Requires.That(list).DoesNotContain("Test"))
+                .ShouldThrow<ArgumentException>();
+
+            list.Invoking(value => Ensures.That(list).DoesNotContain("Test"))
                 .ShouldThrow<PostConditionException>();
 
         }

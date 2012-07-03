@@ -16,16 +16,16 @@
 // </copyright>
 #endregion
 
+using System;
 using System.Collections;
-using System.Linq;
 
 using NStack.Annotations;
 
 namespace NStack.Conditions
 {
-    public abstract class CollectionVariable<T, TThis> : NullableVariable<T, TThis>
+    public abstract class CollectionVariable<T, TItem, TThis> : NullableVariable<T, TThis>
         where T : IEnumerable
-        where TThis : CollectionVariable<T, TThis>
+        where TThis : CollectionVariable<T, TItem, TThis>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
@@ -35,7 +35,7 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        /// Asserts that the argument contains no items.
+        /// Asserts that the collection contains no items.
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
@@ -49,8 +49,18 @@ namespace NStack.Conditions
             return (TThis) this;
         }
 
-        protected abstract bool HasAny();
+        /// <summary>
+        /// When implemented, returns whether or not any items are in the collection. If <paramref name="predicate"/> is specified, any items must match it.
+        /// </summary>
+        /// <param name="predicate">The optional predicate.</param>
+        /// <returns>True if the collection contains any items, or at least one item matching the <paramref name="predicate"/>; otherwise, false.</returns>
+        protected abstract bool HasAny(Func<TItem, bool> predicate = null);
 
+        /// <summary>
+        /// Asserts that the collection is not empty.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         [AssertionMethod]
         public TThis IsNotEmpty(string message = null)
         {
@@ -61,18 +71,66 @@ namespace NStack.Conditions
             return (TThis) this;
         }
 
+        /// <summary>
+        /// Asserts that the collection contains the specified number of items.
+        /// </summary>
+        /// <param name="count"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         [AssertionMethod]
         public TThis HasCountOf(int count, string message = null)
         {
             IsNotNull(message);
 
-            int actual = Value.Cast<object>().Count();
+            int actual = GetCount();
 
             ThrowOnFail(actual == count, message ?? "Must have {0} items (actual: {1}).", count, actual);
 
             return (TThis) this;
         }
 
+        /// <summary>
+        /// When implemented, returns the total number of items in the collection.
+        /// </summary>
+        /// <returns>The total number of items in the collection.</returns>
         protected abstract int GetCount();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        [AssertionMethod]
+        public TThis Contains(TItem item, string message = null)
+        {
+            IsNotNull(message);
+
+            ThrowOnFail(HasAny(it => Equals(it, item)), message ?? "Must contain the specified item \"{0}\".", item);
+
+            return (TThis) this;
+        }
+
+        [AssertionMethod]
+        public TThis DoesNotHaveCountOf(int count, string message = null)
+        {
+            IsNotNull(message);
+
+            int actual = GetCount();
+
+            ThrowOnSuccess(actual == count, message ?? "Must not have {0} items.", count);
+
+            return (TThis) this;
+        }
+
+        [AssertionMethod]
+        public TThis DoesNotContain(TItem item, string message = null)
+        {
+            IsNotNull(message);
+
+            ThrowOnSuccess(HasAny(it => Equals(it, item)), message ?? "Must not contain the specified item \"{0}\".", item);
+
+            return (TThis) this;
+        }
     }
 }
