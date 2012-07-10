@@ -63,8 +63,12 @@
     <Compile Include="Expressions\ExpressionUtil.cs" />
     <Compile Include="Extensions\ByteArray.ToHex.cs" />
     <Compile Include="Extensions\ConditionsExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.Capitalize.cs" />
     <Compile Include="Extensions\StringExtensions.ConvertTo.cs" />
     <Compile Include="Extensions\StringExtensions.Formatted.cs" />
+    <Compile Include="Extensions\StringExtensions.Inflector.cs" />
+    <Compile Include="Extensions\StringExtensions.Underscore.cs" />
+    <Compile Include="Extensions\TypeExtensions.IsSubclassOfGeneric.cs" />
     <Compile Include="Fluent\IFluent.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Entity[TId].cs" />
