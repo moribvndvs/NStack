@@ -31,6 +31,12 @@ namespace NStack.Data
     /// </summary>
     public class DefaultNamingConvention : INamingConvention
     {
+        private const string ForeignKeyColumnFormat = "{0}_{1}";
+
+        private const string ForeignKeyNameFormat = "fk_{0}_{1}_{2}";
+
+        private const string IndexNameFormat = "ix_{0}_{1}";
+
         /// <summary>
         /// Returns the name of the table for the model.
         /// </summary>
@@ -55,7 +61,18 @@ namespace NStack.Data
             Requires.That(member, "member").IsNotNull();
             Requires.That(member.LocalMember, "member.LocalMember").IsNotNull();
 
-            return member.LocalMember.Name.Underscore();
+            var localName = member.LocalMember.Name.Underscore();
+
+            var type = member.LocalMember.GetPropertyOrFieldType();
+
+            if (inspector.IsEntity(type)) // is a foreign key
+            {
+                var id = inspector.FindPersistentId(type);
+
+                if (id != null) return ForeignKeyColumnFormat.Formatted(localName, Column(inspector, id));
+            }
+
+            return localName;
         }
 
         /// <summary>
@@ -63,11 +80,30 @@ namespace NStack.Data
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member">The entity property.</param>
-        /// <param name="inverseMember">The inverse entity property.</param>
         /// <returns>The name of the foreign key.</returns>
-        public string ForeignKey(IModelInspector inspector, PropertyPath member, PropertyPath inverseMember)
+        public string ForeignKey(IModelInspector inspector, PropertyPath member)
         {
-            throw new NotImplementedException();
+            Requires.That(member, "member").IsNotNull();
+            Requires.That(member.LocalMember, "member.LocalMember").IsNotNull();
+
+            return ForeignKeyNameFormat.Formatted(Table(inspector, member.LocalMember.GetPropertyOrFieldType()),
+                                              Table(inspector, member.LocalMember.DeclaringType),
+                                              Column(inspector, member));
+        }
+
+        /// <summary>
+        /// Returns the name of the index for the column.
+        /// </summary>
+        /// <param name="inspector">The model inspector.</param>
+        /// <param name="member">The entity property.</param>
+        /// <returns>The name of the index.</returns>
+        public string Index(IModelInspector inspector, PropertyPath member)
+        {
+            Requires.That(member, "member").IsNotNull();
+            Requires.That(member.LocalMember, "member.LocalMember").IsNotNull();
+
+            return IndexNameFormat.Formatted(Table(inspector, member.LocalMember.DeclaringType),
+                                             Column(inspector, member));
         }
     }
 }

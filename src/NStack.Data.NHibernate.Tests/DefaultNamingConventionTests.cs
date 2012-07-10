@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Linq;
 using System.Reflection;
 
@@ -16,12 +17,18 @@ namespace NStack.Data
     public class DefaultNamingConventionTests
     {
         private readonly DefaultNamingConvention _convention = new DefaultNamingConvention();
+        private readonly Mock<IModelInspector> _inspector = new Mock<IModelInspector>();
 
         #region Setup/Teardown for fixture
 
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
+            _inspector.Setup(c => c.IsEntity(It.IsAny<Type>()))
+                .Returns((Type type) => type == typeof (Parent) || type == typeof (ParentWithGuid));
+
+            _inspector.Setup(c => c.IsPersistentId(It.IsAny<MemberInfo>()))
+                .Returns((MemberInfo member) => member.Name == "Id");
         }
 
         [TestFixtureTearDown]
@@ -56,7 +63,7 @@ namespace NStack.Data
         public void Table_should_conform()
         {
             // Act
-            var name = _convention.Table(null, typeof (ParentWithGuid));
+            var name = _convention.Table(_inspector.Object, typeof (ParentWithGuid));
 
             // Assert
             name.Should().Be("parent_with_guids");
@@ -66,10 +73,42 @@ namespace NStack.Data
         public void Column_should_conform_to_persistent_property()
         {
             // Act
-            var name = _convention.Column(null, new PropertyPath(null, GetMemberInfo<Parent>("FirstName")));
+            var name = _convention.Column(_inspector.Object, new PropertyPath(null, GetMemberInfo<Parent>("FirstName")));
 
             // Assert
             name.Should().Be("first_name");
+        }
+
+        [Test]
+        public void Column_should_conform_to_manytoone_property()
+        {
+            // Act
+            var name = _convention.Column(_inspector.Object, new PropertyPath(null, GetMemberInfo<Parent>("NullableReference")));
+
+            // Assert
+            name.Should().Be("nullable_reference_id");
+
+        }
+
+        [Test]
+        public void ForeignKey_should_conform()
+        {
+            // Act
+            var name = _convention.ForeignKey(_inspector.Object, new PropertyPath(null, GetMemberInfo<Parent>("NullableReference")));
+
+            // Assert
+            name.Should().Be("fk_parents_parents_nullable_reference_id");
+
+        }
+
+        [Test]
+        public void Index_should_conform()
+        {
+            // Act
+            var name = _convention.Index(_inspector.Object, new PropertyPath(null, GetMemberInfo<Parent>("NullableReference")));
+
+            // Assert
+            name.Should().Be("ix_parents_nullable_reference_id");
 
         }
     }

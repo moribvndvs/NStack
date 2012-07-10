@@ -173,52 +173,54 @@ namespace NStack.Data
         }
 
         [Test]
-        public void Should_map_notnull_based_on_property_type_and_RequiredAttribute()
+        public void Should_map_property_conventions()
         {
             // Arrange
             var autoMapper = new AutoMapper();
             HbmClass map;
+            HbmProperty nullableProperty, notNullableProperty;
 
             // Act
             autoMapper.EntityBaseType = typeof(AutoMapperTestEntityBase);
             autoMapper.AddEntitiesFromAssemblyOf<AutoMapperTests>();
             map = autoMapper.Complete().First().RootClasses.First();
+            nullableProperty = map.Properties.Where(p => p.Name == "NullableValue").Cast<HbmProperty>().First();
+            notNullableProperty = map.Properties.Where(p => p.Name == "NotNullableValue").Cast<HbmProperty>().First();
 
             // Assert
-            foreach (var property in map.Properties.OfType<HbmProperty>())
-            {
-                switch(property.Name)
-                {
-                    case "NullableValue":
-                    case "NullableReference":
-                        property.notnull.Should().BeFalse();
-                        break;
-                    case "NotNullableValue":
-                    case "NotNullableReference":
-                        property.notnull.Should().BeTrue();
-                        break;
-                }
-            }
+            nullableProperty.notnull.Should().BeFalse();
+            nullableProperty.column.Should().Be("nullable_value");
+
+            notNullableProperty.notnull.Should().BeTrue();
+            notNullableProperty.column.Should().Be("not_nullable_value");
 
         }
 
-        [Test, Ignore]
+        [Test]
         public void Should_map_manytoone_conventions()
         {
             // Arrange
             var autoMapper = new AutoMapper();
             HbmClass map;
-            HbmManyToOne property;
+            HbmManyToOne nullableProperty, notNullableProperty;
 
             // Act
             autoMapper.EntityBaseType = typeof(AutoMapperTestEntityBase);
             autoMapper.AddEntitiesFromAssemblyOf<AutoMapperTests>();
             map = autoMapper.Complete().First().RootClasses.First();
-            property = map.Properties.Where(p => p.Name == "NullableReference").Cast<HbmManyToOne>().First();
+            nullableProperty = map.Properties.Where(p => p.Name == "NullableReference").Cast<HbmManyToOne>().First();
+            notNullableProperty = map.Properties.Where(p => p.Name == "NotNullableReference").Cast<HbmManyToOne>().First();
 
             // Assert
-            property.notnull.Should().BeFalse();
-            property.foreignkey.Should().Be("fk_parent_parent_nullable_reference");
+            nullableProperty.notnull.Should().BeFalse();
+            nullableProperty.column.Should().Be("nullable_reference_id");
+            nullableProperty.index.Should().Be("ix_parents_nullable_reference_id");
+            nullableProperty.foreignkey.Should().Be("fk_parents_parents_nullable_reference_id");
+            
+            notNullableProperty.notnull.Should().BeTrue();
+            notNullableProperty.column.Should().Be("not_nullable_reference_id");
+            notNullableProperty.index.Should().Be("ix_parents_not_nullable_reference_id");
+            notNullableProperty.foreignkey.Should().Be("fk_parents_parents_not_nullable_reference_id");
         }
     }
 }

@@ -50,8 +50,15 @@ namespace NStack.Data
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member">The entity property.</param>
-        /// <param name="inverseMember">The inverse entity property.</param>
         /// <returns>The name of the foreign key.</returns>
-        string ForeignKey(IModelInspector inspector, PropertyPath member, PropertyPath inverseMember);
+        string ForeignKey(IModelInspector inspector, PropertyPath member);
+
+        /// <summary>
+        /// Returns the name of the index for the column.
+        /// </summary>
+        /// <param name="inspector">The model inspector.</param>
+        /// <param name="member">The entity property.</param>
+        /// <returns>The name of the index.</returns>
+        string Index(IModelInspector inspector, PropertyPath member);
     }
 }

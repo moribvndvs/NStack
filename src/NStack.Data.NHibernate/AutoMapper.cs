@@ -93,22 +93,24 @@ namespace NStack.Data
                                          {
                                              customizer.Table(NamingConvention.Table(inspector, type));
 
-                                             PropertyInfo property = (from prop in type.GetProperties()
-                                                                      where inspector.IsPersistentId(prop)
-                                                                      select prop).FirstOrDefault();
+                                             PropertyPath property = inspector.FindPersistentId(type);
 
                                              if (property != null)
                                              {
-                                                 customizer.Id(property, map =>
-                                                                             {
-                                                                                 map.Column(
-                                                                                     NamingConvention.Column(inspector,
-                                                                                                             new PropertyPath
-                                                                                                                 (null,
-                                                                                                                  property)));
+                                                 customizer.Id(property.LocalMember, map =>
+                                                                                         {
+                                                                                             map.Column(
+                                                                                                 NamingConvention.Column
+                                                                                                     (inspector,
+                                                                                                      property));
 
-                                                                                 ApplyIdConventions(map, property);
-                                                                             });
+                                                                                             ApplyIdConventions(map,
+                                                                                                                property
+                                                                                                                    .
+                                                                                                                    LocalMember
+                                                                                                                as
+                                                                                                                PropertyInfo);
+                                                                                         });
                                              }
                                          };
             mapper.BeforeMapProperty += (inspector, member, customizer) =>
@@ -121,15 +123,25 @@ namespace NStack.Data
 
                                                 IEnumerable<Attribute> attributes =
                                                     member.LocalMember.GetCustomAttributes(true).OfType<Attribute>();
+
                                                 Type type = member.LocalMember.GetPropertyOrFieldType();
 
-                                                ApplyPropertyConventions(attributes, customizer, type);
+                                                ApplyPropertyConventions(customizer, member, type, attributes);
                                             };
 
             mapper.BeforeMapManyToOne += (inspector, member, customizer) =>
                                              {
-//                                                 customizer.ForeignKey(NamingConvention
-//                                                                           .ForeignKey(inspector, member, ));
+                                                 customizer.Column(NamingConvention.Column(inspector, member));
+                                                 customizer.ForeignKey(NamingConvention
+                                                                           .ForeignKey(inspector, member));
+                                                 customizer.Index(NamingConvention.Index(inspector, member));
+
+                                                 IEnumerable<Attribute> attributes =
+                                                     member.LocalMember.GetCustomAttributes(true).OfType<Attribute>();
+
+                                                 Type type = member.LocalMember.GetPropertyOrFieldType();
+
+                                                 ApplyManyToOneConventions(customizer, member, type, attributes);
                                              };
 
 
@@ -140,17 +152,29 @@ namespace NStack.Data
         }
 
         /// <summary>
+        ///   Applies any conventions required for many-to-one properties.
+        /// </summary>
+        /// <param name="mapper"> The mapper. </param>
+        /// <param name="property"> The property. </param>
+        /// <param name="propertyType"> </param>
+        /// <param name="attributes"> </param>
+        protected virtual void ApplyManyToOneConventions(IManyToOneMapper mapper, PropertyPath property,
+                                                         Type propertyType, IEnumerable<Attribute> attributes)
+        {
+            mapper.NotNullable(!IsNullable(propertyType, attributes));
+        }
+
+        /// <summary>
         ///   Applies any conventions required for persistable properties.
         /// </summary>
         /// <param name="attributes"> Attributes present on the property. </param>
         /// <param name="mapper"> The property mapper. </param>
-        /// <param name="type"> The property type. </param>
-        protected virtual void ApplyPropertyConventions(IEnumerable<Attribute> attributes, IPropertyMapper mapper,
-                                                        Type type)
+        /// <param name="property"> The property. </param>
+        /// <param name="propertyType"> The property type. </param>
+        protected virtual void ApplyPropertyConventions(IPropertyMapper mapper, PropertyPath property, Type propertyType,
+                                                        IEnumerable<Attribute> attributes)
         {
-            mapper.NotNullable((!type.IsClass &&
-                                !(type.IsGenericType && type.GetGenericTypeDefinition() == typeof (Nullable<>))) ||
-                               attributes.Any(t => t is RequiredAttribute));
+            mapper.NotNullable(!IsNullable(propertyType, attributes));
         }
 
         /// <summary>
@@ -163,6 +187,20 @@ namespace NStack.Data
             if (property.PropertyType == typeof (int) || property.PropertyType == typeof (long))
                 map.Generator(Generators.HighLow, g => g.Params(new {max_lo = 100}));
             else if (property.PropertyType == typeof (Guid)) map.Generator(Generators.GuidComb);
+        }
+
+        /// <summary>
+        /// Returns whether or not a column may be nullable, given a property's type and attributes.
+        /// </summary>
+        /// <param name="propertyType">Type of the property.</param>
+        /// <param name="attributes">Attributes defined for the property.</param>
+        /// <returns>True if the column may be nullable; otherwise, false.</returns>
+        protected virtual bool IsNullable(Type propertyType, IEnumerable<Attribute> attributes)
+        {
+            return (propertyType.IsClass ||
+                    (propertyType.IsGenericType &&
+                     propertyType.GetGenericTypeDefinition() == typeof (Nullable<>))) &&
+                   !attributes.Any(t => t is RequiredAttribute);
         }
 
         /// <summary>
