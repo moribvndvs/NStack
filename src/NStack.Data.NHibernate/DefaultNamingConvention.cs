@@ -31,7 +31,7 @@ namespace NStack.Data
     /// </summary>
     public class DefaultNamingConvention : INamingConvention
     {
-        private const string ForeignKeyColumnFormat = "{0}_{1}";
+        private const string KeyColumnFormat = "{0}_{1}";
 
         private const string ForeignKeyNameFormat = "fk_{0}_{1}_{2}";
 
@@ -69,11 +69,13 @@ namespace NStack.Data
             {
                 var id = inspector.FindPersistentId(type);
 
-                if (id != null) return ForeignKeyColumnFormat.Formatted(localName, Column(inspector, id));
+                if (id != null) return KeyColumnFormat.Formatted(localName, Column(inspector, id));
             }
 
             return localName;
         }
+
+
 
         /// <summary>
         /// Returns the name of the foreign key in a relationship.
@@ -104,6 +106,24 @@ namespace NStack.Data
 
             return IndexNameFormat.Formatted(Table(inspector, member.LocalMember.DeclaringType),
                                              Column(inspector, member));
+        }
+
+        /// <summary>
+        /// Returns the name of a key column.
+        /// </summary>
+        /// <param name="inspector">The model inspector.</param>
+        /// <param name="member"></param>
+        /// <returns></returns>
+        public string KeyColumn(IModelInspector inspector, PropertyPath member)
+        {
+            Requires.That(member, "member").IsNotNull();
+            Requires.That(member, "member.LocalMember").IsNotNull();
+
+            var type = member.LocalMember.DeclaringType;
+            var localName = type.Name.Underscore();
+            var id = inspector.FindPersistentId(type);
+
+            return KeyColumnFormat.Formatted(localName, id.LocalMember.Name.Underscore());
         }
     }
 }

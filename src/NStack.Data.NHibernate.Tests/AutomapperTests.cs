@@ -74,7 +74,7 @@ namespace NStack.Data
 
             // Assert
             compiled.Should().HaveCount(1);
-            compiled.FirstOrDefault().RootClasses.Should().HaveCount(1);
+            compiled.FirstOrDefault().RootClasses.Should().HaveCount(2);
             compiled.FirstOrDefault().JoinedSubclasses.Should().HaveCount(1);
         }
 
@@ -130,7 +130,7 @@ namespace NStack.Data
 
             // Assert
             compiled.Should().HaveCount(1);
-            compiled.FirstOrDefault().RootClasses.Should().HaveCount(2);
+            compiled.FirstOrDefault().RootClasses.Should().HaveCount(3);
             compiled.FirstOrDefault().JoinedSubclasses.Should().HaveCount(1);
         }
 
@@ -221,6 +221,28 @@ namespace NStack.Data
             notNullableProperty.column.Should().Be("not_nullable_reference_id");
             notNullableProperty.index.Should().Be("ix_parents_not_nullable_reference_id");
             notNullableProperty.foreignkey.Should().Be("fk_parents_parents_not_nullable_reference_id");
+        }
+
+        [Test]
+        public void Should_map_bag_conventions()
+        {
+            // Arrange
+            var autoMapper = new AutoMapper();
+            HbmClass map;
+            HbmBag property;
+            HbmColumn keyColumn;
+
+            // Act
+            autoMapper.EntityBaseType = typeof(AutoMapperTestEntityBase);
+            autoMapper.AddEntitiesFromAssemblyOf<AutoMapperTests>();
+            map = autoMapper.Complete().First().RootClasses.First();
+            property = map.Properties.Where(p => p.Name == "BagChildren").Cast<HbmBag>().First();
+            keyColumn = property.key.Columns.First();
+
+            // Assert
+            property.inverse.Should().BeTrue();
+            keyColumn.name.Should().Be("bag_parent_id");
+
         }
     }
 }

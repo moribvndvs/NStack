@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using NStack.Models;
@@ -65,6 +66,13 @@ namespace NStack.Data
 
         [Required]
         public Parent NotNullableReference { get; set; }
+
+        public IList<Child> BagChildren { get; set; }
+    }
+
+    public class Child : AutoMapperTestEntityBase
+    {
+        public Parent BagParent { get; set; }
     }
 
     public class JoinedSubclassedParent : Parent

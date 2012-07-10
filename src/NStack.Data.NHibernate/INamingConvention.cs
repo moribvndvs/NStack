@@ -60,5 +60,13 @@ namespace NStack.Data
         /// <param name="member">The entity property.</param>
         /// <returns>The name of the index.</returns>
         string Index(IModelInspector inspector, PropertyPath member);
+
+        /// <summary>
+        /// Returns the name of a key column.
+        /// </summary>
+        /// <param name="inspector">The model inspector.</param>
+        /// <param name="member"></param>
+        /// <returns></returns>
+        string KeyColumn(IModelInspector inspector, PropertyPath member);
     }
 }

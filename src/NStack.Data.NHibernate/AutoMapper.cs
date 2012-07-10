@@ -139,11 +139,34 @@ namespace NStack.Data
                                                  ApplyManyToOneConventions(customizer, member, type, GetMemberAttributes(member.LocalMember));
                                              };
 
+            mapper.BeforeMapBag += (inspector, member, customizer) =>
+                                       {
+                                           var inverse = GetLikelyInverseProperty(member);
+
+                                           var keyColumn = inverse == null
+                                                               ? NamingConvention.KeyColumn(inspector, member)
+                                                               : NamingConvention.Column(inspector, inverse);
+
+
+                                           customizer.Key(key => key.Column(keyColumn));
+
+                                           ApplyBagConventions(customizer);
+                                       };
+
 
             mapper.IsEntity(IsEntity);
             mapper.IsRootEntity(IsRootEntity);
 
             return mapper;
+        }
+
+        /// <summary>
+        /// Applies any conventions to bag properties.
+        /// </summary>
+        /// <param name="mapper">The mapper.</param>
+        protected virtual void ApplyBagConventions(IBagPropertiesMapper mapper)
+        {
+            mapper.Inverse(true);
         }
 
         /// <summary>
@@ -196,6 +219,42 @@ namespace NStack.Data
                     (propertyType.IsGenericType &&
                      propertyType.GetGenericTypeDefinition() == typeof (Nullable<>))) &&
                    !attributes.Any(t => t is RequiredAttribute);
+        }
+
+        /// <summary>
+        /// Returns the most likely inverse property for a collection.
+        /// </summary>
+        /// <param name="member"></param>
+        /// <returns></returns>
+        protected virtual PropertyPath GetLikelyInverseProperty(PropertyPath member)
+        {
+
+            var declared = member.LocalMember.DeclaringType;
+            var collectionType = member.LocalMember.GetPropertyOrFieldType();
+
+            if (!collectionType.IsGenericCollection()) return null;
+
+            var elementType = collectionType.DetermineCollectionElementOrDictionaryValueType();
+
+            var localSimplified = member.LocalMember.Name.Replace(elementType.Name.Pluralize(), string.Empty);
+
+            var otherProperty = elementType
+                                    .GetFirstPropertyOfType(declared,
+                                                            property =>
+                                                                {
+                                                                    var otherSimplified =
+                                                                        property.Name.Replace(declared.Name,
+                                                                                              string.Empty);
+
+                                                                    return otherSimplified.Equals(localSimplified,
+                                                                                                  StringComparison.
+                                                                                                      InvariantCultureIgnoreCase);
+                                                                })
+                                ??
+                                elementType.GetFirstPropertyOfType(
+                                    member.LocalMember.DeclaringType);
+
+            return new PropertyPath(null, otherProperty);
         }
 
         protected virtual IEnumerable<Attribute> GetMemberAttributes(MemberInfo member)

@@ -111,5 +111,17 @@ namespace NStack.Data
             name.Should().Be("ix_parents_nullable_reference_id");
 
         }
+
+        [Test]
+        public void KeyColumn_should_conform()
+        {
+            // Act
+            var name = _convention.KeyColumn(_inspector.Object,
+                                             new PropertyPath(null, GetMemberInfo<Parent>("BagChildren")));
+
+            // Assert
+            name.Should().Be("parent_id");
+
+        }
     }
 }
