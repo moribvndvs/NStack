@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
@@ -121,12 +122,9 @@ namespace NStack.Data
 
                                                 customizer.Column(NamingConvention.Column(inspector, member));
 
-                                                IEnumerable<Attribute> attributes =
-                                                    member.LocalMember.GetCustomAttributes(true).OfType<Attribute>();
-
                                                 Type type = member.LocalMember.GetPropertyOrFieldType();
 
-                                                ApplyPropertyConventions(customizer, member, type, attributes);
+                                                ApplyPropertyConventions(customizer, member, type, GetMemberAttributes(member.LocalMember));
                                             };
 
             mapper.BeforeMapManyToOne += (inspector, member, customizer) =>
@@ -136,12 +134,9 @@ namespace NStack.Data
                                                                            .ForeignKey(inspector, member));
                                                  customizer.Index(NamingConvention.Index(inspector, member));
 
-                                                 IEnumerable<Attribute> attributes =
-                                                     member.LocalMember.GetCustomAttributes(true).OfType<Attribute>();
-
                                                  Type type = member.LocalMember.GetPropertyOrFieldType();
 
-                                                 ApplyManyToOneConventions(customizer, member, type, attributes);
+                                                 ApplyManyToOneConventions(customizer, member, type, GetMemberAttributes(member.LocalMember));
                                              };
 
 
@@ -202,6 +197,11 @@ namespace NStack.Data
                      propertyType.GetGenericTypeDefinition() == typeof (Nullable<>))) &&
                    !attributes.Any(t => t is RequiredAttribute);
         }
+
+        protected virtual IEnumerable<Attribute> GetMemberAttributes(MemberInfo member)
+        {
+            return member.GetCustomAttributes(true).Cast<Attribute>();
+        } 
 
         /// <summary>
         ///   Determines whether or not the type represents a root entity (not a subclass).
