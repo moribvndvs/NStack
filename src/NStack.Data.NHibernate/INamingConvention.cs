@@ -42,16 +42,19 @@ namespace NStack.Data
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member">The entity property.</param>
+        /// <param name="declaringType"> </param>
         /// <returns>The name of the table column.</returns>
-        string Column(IModelInspector inspector, PropertyPath member);
+        string Column(IModelInspector inspector, PropertyPath member, Type declaringType = null);
 
         /// <summary>
         /// Returns the name of the foreign key in a relationship.
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member">The entity property.</param>
+        /// <param name="declaringType"> </param>
+        /// <param name="idDeclaringType"> </param>
         /// <returns>The name of the foreign key.</returns>
-        string ForeignKey(IModelInspector inspector, PropertyPath member);
+        string ForeignKey(IModelInspector inspector, PropertyPath member, Type declaringType = null, Type idDeclaringType = null);
 
         /// <summary>
         /// Returns the name of the index for the column.
@@ -66,7 +69,16 @@ namespace NStack.Data
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member"></param>
+        /// <param name="declaringType"> </param>
         /// <returns></returns>
-        string KeyColumn(IModelInspector inspector, PropertyPath member);
+        string KeyColumn(IModelInspector inspector, PropertyPath member, Type declaringType = null);
+
+        /// <summary>
+        /// Returns the name of the index column in an ordered collection.
+        /// </summary>
+        /// <param name="inspector">The model inspector.</param>
+        /// <param name="member">The collection property.</param>
+        /// <returns>The name of the index column.</returns>
+        string IndexColumn(IModelInspector inspector, PropertyPath member);
     }
 }

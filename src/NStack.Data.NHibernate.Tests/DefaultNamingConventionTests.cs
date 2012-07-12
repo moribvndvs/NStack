@@ -78,6 +78,17 @@ namespace NStack.Data
             // Assert
             name.Should().Be("first_name");
         }
+        
+        [Test]
+        public void Column_should_conform_using_declaringType()
+        {
+            // Act
+            var name = _convention.Column(_inspector.Object, new PropertyPath(null, GetMemberInfo<Parent>("Id")),
+                                          typeof (Parent));
+
+            // Assert
+            name.Should().Be("parent_id");
+        }
 
         [Test]
         public void Column_should_conform_to_manytoone_property()
@@ -100,6 +111,17 @@ namespace NStack.Data
             name.Should().Be("fk_parents_parents_nullable_reference_id");
 
         }
+        
+        [Test]
+        public void ForeignKey_should_conform_using_declaring_types()
+        {
+            // Act
+            var name = _convention.ForeignKey(_inspector.Object, new PropertyPath(null, GetMemberInfo<Parent>("Id")), typeof(JoinedSubclassedParent), typeof(Parent));
+
+            // Assert
+            name.Should().Be("fk_parents_joined_subclassed_parents_parent_id");
+
+        }
 
         [Test]
         public void Index_should_conform()
@@ -118,6 +140,18 @@ namespace NStack.Data
             // Act
             var name = _convention.KeyColumn(_inspector.Object,
                                              new PropertyPath(null, GetMemberInfo<Parent>("BagChildren")));
+
+            // Assert
+            name.Should().Be("parent_id");
+
+        }
+
+        [Test]
+        public void KeyColumn_should_conform_when_using_declaringType()
+        {
+            // Act
+            var name = _convention.KeyColumn(_inspector.Object,
+                                             new PropertyPath(null, GetMemberInfo<Parent>("Id")), typeof(Parent));
 
             // Assert
             name.Should().Be("parent_id");

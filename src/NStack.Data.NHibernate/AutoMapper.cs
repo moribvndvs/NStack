@@ -114,6 +114,22 @@ namespace NStack.Data
                                                                                          });
                                              }
                                          };
+
+            mapper.BeforeMapJoinedSubclass += (inspector, type, customizer) =>
+                                                  {
+                                                      var id = inspector.FindPersistentId(type.BaseType);
+
+                                                      
+                                                      customizer.Table(NamingConvention.Table(inspector, type));
+                                                      customizer.Key(
+                                                          key =>
+                                                              {
+                                                                  key.Column(NamingConvention.KeyColumn(inspector, id,
+                                                                                                        type.BaseType));
+                                                                  key.ForeignKey(NamingConvention.ForeignKey(inspector, id, type, type.BaseType));
+                                                              });
+                                                  };
+
             mapper.BeforeMapProperty += (inspector, member, customizer) =>
                                             {
                                                 if (!inspector.IsPersistentId(member.LocalMember) &&
@@ -150,7 +166,49 @@ namespace NStack.Data
 
                                            customizer.Key(key => key.Column(keyColumn));
 
-                                           ApplyBagConventions(customizer);
+                                           ApplyBagConventions(customizer, member);
+                                       };
+
+            mapper.BeforeMapSet += (inspector, member, customizer) =>
+                                       {
+                                           var inverse = GetLikelyInverseProperty(member);
+
+                                           var keyColumn = inverse == null
+                                                               ? NamingConvention.KeyColumn(inspector, member)
+                                                               : NamingConvention.Column(inspector, inverse);
+
+                                           customizer.Key(key => key.Column(keyColumn));
+
+                                           ApplySetConventions(customizer, member);
+                                       };
+
+            mapper.BeforeMapList += (inspector, member, customizer) =>
+                                        {
+                                            var inverse = GetLikelyInverseProperty(member);
+
+                                            var keyColumn = inverse == null
+                                                                ? NamingConvention.KeyColumn(inspector, member)
+                                                                : NamingConvention.Column(inspector, inverse);
+
+                                            customizer.Key(key => key.Column(keyColumn));
+                                            customizer.Index(index => index.Column(NamingConvention.IndexColumn(inspector, member)));
+
+                                            ApplyListConventions(customizer, member);
+                                        };
+
+            mapper.BeforeMapMap += (inspector, member, customizer) =>
+                                       {
+                                           var inverse = GetLikelyInverseProperty(member);
+
+                                           var keyColumn = inverse == null
+                                                               ? NamingConvention.KeyColumn(inspector, member)
+                                                               : NamingConvention.Column(inspector, inverse);
+
+                                           // TODO: figure out how to set the map key column (not just the foreign key)
+
+                                           customizer.Key(key => key.Column(keyColumn));
+
+                                           ApplyMapConventions(customizer, member);
                                        };
 
 
@@ -160,11 +218,26 @@ namespace NStack.Data
             return mapper;
         }
 
+        private void ApplyMapConventions(IMapPropertiesMapper mapper, PropertyPath member)
+        {
+            mapper.Inverse(true);
+        }
+
+        private void ApplyListConventions(IListPropertiesMapper mapper, PropertyPath member)
+        {
+            mapper.Inverse(true);
+        }
+
+        protected void ApplySetConventions(ISetPropertiesMapper mapper, PropertyPath member)
+        {
+            mapper.Inverse(true);
+        }
+
         /// <summary>
         /// Applies any conventions to bag properties.
         /// </summary>
         /// <param name="mapper">The mapper.</param>
-        protected virtual void ApplyBagConventions(IBagPropertiesMapper mapper)
+        protected virtual void ApplyBagConventions(IBagPropertiesMapper mapper, PropertyPath member)
         {
             mapper.Inverse(true);
         }
@@ -251,8 +324,7 @@ namespace NStack.Data
                                                                                                       InvariantCultureIgnoreCase);
                                                                 })
                                 ??
-                                elementType.GetFirstPropertyOfType(
-                                    member.LocalMember.DeclaringType);
+                                elementType.GetFirstPropertyOfType(member.LocalMember.DeclaringType);
 
             return new PropertyPath(null, otherProperty);
         }
@@ -295,6 +367,17 @@ namespace NStack.Data
         }
 
         /// <summary>
+        /// Allows manual mappings to be performed.
+        /// </summary>
+        /// <param name="map">A delegate for the override mapping.</param>
+        public void Override(Action<ModelMapper> map)
+        {
+            Requires.That(map, "map").IsNotNull();
+
+            map(ModelMapper);
+        }
+
+        /// <summary>
         ///   Automatically maps any suitable entities in the assembly of the specified type.
         /// </summary>
         /// <typeparam name="T"> </typeparam>
@@ -312,8 +395,6 @@ namespace NStack.Data
         /// <returns> </returns>
         public IEnumerable<HbmMapping> Complete()
         {
-            // TODO: compile explicitly added or overridden mappings
-
             return Mappings;
         }
     }

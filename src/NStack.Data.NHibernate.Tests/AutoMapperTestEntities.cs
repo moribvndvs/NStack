@@ -68,11 +68,23 @@ namespace NStack.Data
         public Parent NotNullableReference { get; set; }
 
         public IList<Child> BagChildren { get; set; }
+
+        public Iesi.Collections.Generic.ISet<Child> SetChildren { get; set; }
+
+        public IList<Child> ListChildren { get; set; }
+
+        public IDictionary<string, Child> DictionaryChildren { get; set; }
     }
 
     public class Child : AutoMapperTestEntityBase
     {
         public Parent BagParent { get; set; }
+
+        public Parent SetParent { get; set; }
+
+        public Parent ListParent { get; set; }
+
+        public Parent DictionaryParent { get; set; }
     }
 
     public class JoinedSubclassedParent : Parent

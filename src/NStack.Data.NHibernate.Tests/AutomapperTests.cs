@@ -242,6 +242,108 @@ namespace NStack.Data
             // Assert
             property.inverse.Should().BeTrue();
             keyColumn.name.Should().Be("bag_parent_id");
+        }
+        
+        [Test]
+        public void Should_map_set_conventions()
+        {
+            // Arrange
+            var autoMapper = new AutoMapper();
+            HbmClass map;
+            HbmSet property;
+            HbmColumn keyColumn;
+
+            // Act
+            autoMapper.EntityBaseType = typeof(AutoMapperTestEntityBase);
+            autoMapper.AddEntitiesFromAssemblyOf<AutoMapperTests>();
+            map = autoMapper.Complete().First().RootClasses.First();
+            property = map.Properties.Where(p => p.Name == "SetChildren").Cast<HbmSet>().First();
+            keyColumn = property.key.Columns.First();
+
+            // Assert
+            property.inverse.Should().BeTrue();
+            keyColumn.name.Should().Be("set_parent_id");
+        }
+        
+        [Test]
+        public void Should_map_list_conventions()
+        {
+            // Arrange
+            var autoMapper = new AutoMapper();
+            HbmClass map;
+            HbmList property;
+            HbmColumn keyColumn, indexColumn;
+
+            // Act
+            autoMapper.EntityBaseType = typeof(AutoMapperTestEntityBase);
+            autoMapper.Override(mapping => mapping.Class<Parent>(m => m.List(c => c.ListChildren, c => { })));
+            autoMapper.AddEntitiesFromAssemblyOf<AutoMapperTests>();
+            map = autoMapper.Complete().First().RootClasses.First();
+            property = map.Properties.Where(p => p.Name == "ListChildren").Cast<HbmList>().First();
+            indexColumn = property.ListIndex.Columns.First();
+            keyColumn = property.key.Columns.First();
+
+            // Assert
+            property.inverse.Should().BeTrue();
+            keyColumn.name.Should().Be("list_parent_id");
+            indexColumn.name.Should().Be("list_index");
+        }
+
+        [Test, Ignore]
+        public void Should_map_map_conventions()
+        {
+            // Arrange
+            var autoMapper = new AutoMapper();
+            HbmClass map;
+            HbmMap property;
+            HbmColumn keyColumn, mapKeyColumn;
+
+            // Act
+            autoMapper.EntityBaseType = typeof(AutoMapperTestEntityBase);
+            autoMapper.AddEntitiesFromAssemblyOf<AutoMapperTests>();
+            map = autoMapper.Complete().First().RootClasses.First();
+            property = map.Properties.Where(p => p.Name == "DictionaryChildren").Cast<HbmMap>().First();
+            keyColumn = property.key.Columns.First();
+            mapKeyColumn = (property.Item as HbmMapKey).Columns.First();
+
+            // Assert
+            property.inverse.Should().BeTrue();
+            keyColumn.name.Should().Be("dictionary_parent_id");
+            mapKeyColumn.name.Should().Be("map_key");
+        }
+
+        [Test]
+        public void Should_map_joined_subclass_conventions()
+        {
+            // Arrange
+            var autoMapper = new AutoMapper();
+            HbmJoinedSubclass map;
+
+            // Act
+            autoMapper.EntityBaseType = typeof(AutoMapperTestEntityBase);
+            autoMapper.AddEntitiesFromAssemblyOf<AutoMapperTests>();
+            map = autoMapper.Complete().First().JoinedSubclasses.First(c => c.Name == "JoinedSubclassedParent");
+
+            // Assert
+            map.table.Should().Be("joined_subclassed_parents");
+            map.key.Columns.First().name.Should().Be("parent_id");
+            map.key.foreignkey.Should().Be("fk_parents_joined_subclassed_parents_parent_id");
+        }
+
+        [Test]
+        public void Override_mappings_should_take_affect()
+        {
+            // Arrange
+            var autoMapper = new AutoMapper();
+            HbmClass root;
+
+            // Act
+            autoMapper.Override(map => map.Class<Parent>(mapper => mapper.Table("PARENT")));
+            autoMapper.AddEntitiesFromAssemblyOf<AutoMapperTests>();
+            root = autoMapper.Complete().First().RootClasses.Where(c => c.name == "Parent").Cast<HbmClass>().First();
+
+            // Assert
+            root.table.Should().Be("PARENT");
 
         }
     }

@@ -55,13 +55,19 @@ namespace NStack.Data
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member">The entity property.</param>
+        /// <param name="declaringType"> </param>
         /// <returns>The name of the table column.</returns>
-        public string Column(IModelInspector inspector, PropertyPath member)
+        public string Column(IModelInspector inspector, PropertyPath member, Type declaringType = null)
         {
             Requires.That(member, "member").IsNotNull();
             Requires.That(member.LocalMember, "member.LocalMember").IsNotNull();
 
             var localName = member.LocalMember.Name.Underscore();
+
+            if (declaringType != null)
+            {
+                return KeyColumnFormat.Formatted(declaringType.Name.Underscore(), localName);
+            }
 
             var type = member.LocalMember.GetPropertyOrFieldType();
 
@@ -83,14 +89,14 @@ namespace NStack.Data
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member">The entity property.</param>
         /// <returns>The name of the foreign key.</returns>
-        public string ForeignKey(IModelInspector inspector, PropertyPath member)
+        public string ForeignKey(IModelInspector inspector, PropertyPath member, Type declaringType = null, Type idDeclaringType = null)
         {
             Requires.That(member, "member").IsNotNull();
             Requires.That(member.LocalMember, "member.LocalMember").IsNotNull();
 
-            return ForeignKeyNameFormat.Formatted(Table(inspector, member.LocalMember.GetPropertyOrFieldType()),
-                                              Table(inspector, member.LocalMember.DeclaringType),
-                                              Column(inspector, member));
+            return ForeignKeyNameFormat.Formatted(Table(inspector, idDeclaringType ?? member.LocalMember.GetPropertyOrFieldType()),
+                                              Table(inspector, declaringType ?? member.LocalMember.DeclaringType),
+                                              Column(inspector, member, idDeclaringType));
         }
 
         /// <summary>
@@ -113,17 +119,31 @@ namespace NStack.Data
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member"></param>
+        /// <param name="declaringType"> </param>
         /// <returns></returns>
-        public string KeyColumn(IModelInspector inspector, PropertyPath member)
+        public string KeyColumn(IModelInspector inspector, PropertyPath member, Type declaringType = null)
         {
             Requires.That(member, "member").IsNotNull();
-            Requires.That(member, "member.LocalMember").IsNotNull();
+            Requires.That(member.LocalMember, "member.LocalMember").IsNotNull();
 
-            var type = member.LocalMember.DeclaringType;
+            var type = declaringType ?? member.LocalMember.DeclaringType;
             var localName = type.Name.Underscore();
             var id = inspector.FindPersistentId(type);
 
             return KeyColumnFormat.Formatted(localName, id.LocalMember.Name.Underscore());
+        }
+
+        /// <summary>
+        /// Returns the name of the index column in an ordered collection.
+        /// </summary>
+        /// <param name="inspector">The model inspector.</param>
+        /// <param name="member">The collection property.</param>
+        /// <returns>The name of the index column.</returns>
+        public string IndexColumn(IModelInspector inspector, PropertyPath member)
+        {
+            if (inspector.IsList(member.LocalMember)) return "list_index";
+
+            return "item_index";
         }
     }
 }
