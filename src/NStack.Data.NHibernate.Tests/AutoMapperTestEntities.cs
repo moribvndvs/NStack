@@ -39,6 +39,11 @@ namespace NStack.Data
 
     }
 
+    public class EntityBase : AutoMapperTestEntityBase, IEntityBase
+    {
+        
+    }
+
     public class Address
     {
         public string Street1 { get; set; }
@@ -90,5 +95,20 @@ namespace NStack.Data
     public class JoinedSubclassedParent : Parent
     {
 
+    }
+
+    public abstract class SingleTableBase : AutoMapperTestEntityBase
+    {
+
+    }
+
+    public class SingleTableA : SingleTableBase
+    {
+        public string A { get; set; }
+    }
+
+    public class SingleTableB : SingleTableBase
+    {
+        public string B { get; set; }
     }
 }

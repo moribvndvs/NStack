@@ -20,7 +20,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
@@ -51,7 +50,7 @@ namespace NStack.Data
         public AutoMapper(INamingConvention namingConvention)
         {
             NamingConvention = namingConvention;
-            EntityBaseType = typeof (Entity<>);
+            EntityBaseType = typeof (Entity);
             Mappings = new List<HbmMapping>();
 
             Initialize();
@@ -218,17 +217,17 @@ namespace NStack.Data
             return mapper;
         }
 
-        private void ApplyMapConventions(IMapPropertiesMapper mapper, PropertyPath member)
+        protected virtual void ApplyMapConventions(IMapPropertiesMapper mapper, PropertyPath member)
         {
             mapper.Inverse(true);
         }
 
-        private void ApplyListConventions(IListPropertiesMapper mapper, PropertyPath member)
+        protected virtual void ApplyListConventions(IListPropertiesMapper mapper, PropertyPath member)
         {
             mapper.Inverse(true);
         }
 
-        protected void ApplySetConventions(ISetPropertiesMapper mapper, PropertyPath member)
+        protected virtual void ApplySetConventions(ISetPropertiesMapper mapper, PropertyPath member)
         {
             mapper.Inverse(true);
         }
@@ -237,6 +236,7 @@ namespace NStack.Data
         /// Applies any conventions to bag properties.
         /// </summary>
         /// <param name="mapper">The mapper.</param>
+        /// <param name="member"> </param>
         protected virtual void ApplyBagConventions(IBagPropertiesMapper mapper, PropertyPath member)
         {
             mapper.Inverse(true);
@@ -342,13 +342,7 @@ namespace NStack.Data
         /// <returns> </returns>
         protected virtual bool IsRootEntity(Type type, bool declared)
         {
-            Type baseType = type.BaseType;
-
-            if (baseType == null) return true;
-
-            return (baseType == EntityBaseType)
-                   || (baseType.IsGenericType && baseType.GetGenericTypeDefinition() == EntityBaseType)
-                   || baseType.IsAbstract;
+            return type.BaseType == EntityBaseType;
         }
 
         /// <summary>
@@ -359,9 +353,8 @@ namespace NStack.Data
         /// <returns> </returns>
         protected virtual bool IsEntity(Type type, bool declared)
         {
-            if (type == EntityBaseType || type.IsInterface || type.IsAbstract) return false;
-
-            if (EntityBaseType.IsGenericType && EntityBaseType.IsSubclassOfGeneric(type)) return true;
+            if (type == EntityBaseType || type.IsInterface
+                || type.ImplementsInterfaceDirectly(typeof(IEntityBase))) return false;
 
             return EntityBaseType.IsAssignableFrom(type);
         }

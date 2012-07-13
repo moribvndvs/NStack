@@ -48,8 +48,7 @@ namespace NStack.Data
         [Test]
         public void Script()
         {
-            var autoMapper = new AutoMapper();
-
+            var autoMapper = new AutoMapper {EntityBaseType = typeof (AutoMapperTestEntityBase)};
             autoMapper.AddEntitiesFromAssemblyOf<SchemaTests>();
 
             var compiled = autoMapper.Complete();

@@ -73,6 +73,7 @@
     <Compile Include="Extensions\StringConvertToTests.cs" />
     <Compile Include="Extensions\StringInflectorTests.cs" />
     <Compile Include="Extensions\StringUnderscoreTests.cs" />
+    <Compile Include="Extensions\TypeImplementsInterfaceDirectlyTests.cs" />
     <Compile Include="Models\EntityTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

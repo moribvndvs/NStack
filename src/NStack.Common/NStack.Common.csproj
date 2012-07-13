@@ -68,6 +68,7 @@
     <Compile Include="Extensions\StringExtensions.Formatted.cs" />
     <Compile Include="Extensions\StringExtensions.Inflector.cs" />
     <Compile Include="Extensions\StringExtensions.Underscore.cs" />
+    <Compile Include="Extensions\TypeExtensions.ImplementsInterfaceDirectly.cs" />
     <Compile Include="Extensions\TypeExtensions.IsSubclassOfGeneric.cs" />
     <Compile Include="Fluent\IFluent.cs" />
     <Compile Include="Models\Entity.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Data\IUnitOfWorkScope.cs" />
     <Compile Include="Data\Repository[TEntity,TId].cs" />
     <Compile Include="Data\UnitOfWork.cs" />
+    <Compile Include="Models\IEntityBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requires.cs" />
   </ItemGroup>
