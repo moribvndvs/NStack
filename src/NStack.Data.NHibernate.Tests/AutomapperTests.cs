@@ -58,12 +58,15 @@ namespace NStack.Data
                                      EntityBaseType = typeof (AutoMapperTestEntityBase)
                                  };
 
-            automapper.Override(mapping =>
+            automapper.Override(mapper =>
                                     {
-                                        mapping.Class<Parent>(m =>
+                                        mapper.Class<Parent>(m =>
                                                                   {
                                                                       m.List(c => c.ListChildren, c => { });
                                                                   });
+                                        mapper.Class<SingleTableBase>(m => m.Discriminator(d => d.Column("type")));
+                                        mapper.Subclass<SingleTableA>(m => m.DiscriminatorValue("a"));
+                                        mapper.Subclass<SingleTableB>(m => m.DiscriminatorValue("b"));
                                     });
             automapper.AddEntitiesFromAssemblyOf<AutoMapperTests>();
 
@@ -276,18 +279,32 @@ namespace NStack.Data
         }
 
         [Test]
-        public void Should_map_joined_subclass_conventions()
+        public void Should_map_table_per_class_conventions()
         {
             // Arrange
             HbmJoinedSubclass map;
 
             // Act
-            map = _mapping.JoinedSubclasses.First(c => c.Name == "JoinedSubclassedParent");
+            map = _mapping.JoinedSubclasses.First(c => c.Name == "SeparateTable");
 
             // Assert
-            map.table.Should().Be("joined_subclassed_parents");
+            map.table.Should().Be("separate_tables");
             map.key.Columns.First().name.Should().Be("parent_id");
-            map.key.foreignkey.Should().Be("fk_parents_joined_subclassed_parents_parent_id");
+            map.key.foreignkey.Should().Be("fk_parents_separate_tables_parent_id");
+        }
+
+        [Test]
+        public void Should_map_table_per_class_hierarchy_conventions()
+        {
+            // Arrange
+            HbmSubclass map;
+
+            // Act
+            map = _mapping.SubClasses.First(c => c.Name == "SingleTableA");
+
+            // Assert
+            map.discriminatorvalue.Should().Be("a");
+
         }
 
         [Test]

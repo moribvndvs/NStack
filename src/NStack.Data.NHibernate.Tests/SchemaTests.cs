@@ -48,10 +48,24 @@ namespace NStack.Data
         [Test]
         public void Script()
         {
-            var autoMapper = new AutoMapper {EntityBaseType = typeof (AutoMapperTestEntityBase)};
-            autoMapper.AddEntitiesFromAssemblyOf<SchemaTests>();
+            var automapper = new AutoMapper
+            {
+                EntityBaseType = typeof(AutoMapperTestEntityBase)
+            };
 
-            var compiled = autoMapper.Complete();
+            automapper.Override(mapping =>
+            {
+                mapping.Class<Parent>(m =>
+                {
+                    m.List(c => c.ListChildren, c => { });
+                });
+                mapping.Class<SingleTableBase>(m => m.Discriminator(d => d.Column("type")));
+                mapping.Subclass<SingleTableA>(m => m.DiscriminatorValue("a"));
+                mapping.Subclass<SingleTableB>(m => m.DiscriminatorValue("b"));
+            });
+            automapper.AddEntitiesFromAssemblyOf<SchemaTests>();
+
+            var compiled = automapper.Complete();
 
             var configuration = new Configuration();
             configuration.DataBaseIntegration(db =>

@@ -92,23 +92,41 @@ namespace NStack.Data
         public Parent DictionaryParent { get; set; }
     }
 
-    public class JoinedSubclassedParent : Parent
+    public class SeparateTable : Parent
     {
 
     }
 
     public abstract class SingleTableBase : AutoMapperTestEntityBase
     {
-
+        public abstract string Type { get; }
     }
 
     public class SingleTableA : SingleTableBase
     {
         public string A { get; set; }
+
+        #region Overrides of SingleTableBase
+
+        public override string Type
+        {
+            get { return "a"; }
+        }
+
+        #endregion
     }
 
     public class SingleTableB : SingleTableBase
     {
         public string B { get; set; }
+
+        #region Overrides of SingleTableBase
+
+        public override string Type
+        {
+            get { return "b"; }
+        }
+
+        #endregion
     }
 }

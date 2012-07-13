@@ -213,6 +213,7 @@ namespace NStack.Data
 
             mapper.IsEntity(IsEntity);
             mapper.IsRootEntity(IsRootEntity);
+            //mapper.IsTablePerClassHierarchy(IsTablePerClassHierarchy);
 
             return mapper;
         }
@@ -332,7 +333,12 @@ namespace NStack.Data
         protected virtual IEnumerable<Attribute> GetMemberAttributes(MemberInfo member)
         {
             return member.GetCustomAttributes(true).Cast<Attribute>();
-        } 
+        }
+
+        protected virtual bool IsTablePerClassHierarchy(Type type, bool b)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         ///   Determines whether or not the type represents a root entity (not a subclass).

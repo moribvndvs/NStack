@@ -116,7 +116,7 @@ namespace NStack.Data
         public void ForeignKey_should_conform_using_declaring_types()
         {
             // Act
-            var name = _convention.ForeignKey(_inspector.Object, new PropertyPath(null, GetMemberInfo<Parent>("Id")), typeof(JoinedSubclassedParent), typeof(Parent));
+            var name = _convention.ForeignKey(_inspector.Object, new PropertyPath(null, GetMemberInfo<Parent>("Id")), typeof(SeparateTable), typeof(Parent));
 
             // Assert
             name.Should().Be("fk_parents_joined_subclassed_parents_parent_id");
