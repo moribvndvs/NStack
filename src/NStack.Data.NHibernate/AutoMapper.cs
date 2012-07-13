@@ -37,6 +37,8 @@ namespace NStack.Data
     /// </summary>
     public class AutoMapper
     {
+        private static readonly Func<Type, bool> Accept = type => true; 
+
         /// <summary>
         ///   Initializes a new instance of <see cref="AutoMapper" /> .
         /// </summary>
@@ -302,7 +304,6 @@ namespace NStack.Data
         /// <returns></returns>
         protected virtual PropertyPath GetLikelyInverseProperty(PropertyPath member)
         {
-
             var declared = member.LocalMember.DeclaringType;
             var collectionType = member.LocalMember.GetPropertyOrFieldType();
 
@@ -333,11 +334,6 @@ namespace NStack.Data
         protected virtual IEnumerable<Attribute> GetMemberAttributes(MemberInfo member)
         {
             return member.GetCustomAttributes(true).Cast<Attribute>();
-        }
-
-        protected virtual bool IsTablePerClassHierarchy(Type type, bool b)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -377,15 +373,45 @@ namespace NStack.Data
         }
 
         /// <summary>
-        ///   Automatically maps any suitable entities in the assembly of the specified type.
+        /// Maps all explicit mappings, overrides, and entities found in the assembly of the specified type.
         /// </summary>
-        /// <typeparam name="T"> </typeparam>
-        public void AddEntitiesFromAssemblyOf<T>(Func<Type, bool> filter = null)
+        /// <typeparam name="T">Type whose assembly should be inspected.</typeparam>
+        /// <param name="entityFilter">Filters entities.</param>
+        /// <param name="mappingFilter">Filters mappings.</param>
+        /// <param name="overrideFilter">Filters overrides.</param>
+        public void MapAssemblyOf<T>(Func<Type, bool> entityFilter = null, Func<Type, bool> mappingFilter = null,
+                                     Func<Type, bool> overrideFilter = null)
         {
-            IEnumerable<Type> types = typeof (T).Assembly.GetExportedTypes().AsEnumerable();
-            if (filter != null) types = types.Where(filter);
+            MapAssemblyOfType(typeof(T), entityFilter, mappingFilter, overrideFilter);
+        }
 
-            Mappings.Add(ModelMapper.CompileMappingFor(types));
+        /// <summary>
+        /// Maps all explicit mappings, overrides, and entities found in the assembly of the specified type.
+        /// </summary>
+        /// <param name="type">Type whose assembly should be inspected.</param>
+        /// <param name="entityFilter">Filters entities.</param>
+        /// <param name="mappingFilter">Filters mappings.</param>
+        /// <param name="overrideFilter">Filters overrides.</param>
+        public void MapAssemblyOfType(Type type, Func<Type, bool> entityFilter = null, Func<Type, bool> mappingFilter = null,
+                                     Func<Type, bool> overrideFilter = null)
+        {
+            var types = type.Assembly.GetExportedTypes().AsEnumerable();
+
+            var entityTypes = new List<Type>();
+
+            foreach (var t in types)
+            {
+                if (typeof(IConformistHoldersProvider).IsAssignableFrom(t)
+                    && (mappingFilter ?? Accept)(t)) ModelMapper.AddMapping(t);
+                else if (typeof(IMapperOverride).IsAssignableFrom(t)
+                    && (overrideFilter ?? Accept)(t))
+                {
+                    ((IMapperOverride)Activator.CreateInstance(t)).Override(ModelMapper);
+                }
+                else if ((entityFilter ?? Accept)(t)) entityTypes.Add(t);
+            }
+
+            Mappings.Add(ModelMapper.CompileMappingFor(entityTypes));
         }
 
         /// <summary>

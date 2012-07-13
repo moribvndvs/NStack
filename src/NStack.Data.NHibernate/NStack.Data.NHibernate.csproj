@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="AutoMapper.cs" />
     <Compile Include="DefaultNamingConvention.cs" />
+    <Compile Include="IMapperOverride.cs" />
     <Compile Include="INamingConvention.cs" />
     <Compile Include="ModelMapperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

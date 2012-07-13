@@ -52,18 +52,7 @@ namespace NStack.Data
             {
                 EntityBaseType = typeof(AutoMapperTestEntityBase)
             };
-
-            automapper.Override(mapping =>
-            {
-                mapping.Class<Parent>(m =>
-                {
-                    m.List(c => c.ListChildren, c => { });
-                });
-                mapping.Class<SingleTableBase>(m => m.Discriminator(d => d.Column("type")));
-                mapping.Subclass<SingleTableA>(m => m.DiscriminatorValue("a"));
-                mapping.Subclass<SingleTableB>(m => m.DiscriminatorValue("b"));
-            });
-            automapper.AddEntitiesFromAssemblyOf<SchemaTests>();
+            automapper.MapAssemblyOf<SchemaTests>();
 
             var compiled = automapper.Complete();
 

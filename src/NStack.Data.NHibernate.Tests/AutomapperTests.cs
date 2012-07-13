@@ -60,15 +60,9 @@ namespace NStack.Data
 
             automapper.Override(mapper =>
                                     {
-                                        mapper.Class<Parent>(m =>
-                                                                  {
-                                                                      m.List(c => c.ListChildren, c => { });
-                                                                  });
-                                        mapper.Class<SingleTableBase>(m => m.Discriminator(d => d.Column("type")));
-                                        mapper.Subclass<SingleTableA>(m => m.DiscriminatorValue("a"));
-                                        mapper.Subclass<SingleTableB>(m => m.DiscriminatorValue("b"));
+                                        
                                     });
-            automapper.AddEntitiesFromAssemblyOf<AutoMapperTests>();
+            automapper.MapAssemblyOf<AutoMapperTests>();
 
             _mapping = automapper.Complete().First();
 
@@ -76,7 +70,7 @@ namespace NStack.Data
                              {
                                  EntityBaseType = typeof(AutoMapperTestEntityBase<Guid>)
                              };
-            automapper.AddEntitiesFromAssemblyOf<AutoMapperTests>();
+            automapper.MapAssemblyOf<AutoMapperTests>();
             _guidMapping = automapper.Complete().First();
         }
 
@@ -104,7 +98,7 @@ namespace NStack.Data
         public void Should_add_joined_classes()
         {
             // Act / Assert
-            _mapping.JoinedSubclasses.Should().HaveCount(3);
+            _mapping.JoinedSubclasses.Should().HaveCount(1);
         }
 
         [Test]
@@ -317,7 +311,8 @@ namespace NStack.Data
             // Act
             autoMapper.EntityBaseType = typeof (AutoMapperTestEntityBase);
             autoMapper.Override(map => map.Class<Parent>(mapper => mapper.Table("PARENT")));
-            autoMapper.AddEntitiesFromAssemblyOf<AutoMapperTests>();
+            autoMapper.MapAssemblyOf<AutoMapperTests>(overrideFilter: type => false);
+
             root = autoMapper.Complete().First().RootClasses.First(c => c.name == "Parent");
 
             // Assert

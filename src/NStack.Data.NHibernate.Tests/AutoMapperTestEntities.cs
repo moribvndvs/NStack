@@ -20,6 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+using NHibernate.Mapping.ByCode;
+
 using NStack.Models;
 
 namespace NStack.Data
@@ -125,6 +127,29 @@ namespace NStack.Data
         public override string Type
         {
             get { return "b"; }
+        }
+
+        #endregion
+    }
+
+    public class AutoMapperTestOverrides : IMapperOverride
+    {
+        #region Implementation of IMapperOverride
+
+        /// <summary>
+        /// When implemented, overrides mappings.
+        /// </summary>
+        /// <param name="mapper">The model mapper.</param>
+        public void Override(ModelMapper mapper)
+        {
+            mapper.Class<Parent>(m =>
+            {
+                m.List(c => c.ListChildren, c => { });
+            });
+
+            mapper.Class<SingleTableBase>(m => m.Discriminator(d => d.Column("type")));
+            mapper.Subclass<SingleTableA>(m => m.DiscriminatorValue("a"));
+            mapper.Subclass<SingleTableB>(m => m.DiscriminatorValue("b"));
         }
 
         #endregion

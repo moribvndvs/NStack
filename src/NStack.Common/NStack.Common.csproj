@@ -63,6 +63,7 @@
     <Compile Include="Expressions\ExpressionUtil.cs" />
     <Compile Include="Extensions\ByteArray.ToHex.cs" />
     <Compile Include="Extensions\ConditionsExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.ForEach.cs" />
     <Compile Include="Extensions\StringExtensions.Capitalize.cs" />
     <Compile Include="Extensions\StringExtensions.ConvertTo.cs" />
     <Compile Include="Extensions\StringExtensions.Formatted.cs" />
