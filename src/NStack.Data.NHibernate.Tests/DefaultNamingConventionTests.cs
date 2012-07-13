@@ -119,7 +119,7 @@ namespace NStack.Data
             var name = _convention.ForeignKey(_inspector.Object, new PropertyPath(null, GetMemberInfo<Parent>("Id")), typeof(SeparateTable), typeof(Parent));
 
             // Assert
-            name.Should().Be("fk_parents_joined_subclassed_parents_parent_id");
+            name.Should().Be("fk_parents_separate_tables_parent_id");
 
         }
 
