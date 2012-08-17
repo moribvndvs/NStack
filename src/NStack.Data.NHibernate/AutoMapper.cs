@@ -26,6 +26,7 @@ using System.Reflection;
 
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Mapping.ByCode;
+using NHibernate.Type;
 
 using NStack.Extensions;
 using NStack.Models;
@@ -269,6 +270,8 @@ namespace NStack.Data
                                                         IEnumerable<Attribute> attributes)
         {
             mapper.NotNullable(!IsNullable(propertyType, attributes));
+
+            if (propertyType.IsEnum) mapper.Type<Int32Type>();
         }
 
         /// <summary>

@@ -59,6 +59,12 @@ namespace NStack.Data
         public string PostalCode { get; set; }
     }
 
+    public enum TestEnum
+    {
+        ValueOne,
+        ValueTwo
+    }
+
     public class Parent : AutoMapperTestEntityBase
     {
         public string FirstName { get; set; }
@@ -68,6 +74,8 @@ namespace NStack.Data
         public int NotNullableValue { get; set; }
 
         public int? NullableValue { get; set; }
+
+        public TestEnum TestEnum { get; set; }
 
         public Parent NullableReference { get; set; }
 

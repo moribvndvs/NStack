@@ -24,6 +24,7 @@ using System.Linq;
 using FluentAssertions;
 
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Type;
 
 using NUnit.Framework;
 
@@ -173,6 +174,23 @@ namespace NStack.Data
         }
 
         [Test]
+        public void Should_map_enum_property_conventions()
+        {
+            // Arrange
+            HbmClass map;
+            HbmProperty enumProperty;
+
+            // Act
+            map = _mapping.RootClasses.First(m => m.Name == "Parent");
+            enumProperty = map.Properties.Where(p => p.Name == "TestEnum").Cast<HbmProperty>().First();
+
+            // Assert
+            enumProperty.notnull.Should().BeTrue();
+            enumProperty.Type.name.Should().Be(typeof (Int32Type).AssemblyQualifiedName); // should be stored as integers rather than strings.
+
+        }
+
+        [Test]
         public void Should_map_manytoone_conventions()
         {
             // Arrange
@@ -252,7 +270,7 @@ namespace NStack.Data
             indexColumn.name.Should().Be("list_index");
         }
 
-        [Test, Ignore]
+        [Test, Ignore("Unable to set map key column from ModelMapper.BeginMapMap in current version of NHibernate.")]
         public void Should_map_map_conventions()
         {
             // Arrange
