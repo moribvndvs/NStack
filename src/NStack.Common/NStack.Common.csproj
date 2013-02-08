@@ -88,6 +88,7 @@
     <Compile Include="Models\IEntityBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requires.cs" />
+    <Compile Include="SemanticVersion.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\NStack.snk">
