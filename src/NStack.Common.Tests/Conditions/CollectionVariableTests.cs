@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections;
+using System.Linq;
 
 using FluentAssertions;
 
@@ -159,6 +160,62 @@ namespace NStack.Conditions
             // Act / Assert
             NonEmptyCollection.Invoking(value => value.IsNotEmpty())
                 .ShouldNotThrow();
+        }
+
+        [Test]
+        public void HasCountLessThanOrEqualTo_should_pass()
+        {
+            EmptyCollection.Invoking(value => value.HasCountLessThanOrEqualTo(1))
+                           .ShouldNotThrow();
+        }
+        
+        [Test]
+        public void HasCountLessThanOrEqualTo_should_fail()
+        {
+            NonEmptyCollection.Invoking(value => value.HasCountLessThanOrEqualTo(0))
+                              .ShouldThrow<ArgumentException>();
+        }
+        
+        [Test]
+        public void HasCountGreaterThanOrEqualTo_should_pass()
+        {
+            NonEmptyCollection.Invoking(value => value.HasCountGreaterThanOrEqualTo(1))
+                              .ShouldNotThrow();
+        }
+        
+        [Test]
+        public void HasCountGreaterThanOrEqualTo_should_fail()
+        {
+            EmptyCollection.Invoking(value => value.HasCountGreaterThanOrEqualTo(int.MaxValue))
+                           .ShouldThrow<ArgumentException>();
+        }
+        
+        [Test]
+        public void HasCountLessThan_should_pass()
+        {
+            EmptyCollection.Invoking(value => value.HasCountLessThan(1))
+                           .ShouldNotThrow();
+        }
+        
+        [Test]
+        public void HasCountLessThan_should_fail()
+        {
+            NonEmptyCollection.Invoking(value => value.HasCountLessThan(1))
+                              .ShouldThrow<ArgumentException>();
+        }
+        
+        [Test]
+        public void HasCountGreaterThan_should_pass()
+        {
+            NonEmptyCollection.Invoking(value => value.HasCountGreaterThan(0))
+                              .ShouldNotThrow();
+        }
+        
+        [Test]
+        public void HasCountGreaterThan_should_fail()
+        {
+            EmptyCollection.Invoking(value => value.HasCountGreaterThan(1))
+                           .ShouldThrow<ArgumentException>();
         }
     }
 }

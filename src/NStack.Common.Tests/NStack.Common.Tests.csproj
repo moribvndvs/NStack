@@ -76,6 +76,8 @@
     <Compile Include="Extensions\TypeImplementsInterfaceDirectlyTests.cs" />
     <Compile Include="Models\EntityTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RangeTests.cs" />
+    <Compile Include="SemanticVersionRangeTests.cs" />
     <Compile Include="SemanticVersionTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -60,20 +60,21 @@ namespace NStack
         {
             // Arrange
             var versions = new[]
-                               {
-                                   new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Pre),
-                                   new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Alpha),
-                                   new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Alpha, 1),
-                                   new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Beta, 1),
-                                   new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Beta, 11),
-                                   new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Rc, 1),
-                                   new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Rc, 1, "1"),
-                                   new SemanticVersion(1, 0, 0),
-                                   new SemanticVersion(1, 0, 0, null, "0.3.7"),
-                                   new SemanticVersion(1, 3, 7, null, "build"),
-                                   new SemanticVersion(1, 3, 7, null, "build.2.b8f12d7"),
-                                   new SemanticVersion(1, 3, 7, null, "build.11.e0f985a")
-                               };
+                {
+                    SemanticVersion.Unspecified,
+                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Pre),
+                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Alpha),
+                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Alpha, 1),
+                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Beta, 1),
+                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Beta, 11),
+                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Rc, 1),
+                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Rc, 1, "1"),
+                    new SemanticVersion(1, 0, 0),
+                    new SemanticVersion(1, 0, 0, null, "0.3.7"),
+                    new SemanticVersion(1, 3, 7, null, "build"),
+                    new SemanticVersion(1, 3, 7, null, "build.2.b8f12d7"),
+                    new SemanticVersion(1, 3, 7, null, "build.11.e0f985a"),
+                };
 
             // Act
             // Assert
@@ -231,6 +232,7 @@ namespace NStack
             // Arrange
             var expected = new[]
                                {
+                                   SemanticVersion.Unspecified,
                                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Pre),
                                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Alpha),
                                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Alpha, 1),
@@ -291,6 +293,29 @@ namespace NStack
         }
 
         [Test]
+        public void ToString_should_include_significant_version_omitting_patch()
+        {
+            // Arrange
+            var first = new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Pre, 1, "build.001");
+
+            // Act
+            // Assert
+            first.ToString("S").Should().Be("1.0");
+        }
+        
+        [Test]
+        public void ToString_should_include_significant_version_including_patch()
+        {
+            // Arrange
+            var first = new SemanticVersion(1, 0, 1, SemanticVersion.Stage.Pre, 1, "build.001");
+
+            // Act
+            // Assert
+            first.ToString("S").Should().Be("1.0.1");
+            first.ToString("S").Should().Be("1.0.1");
+        }
+
+        [Test]
         public void TryParse_should_fail_safely()
         {
             // Arrange
@@ -317,6 +342,31 @@ namespace NStack
             // Assert
             result.Should().BeTrue();
             actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void Initialize_with_empty_prerelease_value_should_be_changed_to_null()
+        {
+            // Arrange
+            // Act
+            var actual = new SemanticVersion(1, 0, 0, string.Empty, string.Empty);
+
+            // Assert
+            actual.PreRelease.Should().BeNull();
+
+
+        }
+        
+        [Test]
+        public void Initialize_with_empty_build_value_should_be_changed_to_null()
+        {
+            // Arrange
+            // Act
+            var actual = new SemanticVersion(1, 0, 0, string.Empty, string.Empty);
+
+            // Assert
+            actual.Build.Should().BeNull();
+
         }
     }
 }

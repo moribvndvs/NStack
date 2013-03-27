@@ -134,5 +134,54 @@ namespace NStack.Conditions
 
             return (TThis) this;
         }
+
+        [AssertionMethod]
+        public TThis HasCountLessThanOrEqualTo(int count, string message = null)
+        {
+            IsNotNull(message);
+
+            var actual = GetCount();
+
+            ThrowOnFail(actual <= count, message ?? "Must contain have {0} item(s) or less (actual: {1}).", count, actual);
+
+
+            return (TThis) this;
+        }
+        
+        [AssertionMethod]
+        public TThis HasCountGreaterThanOrEqualTo(int count, string message = null)
+        {
+            IsNotNull(message);
+
+            var actual = GetCount();
+
+            ThrowOnFail(actual >= count, message ?? "Must contain have {0} item(s) or more (actual: {1}).", count, actual);
+
+            return (TThis)this;
+        }
+        
+        [AssertionMethod]
+        public TThis HasCountLessThan(int count, string message = null)
+        {
+            IsNotNull(message);
+
+            var actual = GetCount();
+
+            ThrowOnFail(actual < count, message ?? "Must contain have less than {0} item(s) (actual: {1}).", count, actual);
+
+            return (TThis)this;
+        }
+        
+        [AssertionMethod]
+        public TThis HasCountGreaterThan(int count, string message = null)
+        {
+            IsNotNull(message);
+
+            var actual = GetCount();
+
+            ThrowOnFail(actual > count, message ?? "Must contain have more than {0} item(s) (actual: {1}).", count, actual);
+
+            return (TThis)this;
+        }
     }
 }

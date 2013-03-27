@@ -87,8 +87,10 @@
     <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Models\IEntityBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Range.cs" />
     <Compile Include="Requires.cs" />
     <Compile Include="SemanticVersion.cs" />
+    <Compile Include="SemanticVersionRange.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\NStack.snk">

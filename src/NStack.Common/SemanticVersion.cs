@@ -39,6 +39,16 @@ namespace NStack
                 @"^(?<ma>[0-9]+)\.(?<mi>[0-9]+)(\.(?<pa>[0-9]+))?(\-(?<pr>[a-zA-Z0-9\.]+))?(\+(?<b>[A-Za-z0-9\.]+))?$");
 
         /// <summary>
+        /// Represents an unspecified semantic version.
+        /// </summary>
+        public static readonly SemanticVersion Unspecified = new SemanticVersion(0, 0, 0);
+
+        /// <summary>
+        /// Represents the maximum semantic version (excluding build).
+        /// </summary>
+        public static readonly SemanticVersion MaxValue = new SemanticVersion(int.MaxValue, int.MaxValue, int.MaxValue);
+
+        /// <summary>
         ///   Initializes a new instance of <see cref="SemanticVersion" /> .
         /// </summary>
         /// <param name="major"> The major version. </param>
@@ -65,11 +75,11 @@ namespace NStack
 
             ValidateLabelArgument("preRelease", preRelease);
 
-            PreRelease = preRelease;
+            PreRelease = string.IsNullOrWhiteSpace(preRelease) ? null : preRelease;
 
             ValidateLabelArgument("build", build);
 
-            Build = build;
+            Build = string.IsNullOrWhiteSpace(build) ? null : build;
         }
 
         /// <summary>
@@ -158,7 +168,7 @@ namespace NStack
         ///    name="other" /> parameter.Zero This object is equal to <paramref name="other" /> . Greater than zero This object is greater than <paramref
         ///    name="other" /> . </returns>
         /// <param name="other"> An object to compare with this object. </param>
-        public int CompareTo(SemanticVersion other)
+        public virtual int CompareTo(SemanticVersion other)
         {
             if (other == null) return 1;
 
@@ -182,7 +192,7 @@ namespace NStack
         /// </summary>
         /// <param name="other"> The other version to compare. </param>
         /// <returns> True if the versions are equivalent; otherwise, false. </returns>
-        public bool Equals(SemanticVersion other)
+        public virtual bool Equals(SemanticVersion other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -217,6 +227,9 @@ namespace NStack
             {
                 case "s": // significant version, omitting pre-release and build
                     builder.AppendFormat(formatProvider, "{0}.{1}.{2}", Major, Minor, Patch);
+                    break;
+                case "S": // significant version, omitting pre-release, build, and patch if patch is 0
+                    builder.AppendFormat(Patch == 0 ? "{0}.{1}" : "{0}.{1}.{2}", Major, Minor, Patch);
                     break;
                 case "f": // full version, including pre-release and build
                     builder.AppendFormat(formatProvider, "{0}.{1}.{2}", Major, Minor, Patch);
