@@ -42,6 +42,165 @@ namespace NStack
         }
 
         /// <summary>
+        /// Begins fluent assertion of preconditions.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="argumentName"></param>
+        /// <returns></returns>
+        public static NumericVariable<int> That(int value, string argumentName = null)
+        {
+            return new NumericVariable<int>(value, argumentName, true);
+        }
+
+        /// <summary>
+        /// Begins fluent assertion of preconditions.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="reference"></param>
+        /// <returns></returns>
+        public static NumericVariable<int> That(int value, Expression<Func<int>> reference)
+        {
+            return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
+        }
+
+
+        /// <summary>
+        /// Begins fluent assertion of preconditions.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="argumentName"></param>
+        /// <returns></returns>
+        public static NumericVariable<decimal> That(decimal value, string argumentName = null)
+        {
+            return new NumericVariable<decimal>(value, argumentName, true);
+        }
+
+        /// <summary>
+        /// Begins fluent assertion of preconditions.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="reference"></param>
+        /// <returns></returns>
+        public static NumericVariable<decimal> That(decimal value, Expression<Func<decimal>> reference)
+        {
+            return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
+        }
+
+
+        /// <summary>
+        /// Begins fluent assertion of preconditions.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="argumentName"></param>
+        /// <returns></returns>
+        public static NumericVariable<float> That(float value, string argumentName = null)
+        {
+            return new NumericVariable<float>(value, argumentName, true);
+        }
+
+        /// <summary>
+        /// Begins fluent assertion of preconditions.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="reference"></param>
+        /// <returns></returns>
+        public static NumericVariable<float> That(float value, Expression<Func<float>> reference)
+        {
+            return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
+        }
+
+
+        /// <summary>
+        /// Begins fluent assertion of preconditions.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="argumentName"></param>
+        /// <returns></returns>
+        public static NumericVariable<double> That(double value, string argumentName = null)
+        {
+            return new NumericVariable<double>(value, argumentName, true);
+        }
+
+        /// <summary>
+        /// Begins fluent assertion of preconditions.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="reference"></param>
+        /// <returns></returns>
+        public static NumericVariable<double> That(double value, Expression<Func<double>> reference)
+        {
+            return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
+        }
+
+
+        /// <summary>
+        /// Begins fluent assertion of preconditions.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="argumentName"></param>
+        /// <returns></returns>
+        public static NumericVariable<uint> That(uint value, string argumentName = null)
+        {
+            return new NumericVariable<uint>(value, argumentName, true);
+        }
+
+        /// <summary>
+        /// Begins fluent assertion of preconditions.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="reference"></param>
+        /// <returns></returns>
+        public static NumericVariable<uint> That(uint value, Expression<Func<uint>> reference)
+        {
+            return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
+        }
+
+
+        /// <summary>
+        /// Begins fluent assertion of preconditions.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="argumentName"></param>
+        /// <returns></returns>
+        public static NumericVariable<long> That(long value, string argumentName = null)
+        {
+            return new NumericVariable<long>(value, argumentName, true);
+        }
+
+        /// <summary>
+        /// Begins fluent assertion of preconditions.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="reference"></param>
+        /// <returns></returns>
+        public static NumericVariable<long> That(long value, Expression<Func<long>> reference)
+        {
+            return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
+        }
+
+        /// <summary>
+        /// Begins fluent assertion of preconditions.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="argumentName"></param>
+        /// <returns></returns>
+        public static NumericVariable<ulong> That(ulong value, string argumentName = null)
+        {
+            return new NumericVariable<ulong>(value, argumentName, true);
+        }
+
+        /// <summary>
+        /// Begins fluent assertion of preconditions.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="reference"></param>
+        /// <returns></returns>
+        public static NumericVariable<ulong> That(ulong value, Expression<Func<ulong>> reference)
+        {
+            return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
+        }
+
+        /// <summary>
         ///   Begins fluent assertion of postconditions.
         /// </summary>
         /// <typeparam name="T"> The type of the argument. </typeparam>

@@ -1,0 +1,264 @@
+﻿#region header
+// -----------------------------------------------------------------------
+//  <copyright file="FlakeTests.cs" company="Family Bronze, LTD">
+//      © 2013 Mike Grabski and Family Bronze, LTD All rights reserved.
+//  </copyright>
+// -----------------------------------------------------------------------
+#endregion
+
+
+using System;
+
+using FluentAssertions;
+
+using NUnit.Framework;
+
+namespace NStack
+{
+    [TestFixture]
+    public class FlakeTests
+    {
+        private const decimal Value = 1645918652519951500771329M;
+        private const string EncodedValue = "hx6f92xbkvmyhk4jhp";
+
+        #region Set-up and Tear-down
+
+        [TestFixtureSetUp]
+        public void SetUpFixture()
+        {
+
+        }
+
+        [SetUp]
+        public void SetUpTest()
+        {
+
+        }
+
+        [TearDown]
+        public void TearDownTest()
+        {
+
+        }
+
+        [TestFixtureTearDown]
+        public void TearDownFixture()
+        {
+
+        }
+
+        #endregion
+
+        [Test]
+        public void Equals_should_return_true()
+        {
+            // Arrange
+            var first = new Flake(1);
+            var second = new Flake(1);
+
+            // Act
+            // Assert
+
+            first.Equals(second).Should().BeTrue();
+            first.Equals(first).Should().BeTrue();
+        }
+
+        [Test]
+        public void Equals_should_return_false()
+        {
+            // Arrange
+            var first = new Flake(1);
+            var second = new Flake(2);
+
+            // Act
+            // Assert
+
+            first.Equals(second).Should().BeFalse();
+        }
+
+        [Test]
+        public void IsUnassigned_should_return_true()
+        {
+            // Arrange
+            var value = new Flake(0);
+
+            // Act
+            var actual = value.IsUnassigned();
+
+            // Assert
+            actual.Should().BeTrue();
+        }
+        
+        [Test]
+        public void IsUnassigned_should_return_false()
+        {
+            // Arrange
+            var value = new Flake(1);
+
+            // Act
+            var actual = value.IsUnassigned();
+
+            // Assert
+            actual.Should().BeFalse();
+        }
+
+        [Test]
+        public void Should_not_accept_negative_values()
+        {
+            Assert.Throws<ArgumentException>(() => new Flake(-1));
+        }
+
+        [Test]
+        public void Should_truncate_fractional_values()
+        {
+            // Arrange
+            var actual = new Flake(1.012M);
+            var expected = new Flake(1);
+
+            // Act / Assert
+            actual.Should().Be(expected);
+
+        }
+
+        [Test]
+        public void CompareTo_should_return_negative_value()
+        {
+            // Arrange
+            var lesser = new Flake(1);
+            var greater = new Flake(2);
+
+            // Act
+            var actual = lesser.CompareTo(greater);
+
+            // Assert
+            actual.Should().BeNegative();
+        }
+        
+        [Test]
+        public void CompareTo_should_return_positive_value()
+        {
+            // Arrange
+            var lesser = new Flake(1);
+            var greater = new Flake(2);
+
+            // Act
+            var actual = greater.CompareTo(lesser);
+
+            // Assert
+            actual.Should().BeGreaterThan(0);
+        }
+        
+        [Test]
+        public void CompareTo_should_return_zero()
+        {
+            // Arrange
+            var greater = new Flake(2);
+
+            // Act
+            var actual = greater.CompareTo(greater);
+
+            // Assert
+            actual.Should().Be(0);
+        }
+
+        [Test]
+        public void Should_be_greater_than()
+        {
+            (new Flake(2) > new Flake(1)).Should().BeTrue();
+        }
+
+        [Test]
+        public void Should_be_less_than()
+        {
+            (new Flake(2) < new Flake(3)).Should().BeTrue();
+        }
+        
+        [Test]
+        public void Should_be_less_than_or_equal_to()
+        {
+            (new Flake(2) <= new Flake(3)).Should().BeTrue();
+            (new Flake(2) <= new Flake(2)).Should().BeTrue();
+        }
+
+        [Test]
+        public void Should_be_greater_than_or_equal_to()
+        {
+            (new Flake(2) >= new Flake(1)).Should().BeTrue();
+            (new Flake(2) >= new Flake(2)).Should().BeTrue();
+        }
+
+        [Test]
+        public void ToString_should_return_base24_string()
+        {
+            // Arrange
+            Flake a = Value;
+
+            var actual = a.ToString();
+
+            actual.Should().Be(EncodedValue);
+        }
+
+        [Test]
+        public void ToString_should_return_decimal_format()
+        {
+            // Arrange
+            Flake a = Value;
+
+            // Act
+            var actual = a.ToString("d");
+
+            // Assert
+            actual.Should().Be("1645918652519951500771329");
+        }
+
+        [Test]
+        public void Parse_should_parse_Base24_encoded_string()
+        {
+            // Arrange
+            // Act
+            var actual = Flake.Parse(EncodedValue);
+
+            // Assert
+            actual.Should().Be(new Flake(Value));
+        }
+
+        [Test]
+        public void Should_assign_from_string()
+        {
+            // Arrange
+            Flake actual = EncodedValue;
+
+            // Act / Assert
+            actual.Should().Be(new Flake(Value));
+
+        }
+
+        [Test]
+        public void TryParse_should_not_throw()
+        {
+            Flake actual = new Flake();
+
+            actual.Invoking(flake => Flake.TryParse(null, out actual))
+                  .ShouldNotThrow();
+            
+            actual.Invoking(flake => Flake.TryParse(string.Empty, out actual))
+                  .ShouldNotThrow();
+
+            actual.Invoking(flake => Flake.TryParse("21@#", out actual))
+                  .ShouldNotThrow();
+        }
+
+        [Test]
+        public void TryParse_should_parse_from_string()
+        {
+            // Arrange
+            Flake actual;
+
+            // Act
+            Flake.TryParse(EncodedValue, out actual).Should().BeTrue();
+
+            // Assert
+            actual.Should().Be(new Flake(Value));
+        }
+    }
+}

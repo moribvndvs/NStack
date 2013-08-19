@@ -67,13 +67,16 @@
     <Compile Include="Conditions\GenericDictionaryVariableTests.cs" />
     <Compile Include="Conditions\NonGenericCollectionVariableTests.cs" />
     <Compile Include="Conditions\NonGenericDictionaryVariableTests.cs" />
+    <Compile Include="Conditions\NumericVariableTests.cs" />
     <Compile Include="Conditions\ObjectVariableTests.cs" />
     <Compile Include="Conditions\StringVariableTests.cs" />
+    <Compile Include="NumberBasesTests.cs" />
     <Compile Include="Extensions\StringCapitalizeTests.cs" />
     <Compile Include="Extensions\StringConvertToTests.cs" />
     <Compile Include="Extensions\StringInflectorTests.cs" />
     <Compile Include="Extensions\StringUnderscoreTests.cs" />
     <Compile Include="Extensions\TypeImplementsInterfaceDirectlyTests.cs" />
+    <Compile Include="FlakeTests.cs" />
     <Compile Include="Models\EntityTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RangeTests.cs" />

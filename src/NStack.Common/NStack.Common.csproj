@@ -51,6 +51,7 @@
     <Compile Include="Conditions\DictionaryVariable.cs" />
     <Compile Include="Conditions\GenericDictionaryVariable.cs" />
     <Compile Include="Conditions\NonGenericDictionaryVariable.cs" />
+    <Compile Include="Conditions\NumericVariable.cs" />
     <Compile Include="Conditions\Variable.cs" />
     <Compile Include="Conditions\CollectionVariable.cs" />
     <Compile Include="Conditions\GenericCollectionVariable.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Conditions\ObjectVariable.cs" />
     <Compile Include="Conditions\PostConditionException.cs" />
     <Compile Include="Conditions\StringVariable.cs" />
+    <Compile Include="NumberBases.cs" />
     <Compile Include="Ensures.cs" />
     <Compile Include="Expressions\ExpressionUtil.cs" />
     <Compile Include="Extensions\ByteArray.ToHex.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Extensions\StringExtensions.Underscore.cs" />
     <Compile Include="Extensions\TypeExtensions.ImplementsInterfaceDirectly.cs" />
     <Compile Include="Extensions\TypeExtensions.IsSubclassOfGeneric.cs" />
+    <Compile Include="Flake.cs" />
     <Compile Include="Fluent\IFluent.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Entity[TId].cs" />

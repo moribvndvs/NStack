@@ -18,6 +18,7 @@
 
 #endregion
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -36,6 +37,42 @@ namespace NStack.Extensions
         /// <param name="argumentName"> </param>
         /// <returns> </returns>
         public static ObjectVariable RequiresThat(this object value, string argumentName = null)
+        {
+            return Requires.That(value, argumentName);
+        }
+
+        public static NumericVariable<int> RequiresThat(this int value, string argumentName = null)
+        {
+            return Requires.That(value, argumentName);
+        }
+        
+        
+        public static NumericVariable<decimal> RequiresThat(this decimal value, string argumentName = null)
+        {
+            return Requires.That(value, argumentName);
+        }
+
+        public static NumericVariable<float> RequiresThat(this float value, string argumentName = null)
+        {
+            return Requires.That(value, argumentName);
+        }
+        
+        public static NumericVariable<double> RequiresThat(this double value, string argumentName = null)
+        {
+            return Requires.That(value, argumentName);
+        }
+        
+        public static NumericVariable<uint> RequiresThat(this uint value, string argumentName = null)
+        {
+            return Requires.That(value, argumentName);
+        }
+        
+        public static NumericVariable<long> RequiresThat(this long value, string argumentName = null)
+        {
+            return Requires.That(value, argumentName);
+        }
+        
+        public static NumericVariable<ulong> RequiresThat(this ulong value, string argumentName = null)
         {
             return Requires.That(value, argumentName);
         }
@@ -119,6 +156,42 @@ namespace NStack.Extensions
         public static NonGenericDictionaryVariable EnsuresThat(IDictionary dictionary, string argumentName = null)
         {
             return Ensures.That(dictionary, argumentName);
+        }
+
+        public static NumericVariable<int> EnsuresThat(this int value, string argumentName = null)
+        {
+            return Ensures.That(value, argumentName);
+        }
+
+
+        public static NumericVariable<decimal> EnsuresThat(this decimal value, string argumentName = null)
+        {
+            return Ensures.That(value, argumentName);
+        }
+
+        public static NumericVariable<float> EnsuresThat(this float value, string argumentName = null)
+        {
+            return Ensures.That(value, argumentName);
+        }
+
+        public static NumericVariable<double> EnsuresThat(this double value, string argumentName = null)
+        {
+            return Ensures.That(value, argumentName);
+        }
+
+        public static NumericVariable<uint> EnsuresThat(this uint value, string argumentName = null)
+        {
+            return Ensures.That(value, argumentName);
+        }
+
+        public static NumericVariable<long> EnsuresThat(this long value, string argumentName = null)
+        {
+            return Ensures.That(value, argumentName);
+        }
+
+        public static NumericVariable<ulong> EnsuresThat(this ulong value, string argumentName = null)
+        {
+            return Ensures.That(value, argumentName);
         }
 
         #endregion
