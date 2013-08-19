@@ -48,6 +48,7 @@
     </Compile>
     <Compile Include="Annotations\Annotations.cs" />
     <Compile Include="Collections\BiDictionary.cs" />
+    <Compile Include="ComponentModel\FlakeConverter.cs" />
     <Compile Include="Conditions\DictionaryVariable.cs" />
     <Compile Include="Conditions\GenericDictionaryVariable.cs" />
     <Compile Include="Conditions\NonGenericDictionaryVariable.cs" />

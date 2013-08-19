@@ -9,6 +9,7 @@
 #endregion
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 
 namespace NStack
@@ -16,6 +17,7 @@ namespace NStack
     /// <summary>
     ///     Represents an identifier that is unique and sequential, and can be generated in a non-coordinated, distributed environment.
     /// </summary>
+    [Serializable, TypeConverter(typeof(ComponentModel.FlakeConverter))]
     public struct Flake : IEquatable<Flake>, IComparable<Flake>, IComparable, IFormattable
     {
         /// <summary>
