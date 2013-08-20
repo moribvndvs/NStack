@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4F9B0C74-9E03-4FC6-8ADE-730AB18FF600}</ProjectGuid>
+    <ProjectGuid>{6EA51D42-64C7-479F-A63F-BD8B683003F6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NStack.Web</RootNamespace>
-    <AssemblyName>NStack.Web.Tests</AssemblyName>
+    <RootNamespace>NStack.Web.WebApi</RootNamespace>
+    <AssemblyName>NStack.Web.WebApi.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -30,6 +30,12 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\NStack.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentAssertions">
@@ -66,9 +72,9 @@
       <Project>{647d81a7-01e7-4074-b28a-d5284a1c4196}</Project>
       <Name>NStack.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NStack.Web\NStack.Web.csproj">
-      <Project>{fd301d5e-83be-4ca0-a805-1a168aeb75bc}</Project>
-      <Name>NStack.Web</Name>
+    <ProjectReference Include="..\NStack.Web.WebApi\NStack.Web.WebApi.csproj">
+      <Project>{95c3dc8f-c1e1-4830-90f0-0be8ea176dbc}</Project>
+      <Name>NStack.Web.WebApi</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
