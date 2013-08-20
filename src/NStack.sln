@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.Common", "NStack.Common\NStack.Common.csproj", "{647D81A7-01E7-4074-B28A-D5284A1C4196}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.Common.Tests", "NStack.Common.Tests\NStack.Common.Tests.csproj", "{C4F4B854-12FF-49FB-BD80-3B6DB7FF3142}"
@@ -18,12 +18,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{EAFC4F2F-48BF-4D44-98D0-AA7B7677EA19}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F8A4F038-DA75-42C4-A24A-5F4897252996}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.Web", "NStack.Web\NStack.Web.csproj", "{FD301D5E-83BE-4CA0-A805-1A168AEB75BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.Web.Tests", "NStack.Web.Tests\NStack.Web.Tests.csproj", "{4F9B0C74-9E03-4FC6-8ADE-730AB18FF600}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,14 @@ Global
 		{3C7BD1B2-F051-41F2-BA01-5CBA3103A2EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C7BD1B2-F051-41F2-BA01-5CBA3103A2EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C7BD1B2-F051-41F2-BA01-5CBA3103A2EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD301D5E-83BE-4CA0-A805-1A168AEB75BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD301D5E-83BE-4CA0-A805-1A168AEB75BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD301D5E-83BE-4CA0-A805-1A168AEB75BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD301D5E-83BE-4CA0-A805-1A168AEB75BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F9B0C74-9E03-4FC6-8ADE-730AB18FF600}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F9B0C74-9E03-4FC6-8ADE-730AB18FF600}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F9B0C74-9E03-4FC6-8ADE-730AB18FF600}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F9B0C74-9E03-4FC6-8ADE-730AB18FF600}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,7 +66,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{647D81A7-01E7-4074-B28A-D5284A1C4196} = {03EDE2D3-F66E-4955-8FBB-9F72D5E12A8F}
 		{4ED046DC-68AF-4851-B9F4-F40F25739E0F} = {03EDE2D3-F66E-4955-8FBB-9F72D5E12A8F}
+		{FD301D5E-83BE-4CA0-A805-1A168AEB75BC} = {03EDE2D3-F66E-4955-8FBB-9F72D5E12A8F}
 		{C4F4B854-12FF-49FB-BD80-3B6DB7FF3142} = {87DE6C7B-A6FE-45E1-956E-0F9109683BB9}
 		{3C7BD1B2-F051-41F2-BA01-5CBA3103A2EB} = {87DE6C7B-A6FE-45E1-956E-0F9109683BB9}
+		{4F9B0C74-9E03-4FC6-8ADE-730AB18FF600} = {87DE6C7B-A6FE-45E1-956E-0F9109683BB9}
 	EndGlobalSection
 EndGlobal
