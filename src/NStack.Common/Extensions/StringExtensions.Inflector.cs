@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="StringExtensions.Inflector.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -121,20 +121,24 @@ namespace NStack.Extensions
         }
 
         /// <summary>
-        ///   Returns the plural form of the specified word (basic English-only).
+        ///     Returns the plural form of the specified word (basic English-only).
         /// </summary>
         /// <param name="word"> An English word in singular form. </param>
-        /// <returns> The pluralized form of <paramref name="word" /> . </returns>
+        /// <returns>
+        ///     The pluralized form of <paramref name="word" /> .
+        /// </returns>
         public static string Pluralize(this string word)
         {
             return ApplyRules(Plurals, word);
         }
 
         /// <summary>
-        ///   Returns the singular form of the specified word (basic English-only).
+        ///     Returns the singular form of the specified word (basic English-only).
         /// </summary>
         /// <param name="word"> An English word in plural form. </param>
-        /// <returns> The singular version of <paramref name="word" /> . </returns>
+        /// <returns>
+        ///     The singular version of <paramref name="word" /> .
+        /// </returns>
         public static string Singularize(this string word)
         {
             return ApplyRules(Singulars, word);

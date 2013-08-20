@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="IUnitOfWorkScope.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -23,12 +23,12 @@ using System;
 namespace NStack.Data
 {
     /// <summary>
-    ///   A contract for a class that helps a code block enlist in a unit of work.
+    ///     A contract for a class that helps a code block enlist in a unit of work.
     /// </summary>
     public interface IUnitOfWorkScope : IDisposable
     {
         /// <summary>
-        ///   Gets the <see cref="IUnitOfWork" /> the scope belongs to.
+        ///     Gets the <see cref="IUnitOfWork" /> the scope belongs to.
         /// </summary>
         IUnitOfWork UnitOfWork { get; }
     }

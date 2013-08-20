@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="PostConditionException.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -25,14 +25,14 @@ namespace NStack.Conditions
     public class PostConditionException : Exception
     {
         /// <summary>
-        ///   Initializes a new instance of the <see cref="T:System.Exception" /> class.
+        ///     Initializes a new instance of the <see cref="T:System.Exception" /> class.
         /// </summary>
         public PostConditionException()
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="T:System.Exception" /> class with a specified error message.
+        ///     Initializes a new instance of the <see cref="T:System.Exception" /> class with a specified error message.
         /// </summary>
         /// <param name="message"> The message that describes the error. </param>
         public PostConditionException(string message) : base(message)

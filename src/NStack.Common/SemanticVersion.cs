@@ -27,29 +27,64 @@ using System.Text.RegularExpressions;
 namespace NStack
 {
     /// <summary>
-    ///   Represents a software version based on Semantic Versioning.
+    ///     Represents a software version based on Semantic Versioning.
     /// </summary>
     /// <remarks>
-    ///   Refer to the specification outlined at http://semver.org.
+    ///     Refer to the specification outlined at http://semver.org.
     /// </remarks>
     public class SemanticVersion : IComparable<SemanticVersion>, IComparable, IFormattable, IEquatable<SemanticVersion>
     {
+        #region Stage enum
+
+        /// <summary>
+        ///     Indicates common pre-release stages for <see cref="SemanticVersion" /> .
+        /// </summary>
+        public enum Stage
+        {
+            /// <summary>
+            ///     Not a pre-release stage (a final or RTW release).
+            /// </summary>
+            None,
+
+            /// <summary>
+            ///     A preview or pre-alpha release stage.
+            /// </summary>
+            Pre,
+
+            /// <summary>
+            ///     An alpha release stage.
+            /// </summary>
+            Alpha,
+
+            /// <summary>
+            ///     A beta release stage.
+            /// </summary>
+            Beta,
+
+            /// <summary>
+            ///     A release candidate stage.
+            /// </summary>
+            Rc
+        }
+
+        #endregion
+
         private static readonly Regex ParseExpression =
             new Regex(
                 @"^(?<ma>[0-9]+)\.(?<mi>[0-9]+)(\.(?<pa>[0-9]+))?(\-(?<pr>[a-zA-Z0-9\.]+))?(\+(?<b>[A-Za-z0-9\.]+))?$");
 
         /// <summary>
-        /// Represents an unspecified semantic version.
+        ///     Represents an unspecified semantic version.
         /// </summary>
         public static readonly SemanticVersion Unspecified = new SemanticVersion(0, 0, 0);
 
         /// <summary>
-        /// Represents the maximum semantic version (excluding build).
+        ///     Represents the maximum semantic version (excluding build).
         /// </summary>
         public static readonly SemanticVersion MaxValue = new SemanticVersion(int.MaxValue, int.MaxValue, int.MaxValue);
 
         /// <summary>
-        ///   Initializes a new instance of <see cref="SemanticVersion" /> .
+        ///     Initializes a new instance of <see cref="SemanticVersion" /> .
         /// </summary>
         /// <param name="major"> The major version. </param>
         /// <param name="minor"> The minor version. </param>
@@ -60,7 +95,7 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Initializes a new instance of <see cref="SemanticVersion" /> .
+        ///     Initializes a new instance of <see cref="SemanticVersion" /> .
         /// </summary>
         /// <param name="major"> The major version. </param>
         /// <param name="minor"> The minor version. </param>
@@ -83,7 +118,7 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Initializes a new instance of <see cref="SemanticVersion" /> .
+        ///     Initializes a new instance of <see cref="SemanticVersion" /> .
         /// </summary>
         /// <param name="major"> The major version. </param>
         /// <param name="minor"> The minor version. </param>
@@ -111,42 +146,49 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Gets the major version.
+        ///     Gets the major version.
         /// </summary>
         public int Major { get; private set; }
 
         /// <summary>
-        ///   Gets the minor version.
+        ///     Gets the minor version.
         /// </summary>
         public int Minor { get; private set; }
 
         /// <summary>
-        ///   Gets the patch version.
+        ///     Gets the patch version.
         /// </summary>
         public int Patch { get; private set; }
 
         /// <summary>
-        ///   Gets the pre-release version.
+        ///     Gets the pre-release version.
         /// </summary>
         public string PreRelease { get; private set; }
 
         /// <summary>
-        ///   Gets the build version.
+        ///     Gets the build version.
         /// </summary>
         public string Build { get; private set; }
 
         #region IComparable Members
 
         /// <summary>
-        ///   Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+        ///     Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
         /// </summary>
-        /// <returns> A value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance is less than <paramref
-        ///    name="obj" /> . Zero This instance is equal to <paramref name="obj" /> . Greater than zero This instance is greater than <paramref
-        ///    name="obj" /> . </returns>
+        /// <returns>
+        ///     A value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance is less than
+        ///     <paramref
+        ///         name="obj" />
+        ///     . Zero This instance is equal to <paramref name="obj" /> . Greater than zero This instance is greater than
+        ///     <paramref
+        ///         name="obj" />
+        ///     .
+        /// </returns>
         /// <param name="obj"> An object to compare with this instance. </param>
         /// <exception cref="T:System.ArgumentException">
-        ///   <paramref name="obj" />
-        ///   is not the same type as this instance.</exception>
+        ///     <paramref name="obj" />
+        ///     is not the same type as this instance.
+        /// </exception>
         /// <filterpriority>2</filterpriority>
         int IComparable.CompareTo(object obj)
         {
@@ -162,11 +204,17 @@ namespace NStack
         #region IComparable<SemanticVersion> Members
 
         /// <summary>
-        ///   Compares the current object with another object of the same type.
+        ///     Compares the current object with another object of the same type.
         /// </summary>
-        /// <returns> A value that indicates the relative order of the objects being compared. The return value has the following meanings: Value Meaning Less than zero This object is less than the <paramref
-        ///    name="other" /> parameter.Zero This object is equal to <paramref name="other" /> . Greater than zero This object is greater than <paramref
-        ///    name="other" /> . </returns>
+        /// <returns>
+        ///     A value that indicates the relative order of the objects being compared. The return value has the following meanings: Value Meaning Less than zero This object is less than the
+        ///     <paramref
+        ///         name="other" />
+        ///     parameter.Zero This object is equal to <paramref name="other" /> . Greater than zero This object is greater than
+        ///     <paramref
+        ///         name="other" />
+        ///     .
+        /// </returns>
         /// <param name="other"> An object to compare with this object. </param>
         public virtual int CompareTo(SemanticVersion other)
         {
@@ -188,7 +236,7 @@ namespace NStack
         #region IEquatable<SemanticVersion> Members
 
         /// <summary>
-        ///   Determines whether the specified <see cref="SemanticVersion" /> equals the current <see cref="SemanticVersion" /> .
+        ///     Determines whether the specified <see cref="SemanticVersion" /> equals the current <see cref="SemanticVersion" /> .
         /// </summary>
         /// <param name="other"> The other version to compare. </param>
         /// <returns> True if the versions are equivalent; otherwise, false. </returns>
@@ -207,15 +255,20 @@ namespace NStack
         #region IFormattable Members
 
         /// <summary>
-        ///   Returns a <see cref="T:System.String" /> that represents the current <see cref="SemanticVersion" /> .
+        ///     Returns a <see cref="T:System.String" /> that represents the current <see cref="SemanticVersion" /> .
         /// </summary>
         /// <param name="format"> A format identifier. </param>
         /// <param name="formatProvider"> The format provider. </param>
-        /// <returns> A <see cref="T:System.String" /> that represents the current <see cref="SemanticVersion" /> , formatted according to <paramref
-        ///    name="format" /> . </returns>
+        /// <returns>
+        ///     A <see cref="T:System.String" /> that represents the current <see cref="SemanticVersion" /> , formatted according to
+        ///     <paramref
+        ///         name="format" />
+        ///     .
+        /// </returns>
         /// <exception cref="FormatException">
-        ///   <paramref name="format" />
-        ///   is an unknown format identifier.</exception>
+        ///     <paramref name="format" />
+        ///     is an unknown format identifier.
+        /// </exception>
         public string ToString(string format, IFormatProvider formatProvider)
         {
             if (string.IsNullOrEmpty(format)) format = "f";
@@ -250,10 +303,14 @@ namespace NStack
         #endregion
 
         /// <summary>
-        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" /> .
+        ///     Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" /> .
         /// </summary>
-        /// <returns> true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" /> ; otherwise, false. </returns>
-        /// <param name="obj"> The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" /> . </param>
+        /// <returns>
+        ///     true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" /> ; otherwise, false.
+        /// </returns>
+        /// <param name="obj">
+        ///     The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" /> .
+        /// </param>
         /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
@@ -264,9 +321,11 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Serves as a hash function for a particular type.
+        ///     Serves as a hash function for a particular type.
         /// </summary>
-        /// <returns> A hash code for the current <see cref="T:System.Object" /> . </returns>
+        /// <returns>
+        ///     A hash code for the current <see cref="T:System.Object" /> .
+        /// </returns>
         /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
@@ -282,7 +341,7 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Determines whether or not two <see cref="SemanticVersion" /> instances are equivalent.
+        ///     Determines whether or not two <see cref="SemanticVersion" /> instances are equivalent.
         /// </summary>
         /// <param name="left"> The left instance. </param>
         /// <param name="right"> The right instance. </param>
@@ -293,7 +352,7 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Determines whether or not two <see cref="SemanticVersion" /> instances are not equivalent.
+        ///     Determines whether or not two <see cref="SemanticVersion" /> instances are not equivalent.
         /// </summary>
         /// <param name="left"> The left instance. </param>
         /// <param name="right"> The right instance. </param>
@@ -305,57 +364,67 @@ namespace NStack
 
 
         /// <summary>
-        ///   Determines if <paramref name="left" /> is greater than <paramref name="right" /> .
+        ///     Determines if <paramref name="left" /> is greater than <paramref name="right" /> .
         /// </summary>
         /// <param name="left"> The left instance. </param>
         /// <param name="right"> The right instance. </param>
-        /// <returns> True if <paramref name="left" /> is greater than <paramref name="right" /> ; otherwise, false. </returns>
+        /// <returns>
+        ///     True if <paramref name="left" /> is greater than <paramref name="right" /> ; otherwise, false.
+        /// </returns>
         public static bool operator >(SemanticVersion left, SemanticVersion right)
         {
             return left.CompareTo(right) > 0;
         }
 
         /// <summary>
-        ///   Determines if <paramref name="left" /> is less than <paramref name="right" /> .
+        ///     Determines if <paramref name="left" /> is less than <paramref name="right" /> .
         /// </summary>
         /// <param name="left"> The left instance. </param>
         /// <param name="right"> The right instance. </param>
-        /// <returns> True if <paramref name="left" /> is less than <paramref name="right" /> ; otherwise, false. </returns>
+        /// <returns>
+        ///     True if <paramref name="left" /> is less than <paramref name="right" /> ; otherwise, false.
+        /// </returns>
         public static bool operator <(SemanticVersion left, SemanticVersion right)
         {
             return left.CompareTo(right) < 0;
         }
 
         /// <summary>
-        ///   Determines if <paramref name="left" /> is greater than or equal to <paramref name="right" /> .
+        ///     Determines if <paramref name="left" /> is greater than or equal to <paramref name="right" /> .
         /// </summary>
         /// <param name="left"> The left instance. </param>
         /// <param name="right"> The right instance. </param>
-        /// <returns> True if <paramref name="left" /> is greater than <paramref name="right" /> ; otherwise, false. </returns>
+        /// <returns>
+        ///     True if <paramref name="left" /> is greater than <paramref name="right" /> ; otherwise, false.
+        /// </returns>
         public static bool operator >=(SemanticVersion left, SemanticVersion right)
         {
             return left.CompareTo(right) >= 0;
         }
 
         /// <summary>
-        ///   Determines if <paramref name="left" /> is less than or equal to <paramref name="right" /> .
+        ///     Determines if <paramref name="left" /> is less than or equal to <paramref name="right" /> .
         /// </summary>
         /// <param name="left"> The left instance. </param>
         /// <param name="right"> The right instance. </param>
-        /// <returns> True if <paramref name="left" /> is less than <paramref name="right" /> ; otherwise, false. </returns>
+        /// <returns>
+        ///     True if <paramref name="left" /> is less than <paramref name="right" /> ; otherwise, false.
+        /// </returns>
         public static bool operator <=(SemanticVersion left, SemanticVersion right)
         {
             return left.CompareTo(right) <= 0;
         }
 
         /// <summary>
-        ///   Validates a label argument as having only the following characters: [A-Za-z0-9.]
+        ///     Validates a label argument as having only the following characters: [A-Za-z0-9.]
         /// </summary>
         /// <param name="name"> The name of the argument. </param>
         /// <param name="value"> The value of the argument. </param>
-        /// <exception cref="ArgumentException">The
-        ///   <paramref name="value" />
-        ///   contains an invalid character.</exception>
+        /// <exception cref="ArgumentException">
+        ///     The
+        ///     <paramref name="value" />
+        ///     contains an invalid character.
+        /// </exception>
         private static void ValidateLabelArgument(string name, string value)
         {
             if (string.IsNullOrEmpty(value)) return;
@@ -367,7 +436,7 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Compare two labels.
+        ///     Compare two labels.
         /// </summary>
         /// <param name="value"> The current value. </param>
         /// <param name="other"> The other value. </param>
@@ -411,7 +480,7 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Compares two values, first as integers if they appear to be numeric, otherwise as strings.
+        ///     Compares two values, first as integers if they appear to be numeric, otherwise as strings.
         /// </summary>
         /// <param name="firstString"> The first string. </param>
         /// <param name="secondString"> The second string. </param>
@@ -430,9 +499,11 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Returns a <see cref="T:System.String" /> that represents the current <see cref="SemanticVersion" /> .
+        ///     Returns a <see cref="T:System.String" /> that represents the current <see cref="SemanticVersion" /> .
         /// </summary>
-        /// <returns> A <see cref="T:System.String" /> that represents the current <see cref="SemanticVersion" /> . </returns>
+        /// <returns>
+        ///     A <see cref="T:System.String" /> that represents the current <see cref="SemanticVersion" /> .
+        /// </returns>
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
@@ -440,26 +511,37 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Returns a <see cref="T:System.String" /> that represents the current <see cref="SemanticVersion" /> .
+        ///     Returns a <see cref="T:System.String" /> that represents the current <see cref="SemanticVersion" /> .
         /// </summary>
         /// <param name="format"> A format identifier. </param>
-        /// <returns> A <see cref="T:System.String" /> that represents the current <see cref="SemanticVersion" /> , formatted according to <paramref
-        ///    name="format" /> . </returns>
+        /// <returns>
+        ///     A <see cref="T:System.String" /> that represents the current <see cref="SemanticVersion" /> , formatted according to
+        ///     <paramref
+        ///         name="format" />
+        ///     .
+        /// </returns>
         /// <exception cref="FormatException">
-        ///   <paramref name="format" />
-        ///   is an unknown format identifier.</exception>
+        ///     <paramref name="format" />
+        ///     is an unknown format identifier.
+        /// </exception>
         public string ToString(string format)
         {
             return ToString(format, null);
         }
 
         /// <summary>
-        ///   Attempts to parse a <see cref="SemanticVersion" /> from a string.
+        ///     Attempts to parse a <see cref="SemanticVersion" /> from a string.
         /// </summary>
         /// <param name="value"> The string containing the semantic version. </param>
-        /// <param name="version"> The resulting <see cref="SemanticVersion" /> . </param>
-        /// <returns> True if a <see cref="SemanticVersion" /> was found in <paramref name="value" /> and was assigned to <paramref
-        ///    name="version" /> ; otherwise, false. </returns>
+        /// <param name="version">
+        ///     The resulting <see cref="SemanticVersion" /> .
+        /// </param>
+        /// <returns>
+        ///     True if a <see cref="SemanticVersion" /> was found in <paramref name="value" /> and was assigned to
+        ///     <paramref
+        ///         name="version" />
+        ///     ; otherwise, false.
+        /// </returns>
         public static bool TryParse(string value, out SemanticVersion version)
         {
             version = null;
@@ -478,10 +560,12 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Parses a <see cref="SemanticVersion" /> from a string.
+        ///     Parses a <see cref="SemanticVersion" /> from a string.
         /// </summary>
         /// <param name="value"> The string containing the semantic version. </param>
-        /// <returns> The <see cref="SemanticVersion" /> parsed from <paramref name="value" /> . </returns>
+        /// <returns>
+        ///     The <see cref="SemanticVersion" /> parsed from <paramref name="value" /> .
+        /// </returns>
         public static SemanticVersion Parse(string value)
         {
             if (string.IsNullOrEmpty(value)) throw new ArgumentException("Value cannot be null or empty.", "value");
@@ -498,37 +582,6 @@ namespace NStack
             string b = match.Groups["b"].Value;
 
             return new SemanticVersion(ma, mi, pa, pr, b);
-        }
-
-        /// <summary>
-        ///   Indicates common pre-release stages for <see cref="SemanticVersion" /> .
-        /// </summary>
-        public enum Stage
-        {
-            /// <summary>
-            ///   Not a pre-release stage (a final or RTW release).
-            /// </summary>
-            None,
-
-            /// <summary>
-            ///   A preview or pre-alpha release stage.
-            /// </summary>
-            Pre,
-
-            /// <summary>
-            ///   An alpha release stage.
-            /// </summary>
-            Alpha,
-
-            /// <summary>
-            ///   A beta release stage.
-            /// </summary>
-            Beta,
-
-            /// <summary>
-            ///   A release candidate stage.
-            /// </summary>
-            Rc
         }
     }
 }

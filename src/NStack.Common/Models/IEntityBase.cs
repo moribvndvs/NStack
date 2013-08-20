@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="IEntityBase.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 namespace NStack.Models
 {
     /// <summary>
-    ///   A marker interface indicating an object is the base for an entity.
+    ///     A marker interface indicating an object is the base for an entity.
     /// </summary>
     public interface IEntityBase
     {

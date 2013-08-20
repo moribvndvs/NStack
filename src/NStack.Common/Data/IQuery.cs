@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="IQuery.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -23,13 +23,13 @@ using System.Collections.Generic;
 namespace NStack.Data
 {
     /// <summary>
-    ///   A contract for <see cref="ICommand" /> s that return an enumeration of entities.
+    ///     A contract for <see cref="ICommand" /> s that return an enumeration of entities.
     /// </summary>
     /// <typeparam name="TEntity"> The entity type. </typeparam>
     public interface IQuery<out TEntity> : ICommandWithResult<IEnumerable<TEntity>>
     {
         /// <summary>
-        ///   Returns the number of records that would be returned by the query.
+        ///     Returns the number of records that would be returned by the query.
         /// </summary>
         /// <returns> The number of matching records. </returns>
         int Count();

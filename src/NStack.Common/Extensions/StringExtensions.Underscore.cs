@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="StringExtensions.Underscore.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ namespace NStack.Extensions
     public static partial class StringExtensions
     {
         /// <summary>
-        ///   Returns a representation of the original string where Pascal-cased words are separated by underscores, and the whole thing is lower cased.
+        ///     Returns a representation of the original string where Pascal-cased words are separated by underscores, and the whole thing is lower cased.
         /// </summary>
         /// <param name="original"> The original string. </param>
         /// <returns> </returns>
@@ -33,7 +33,7 @@ namespace NStack.Extensions
         {
             var buffer = new StringBuilder();
 
-            for (var i = 0; i < original.Length; i++)
+            for (int i = 0; i < original.Length; i++)
             {
                 char c = original[i];
 

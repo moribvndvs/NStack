@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="StringExtensions.Capitalize.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ namespace NStack.Extensions
     public static partial class StringExtensions
     {
         /// <summary>
-        ///   Capitalizes the first letter in the string.
+        ///     Capitalizes the first letter in the string.
         /// </summary>
         /// <param name="original"> The original string. </param>
         /// <returns> The string, all lower case except for the first letter. </returns>

@@ -1,6 +1,7 @@
 ﻿#region header
+
 // <copyright file="TypeExtensions.IsSubclassOfGeneric.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -14,6 +15,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System;
@@ -23,7 +25,7 @@ namespace NStack.Extensions
     public static partial class TypeExtensions
     {
         /// <summary>
-        /// Returns whether or not a given type is a subclass of an open generic.
+        ///     Returns whether or not a given type is a subclass of an open generic.
         /// </summary>
         /// <param name="generic"></param>
         /// <param name="toCheck"></param>
@@ -32,9 +34,9 @@ namespace NStack.Extensions
         {
             //Contract.Requires(toCheck != null);
 
-            while (toCheck != typeof(object) && toCheck != null)
+            while (toCheck != typeof (object) && toCheck != null)
             {
-                var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
+                Type cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
                 if (generic == cur)
                 {
                     return true;

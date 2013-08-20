@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="DefaultNamingConvention.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ using NStack.Extensions;
 namespace NStack.Data
 {
     /// <summary>
-    /// The default implementation of <see cref="INamingConvention"/>.
+    ///     The default implementation of <see cref="INamingConvention" />.
     /// </summary>
     public class DefaultNamingConvention : INamingConvention
     {
@@ -37,8 +37,10 @@ namespace NStack.Data
 
         private const string IndexNameFormat = "ix_{0}_{1}";
 
+        #region INamingConvention Members
+
         /// <summary>
-        /// Returns the name of the table for the model.
+        ///     Returns the name of the table for the model.
         /// </summary>
         /// <param name="modelInspector">The model inspector.</param>
         /// <param name="type">The model type.</param>
@@ -51,7 +53,7 @@ namespace NStack.Data
         }
 
         /// <summary>
-        /// Returns the name of the table column for an entity's property.
+        ///     Returns the name of the table column for an entity's property.
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member">The entity property.</param>
@@ -62,18 +64,18 @@ namespace NStack.Data
             Requires.That(member, "member").IsNotNull();
             Requires.That(member.LocalMember, "member.LocalMember").IsNotNull();
 
-            var localName = member.LocalMember.Name.Underscore();
+            string localName = member.LocalMember.Name.Underscore();
 
             if (declaringType != null)
             {
                 return KeyColumnFormat.Formatted(declaringType.Name.Underscore(), localName);
             }
 
-            var type = member.LocalMember.GetPropertyOrFieldType();
+            Type type = member.LocalMember.GetPropertyOrFieldType();
 
             if (inspector.IsEntity(type)) // is a foreign key
             {
-                var id = inspector.FindPersistentId(type);
+                PropertyPath id = inspector.FindPersistentId(type);
 
                 if (id != null) return KeyColumnFormat.Formatted(localName, Column(inspector, id));
             }
@@ -82,25 +84,27 @@ namespace NStack.Data
         }
 
 
-
         /// <summary>
-        /// Returns the name of the foreign key in a relationship.
+        ///     Returns the name of the foreign key in a relationship.
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member">The entity property.</param>
         /// <returns>The name of the foreign key.</returns>
-        public string ForeignKey(IModelInspector inspector, PropertyPath member, Type declaringType = null, Type idDeclaringType = null)
+        public string ForeignKey(IModelInspector inspector, PropertyPath member, Type declaringType = null,
+                                 Type idDeclaringType = null)
         {
             Requires.That(member, "member").IsNotNull();
             Requires.That(member.LocalMember, "member.LocalMember").IsNotNull();
 
-            return ForeignKeyNameFormat.Formatted(Table(inspector, idDeclaringType ?? member.LocalMember.GetPropertyOrFieldType()),
-                                              Table(inspector, declaringType ?? member.LocalMember.DeclaringType),
-                                              Column(inspector, member, idDeclaringType));
+            return
+                ForeignKeyNameFormat.Formatted(
+                    Table(inspector, idDeclaringType ?? member.LocalMember.GetPropertyOrFieldType()),
+                    Table(inspector, declaringType ?? member.LocalMember.DeclaringType),
+                    Column(inspector, member, idDeclaringType));
         }
 
         /// <summary>
-        /// Returns the name of the index for the column.
+        ///     Returns the name of the index for the column.
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member">The entity property.</param>
@@ -115,7 +119,7 @@ namespace NStack.Data
         }
 
         /// <summary>
-        /// Returns the name of a key column.
+        ///     Returns the name of a key column.
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member"></param>
@@ -126,15 +130,15 @@ namespace NStack.Data
             Requires.That(member, "member").IsNotNull();
             Requires.That(member.LocalMember, "member.LocalMember").IsNotNull();
 
-            var type = declaringType ?? member.LocalMember.DeclaringType;
-            var localName = type.Name.Underscore();
-            var id = inspector.FindPersistentId(type);
+            Type type = declaringType ?? member.LocalMember.DeclaringType;
+            string localName = type.Name.Underscore();
+            PropertyPath id = inspector.FindPersistentId(type);
 
             return KeyColumnFormat.Formatted(localName, id.LocalMember.Name.Underscore());
         }
 
         /// <summary>
-        /// Returns the name of the index column in an ordered collection.
+        ///     Returns the name of the index column in an ordered collection.
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member">The collection property.</param>
@@ -145,5 +149,7 @@ namespace NStack.Data
 
             return "item_index";
         }
+
+        #endregion
     }
 }

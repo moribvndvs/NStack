@@ -1,6 +1,7 @@
 ﻿#region header
+
 // <copyright file="EntityTests.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -14,17 +15,42 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
-using NUnit.Framework;
-
 using FluentAssertions;
+
+using NUnit.Framework;
 
 namespace NStack.Models
 {
     [TestFixture]
     public class EntityTests
     {
+        #region Setup/Teardown
+
+        [TestFixtureSetUp]
+        public void SetUpFixture()
+        {
+        }
+
+        [TestFixtureTearDown]
+        public void TearDownFixture()
+        {
+        }
+
+        [SetUp]
+        public void SetUpTest()
+        {
+        }
+
+        [TearDown]
+        public void TearDownTest()
+        {
+        }
+
+        #endregion
+
         private class EntityA : Entity<int>
         {
             public EntityA()
@@ -49,33 +75,16 @@ namespace NStack.Models
             }
         }
 
-        #region Setup/Teardown for fixture
-
-        [TestFixtureSetUp]
-        public void SetUpFixture()
+        [Test]
+        public void Should_be_equal()
         {
+            // Arrange
+            var a = new EntityA(1);
+            var a2 = new EntityA(1);
+
+            // Act/Assert
+            a.Should().Be(a2);
         }
-
-        [TestFixtureTearDown]
-        public void TearDownFixture()
-        {
-        }
-
-        #endregion
-
-        #region Setup/Teardown for each test
-
-        [SetUp]
-        public void SetUpTest()
-        {
-        }
-
-        [TearDown]
-        public void TearDownTest()
-        {
-        }
-
-        #endregion
 
         [Test]
         public void Should_be_same()
@@ -88,14 +97,13 @@ namespace NStack.Models
         }
 
         [Test]
-        public void Should_be_equal()
+        public void Should_be_transient()
         {
             // Arrange
-            var a = new EntityA(1);
-            var a2 = new EntityA(1);
+            var a = new EntityA();
 
             // Act/Assert
-            a.Should().Be(a2);
+            Assert.That(a.IsTransient(), Is.True);
         }
 
         [Test]
@@ -126,17 +134,6 @@ namespace NStack.Models
         }
 
         [Test]
-        public void Should_be_transient()
-        {
-            // Arrange
-            var a = new EntityA();
-
-            // Act/Assert
-            Assert.That(a.IsTransient(), Is.True);
-
-        }
-
-        [Test]
         public void Should_not_be_transient()
         {
             // Arrange
@@ -144,7 +141,6 @@ namespace NStack.Models
 
             // Act/Assert
             Assert.That(a.IsTransient(), Is.False);
-
         }
 
         [Test]
@@ -156,7 +152,6 @@ namespace NStack.Models
 
             // Act/Assert
             a1.Should().NotBe(a2);
-
         }
     }
 }

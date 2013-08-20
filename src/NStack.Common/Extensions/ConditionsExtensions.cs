@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="ConditionsExtensions.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 
 #endregion
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -31,7 +30,7 @@ namespace NStack.Extensions
         #region RequiresThat
 
         /// <summary>
-        ///   Begins fluent assertion of a precondition.
+        ///     Begins fluent assertion of a precondition.
         /// </summary>
         /// <param name="value"> </param>
         /// <param name="argumentName"> </param>
@@ -45,8 +44,8 @@ namespace NStack.Extensions
         {
             return Requires.That(value, argumentName);
         }
-        
-        
+
+
         public static NumericVariable<decimal> RequiresThat(this decimal value, string argumentName = null)
         {
             return Requires.That(value, argumentName);
@@ -56,29 +55,29 @@ namespace NStack.Extensions
         {
             return Requires.That(value, argumentName);
         }
-        
+
         public static NumericVariable<double> RequiresThat(this double value, string argumentName = null)
         {
             return Requires.That(value, argumentName);
         }
-        
+
         public static NumericVariable<uint> RequiresThat(this uint value, string argumentName = null)
         {
             return Requires.That(value, argumentName);
         }
-        
+
         public static NumericVariable<long> RequiresThat(this long value, string argumentName = null)
         {
             return Requires.That(value, argumentName);
         }
-        
+
         public static NumericVariable<ulong> RequiresThat(this ulong value, string argumentName = null)
         {
             return Requires.That(value, argumentName);
         }
 
         /// <summary>
-        ///   Begins fluent assertion of a precondition on a string.
+        ///     Begins fluent assertion of a precondition on a string.
         /// </summary>
         /// <param name="value"> </param>
         /// <param name="argumentName"> </param>
@@ -115,7 +114,7 @@ namespace NStack.Extensions
         #region EnsuresThat
 
         /// <summary>
-        ///   Begins fluent assertion of a post condition.
+        ///     Begins fluent assertion of a post condition.
         /// </summary>
         /// <param name="value"> </param>
         /// <param name="argumentName"> </param>
@@ -126,7 +125,7 @@ namespace NStack.Extensions
         }
 
         /// <summary>
-        ///   Begins fluent assertion of a post condition on a string.
+        ///     Begins fluent assertion of a post condition on a string.
         /// </summary>
         /// <param name="value"> </param>
         /// <param name="argumentName"> </param>

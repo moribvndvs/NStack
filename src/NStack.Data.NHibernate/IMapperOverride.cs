@@ -1,6 +1,7 @@
 ﻿#region header
+
 // <copyright file="IMapperOverride.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -14,6 +15,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using NHibernate.Mapping.ByCode;
@@ -21,12 +23,12 @@ using NHibernate.Mapping.ByCode;
 namespace NStack.Data
 {
     /// <summary>
-    /// A contract implemented by types that override default mapping conventions.
+    ///     A contract implemented by types that override default mapping conventions.
     /// </summary>
     public interface IMapperOverride
     {
         /// <summary>
-        /// When implemented, overrides mappings.
+        ///     When implemented, overrides mappings.
         /// </summary>
         /// <param name="mapper">The model mapper.</param>
         void Override(ModelMapper mapper);

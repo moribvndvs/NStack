@@ -29,6 +29,8 @@ namespace NStack
     [TestFixture]
     public class RangeTests
     {
+        #region Setup/Teardown
+
         [SetUp]
         public void SetUpTest()
         {
@@ -49,15 +51,35 @@ namespace NStack
         {
         }
 
+        #endregion
+
         [Test]
-        public void Intersects_should_return_true()
+        public void Bounds_cannot_be_null()
+        {
+            Assert.Throws<ArgumentNullException>(() => new Range<string>(null, null));
+        }
+
+        [Test]
+        public void Contains_should_return_false()
         {
             // Arrange
-            var a = new Range<int>(1, 5);
-            var b = new Range<int>(4, 10);
+            var a = new Range<int>(1, 6);
 
             // Act
-            var actual = Range<int>.Intersects(a, b);
+            bool actual = a.Contains(7);
+
+            // Assert
+            actual.Should().BeFalse();
+        }
+
+        [Test]
+        public void Contains_should_return_true()
+        {
+            // Arrange
+            var a = new Range<int>(1, 6);
+
+            // Act
+            bool actual = a.Contains(4);
 
             // Assert
             actual.Should().BeTrue();
@@ -71,50 +93,24 @@ namespace NStack
             var b = new Range<int>(6, 10);
 
             // Act
-            var actual = Range<int>.Intersects(a, b);
+            bool actual = Range<int>.Intersects(a, b);
 
             // Assert
             actual.Should().BeFalse();
         }
 
         [Test]
-        public void Contains_should_return_true()
+        public void Intersects_should_return_true()
         {
             // Arrange
-            var a = new Range<int>(1, 6);
+            var a = new Range<int>(1, 5);
+            var b = new Range<int>(4, 10);
 
             // Act
-            var actual = a.Contains(4);
+            bool actual = Range<int>.Intersects(a, b);
 
             // Assert
             actual.Should().BeTrue();
-        }
-        
-        [Test]
-        public void Contains_should_return_false()
-        {
-            // Arrange
-            var a = new Range<int>(1, 6);
-
-            // Act
-            var actual = a.Contains(7);
-
-            // Assert
-            actual.Should().BeFalse();
-        }
-
-        [Test]
-        public void Should_throw_if_max_is_less_than_min()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new Range<int>(5, 1));
-
-        }
-
-        [Test]
-        public void Bounds_cannot_be_null()
-        {
-            Assert.Throws<ArgumentNullException>(() => new Range<string>(null, null));
-
         }
 
         [Test]
@@ -125,11 +121,10 @@ namespace NStack
             var b = new Range<int>(1, 100);
 
             // Act
-            var actual = a.Equals(b);
+            bool actual = a.Equals(b);
 
             // Assert
             actual.Should().BeTrue();
-
         }
 
         [Test]
@@ -138,12 +133,18 @@ namespace NStack
             // Arrange
             var a = new Range<int>(1, 100);
             var b = new Range<int>(1, 99);
-            
+
             // Act
-            var actual = a.Equals(b);
+            bool actual = a.Equals(b);
 
             // Assert
             actual.Should().BeFalse();
+        }
+
+        [Test]
+        public void Should_throw_if_max_is_less_than_min()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Range<int>(5, 1));
         }
     }
 }

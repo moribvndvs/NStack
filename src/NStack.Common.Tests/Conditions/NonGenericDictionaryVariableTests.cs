@@ -1,6 +1,7 @@
 ﻿#region header
+
 // <copyright file="NonGenericDictionaryVariableTests.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -14,6 +15,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System.Collections;
@@ -23,21 +25,16 @@ using NUnit.Framework;
 namespace NStack.Conditions
 {
     [TestFixture]
-    public class NonGenericDictionaryVariableTests : DictionaryVariableTests<NonGenericDictionaryVariable, IDictionary, object, object, DictionaryEntry>
+    public class NonGenericDictionaryVariableTests
+        : DictionaryVariableTests<NonGenericDictionaryVariable, IDictionary, object, object, DictionaryEntry>
     {
-        #region Overrides of CollectionVariableTests<NonGenericDictionaryVariable,IDictionary,DictionaryEntry>
-
         protected override void InitializeCollections()
         {
             Item = new DictionaryEntry("Test", 1);
             EmptyCollection = new NonGenericDictionaryVariable(new Hashtable(), "EmptyCollection", false);
             NonEmptyCollection = new NonGenericDictionaryVariable(new Hashtable {{Item.Key, Item.Value}},
-                                                               "NonEmptyCollection", false);
+                                                                  "NonEmptyCollection", false);
         }
-
-        #endregion
-
-        #region Overrides of DictionaryVariableTests<NonGenericDictionaryVariable,IDictionary,object,object,DictionaryEntry>
 
         protected override object GetItemKey()
         {
@@ -48,7 +45,5 @@ namespace NStack.Conditions
         {
             return Item.Value;
         }
-
-        #endregion
     }
 }

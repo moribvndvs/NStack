@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="StringVariable.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -28,14 +28,14 @@ namespace NStack.Conditions
     public class StringVariable : NullableVariable<string, StringVariable>
     {
         /// <summary>
-        ///   Initializes a new instance of the <see cref="T:System.Object" /> class.
+        ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
         public StringVariable(string value, string name, bool postCondition) : base(value, name, postCondition)
         {
         }
 
         /// <summary>
-        ///   Asserts that the argument is null or empty.
+        ///     Asserts that the argument is null or empty.
         /// </summary>
         /// <param name="message"> </param>
         /// <returns> </returns>
@@ -47,7 +47,7 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        ///   Asserts that the argument is not a null or empty string.
+        ///     Asserts that the argument is not a null or empty string.
         /// </summary>
         /// <param name="message"> The exception message. </param>
         [AssertionMethod]
@@ -59,7 +59,7 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        ///   Asserts argument contains the specified string, regardless of case.
+        ///     Asserts argument contains the specified string, regardless of case.
         /// </summary>
         /// <param name="value"> </param>
         /// <param name="message"> </param>
@@ -70,7 +70,7 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        ///   Asserts that the argument contains the specified string.
+        ///     Asserts that the argument contains the specified string.
         /// </summary>
         /// <param name="value"> </param>
         /// <param name="comparisonType"> </param>
@@ -89,7 +89,7 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        ///   Asserts that the argument starts with the specified string, regardless of case.
+        ///     Asserts that the argument starts with the specified string, regardless of case.
         /// </summary>
         /// <param name="value"> </param>
         /// <param name="message"> </param>
@@ -101,7 +101,7 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        ///   Asserts that the argument starts with the specified string.
+        ///     Asserts that the argument starts with the specified string.
         /// </summary>
         /// <param name="value"> </param>
         /// <param name="comparisonType"> </param>
@@ -120,7 +120,7 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        ///   Asserts that the argument ends with the specified string, regardless of case.
+        ///     Asserts that the argument ends with the specified string, regardless of case.
         /// </summary>
         /// <param name="value"> </param>
         /// <param name="message"> </param>
@@ -132,7 +132,7 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        ///   Asserts that the argument ends with the specfied string.
+        ///     Asserts that the argument ends with the specfied string.
         /// </summary>
         /// <param name="value"> </param>
         /// <param name="comparisonType"> </param>
@@ -150,7 +150,7 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        ///   Asserts that the argument has the specified length.
+        ///     Asserts that the argument has the specified length.
         /// </summary>
         /// <param name="length"> </param>
         /// <param name="message"> </param>
@@ -174,7 +174,7 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        ///   Asserts that the argument is a blank string (not null or empty, containing only white space characters).
+        ///     Asserts that the argument is a blank string (not null or empty, containing only white space characters).
         /// </summary>
         /// <param name="message"> </param>
         /// <returns> </returns>

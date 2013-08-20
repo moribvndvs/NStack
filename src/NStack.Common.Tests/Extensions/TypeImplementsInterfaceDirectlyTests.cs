@@ -1,17 +1,35 @@
-﻿
+﻿#region header
 
-using NUnit.Framework;
+// <copyright file="TypeImplementsInterfaceDirectlyTests.cs" company="mikegrabski.com">
+//    Copyright 2013 Mike Grabski
+// 
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+// 
+//        http://www.apache.org/licenses/LICENSE-2.0
+// 
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+// </copyright>
+
+#endregion
+
+using System;
 
 using FluentAssertions;
 
-using Moq;
+using NUnit.Framework;
 
 namespace NStack.Extensions
 {
     [TestFixture]
     public class TypeImplementsInterfaceDirectlyTests
     {
-        #region Setup/Teardown for fixture
+        #region Setup/Teardown
 
         [TestFixtureSetUp]
         public void SetUpFixture()
@@ -22,10 +40,6 @@ namespace NStack.Extensions
         public void TearDownFixture()
         {
         }
-
-        #endregion
-
-        #region Setup/Teardown for each test
 
         [SetUp]
         public void SetUpTest()
@@ -39,16 +53,47 @@ namespace NStack.Extensions
 
         #endregion
 
+        private interface IFoo
+        {
+        }
 
+        private class Base
+        {
+        }
+
+        private class Directly : IFoo
+        {
+        }
+
+        private class Indirectly : Directly
+        {
+        }
+
+        private class Both : Indirectly, IFoo
+        {
+        }
+
+        [Test]
+        public void Should_return_false_if_indirectly_implemented()
+        {
+            // Arrange
+            Type t = typeof (Indirectly);
+
+            // Act
+            bool actual = t.ImplementsInterfaceDirectly(typeof (IFoo));
+
+            // Assert
+            actual.Should().BeFalse();
+        }
 
         [Test]
         public void Should_return_false_if_not_implemented()
         {
             // Arrange
-            var t = typeof (Base);
+            Type t = typeof (Base);
 
             // Act
-            var actual = t.ImplementsInterfaceDirectly(typeof (IFoo));
+            bool actual = t.ImplementsInterfaceDirectly(typeof (IFoo));
 
             // Assert
             actual.Should().BeFalse();
@@ -58,65 +103,26 @@ namespace NStack.Extensions
         public void Should_return_true_if_directly_implemented()
         {
             // Arrange
-            var t = typeof (Directly);
+            Type t = typeof (Directly);
 
             // Act
-            var actual = t.ImplementsInterfaceDirectly(typeof (IFoo));
+            bool actual = t.ImplementsInterfaceDirectly(typeof (IFoo));
 
             // Assert
             actual.Should().BeTrue();
-        }
-
-        [Test]
-        public void Should_return_false_if_indirectly_implemented()
-        {
-            // Arrange
-            var t = typeof (Indirectly);
-
-            // Act
-            var actual = t.ImplementsInterfaceDirectly(typeof (IFoo));
-
-            // Assert
-            actual.Should().BeFalse();
-
         }
 
         [Test]
         public void Should_return_true_if_indirectly_and_directly_implemented()
         {
             // Arrange
-            var t = typeof(Both);
+            Type t = typeof (Both);
 
             // Act
-            var actual = t.ImplementsInterfaceDirectly(typeof(IFoo));
+            bool actual = t.ImplementsInterfaceDirectly(typeof (IFoo));
 
             // Assert
             actual.Should().BeTrue();
-        }
-
-        private interface IFoo
-        {
-            
-        }
-
-        private class Base
-        {
-            
-        }
-
-        private class Directly : IFoo
-        {
-            
-        }
-
-        private class Indirectly : Directly
-        {
-            
-        }
-
-        private class Both : Indirectly, IFoo
-        {
-            
         }
     }
 }

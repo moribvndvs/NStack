@@ -84,8 +84,8 @@ namespace NStack
                 SemanticVersion current = versions[i];
 
                 current.CompareTo(previous)
-                    .Should()
-                    .Be(1, "{0} should succeed {1}", current, previous);
+                       .Should()
+                       .Be(1, "{0} should succeed {1}", current, previous);
             }
 
             for (int i = versions.Length - 2; i >= 0; i--)
@@ -94,15 +94,50 @@ namespace NStack
                 SemanticVersion current = versions[i];
 
                 current.CompareTo(next)
-                    .Should().Be(-1, "{0} should preceed {1}", current, next);
+                       .Should().Be(-1, "{0} should preceed {1}", current, next);
             }
+        }
+
+        [Test]
+        public void Initialize_with_empty_build_value_should_be_changed_to_null()
+        {
+            // Arrange
+            // Act
+            var actual = new SemanticVersion(1, 0, 0, string.Empty, string.Empty);
+
+            // Assert
+            actual.Build.Should().BeNull();
+        }
+
+        [Test]
+        public void Initialize_with_empty_prerelease_value_should_be_changed_to_null()
+        {
+            // Arrange
+            // Act
+            var actual = new SemanticVersion(1, 0, 0, string.Empty, string.Empty);
+
+            // Assert
+            actual.PreRelease.Should().BeNull();
+        }
+
+        [Test]
+        public void Initializing_with_invalid_Build_should_throw()
+        {
+            Assert.Throws<ArgumentException>(() => new SemanticVersion(1, 0, 0, null, "abc.1+build"));
+        }
+
+        [Test]
+        public void Initializing_with_invalid_PreRelease_should_throw()
+        {
+            Assert.Throws<ArgumentException>(() => new SemanticVersion(1, 0, 0, preRelease: "abc.1+build"));
         }
 
         [Test]
         public void Initializing_with_stage_and_step_should_set_PreRelease_property()
         {
             // Arrange
-            IEnumerable<SemanticVersion.Stage> stages = Enum.GetValues(typeof (SemanticVersion.Stage)).Cast<SemanticVersion.Stage>();
+            IEnumerable<SemanticVersion.Stage> stages =
+                Enum.GetValues(typeof (SemanticVersion.Stage)).Cast<SemanticVersion.Stage>();
 
             // Act
             // Assert
@@ -119,7 +154,8 @@ namespace NStack
         public void Initializing_with_stage_and_step_with_zero_should_set_PreRelease_property()
         {
             // Arrange
-            IEnumerable<SemanticVersion.Stage> stages = Enum.GetValues(typeof (SemanticVersion.Stage)).Cast<SemanticVersion.Stage>();
+            IEnumerable<SemanticVersion.Stage> stages =
+                Enum.GetValues(typeof (SemanticVersion.Stage)).Cast<SemanticVersion.Stage>();
 
             // Act
             // Assert
@@ -136,7 +172,8 @@ namespace NStack
         public void Initializing_with_stage_should_set_PreRelease_property()
         {
             // Arrange
-            IEnumerable<SemanticVersion.Stage> stages = Enum.GetValues(typeof (SemanticVersion.Stage)).Cast<SemanticVersion.Stage>();
+            IEnumerable<SemanticVersion.Stage> stages =
+                Enum.GetValues(typeof (SemanticVersion.Stage)).Cast<SemanticVersion.Stage>();
 
             // Act
             // Assert
@@ -147,18 +184,6 @@ namespace NStack
                 if (stage == SemanticVersion.Stage.None) actual.PreRelease.Should().BeNull();
                 else actual.PreRelease.Should().Be(stage.ToString().ToLowerInvariant());
             }
-        }
-
-        [Test]
-        public void Initializing_with_invalid_Build_should_throw()
-        {
-            Assert.Throws<ArgumentException>(() => new SemanticVersion(1, 0, 0, null, "abc.1+build"));
-        }
-
-        [Test]
-        public void Initializing_with_invalid_PreRelease_should_throw()
-        {
-            Assert.Throws<ArgumentException>(() => new SemanticVersion(1, 0, 0, preRelease: "abc.1+build"));
         }
 
         [Test]
@@ -231,21 +256,21 @@ namespace NStack
         {
             // Arrange
             var expected = new[]
-                               {
-                                   SemanticVersion.Unspecified,
-                                   new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Pre),
-                                   new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Alpha),
-                                   new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Alpha, 1),
-                                   new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Beta, 1),
-                                   new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Beta, 11),
-                                   new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Rc, 1),
-                                   new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Rc, 1, "1"),
-                                   new SemanticVersion(1, 0, 0),
-                                   new SemanticVersion(1, 0, 0, null, "0.3.7"),
-                                   new SemanticVersion(1, 3, 7, null, "build"),
-                                   new SemanticVersion(1, 3, 7, null, "build.2.b8f12d7"),
-                                   new SemanticVersion(1, 3, 7, null, "build.11.e0f985a")
-                               };
+                {
+                    SemanticVersion.Unspecified,
+                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Pre),
+                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Alpha),
+                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Alpha, 1),
+                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Beta, 1),
+                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Beta, 11),
+                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Rc, 1),
+                    new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Rc, 1, "1"),
+                    new SemanticVersion(1, 0, 0),
+                    new SemanticVersion(1, 0, 0, null, "0.3.7"),
+                    new SemanticVersion(1, 3, 7, null, "build"),
+                    new SemanticVersion(1, 3, 7, null, "build.2.b8f12d7"),
+                    new SemanticVersion(1, 3, 7, null, "build.11.e0f985a")
+                };
             var r = new Random();
             int seed = r.Next();
             SemanticVersion[] actual =
@@ -282,14 +307,15 @@ namespace NStack
         }
 
         [Test]
-        public void ToString_should_include_significant_version_only()
+        public void ToString_should_include_significant_version_including_patch()
         {
             // Arrange
-            var first = new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Pre, 1, "build.001");
+            var first = new SemanticVersion(1, 0, 1, SemanticVersion.Stage.Pre, 1, "build.001");
 
             // Act
             // Assert
-            first.ToString("s").Should().Be("1.0.0");
+            first.ToString("S").Should().Be("1.0.1");
+            first.ToString("S").Should().Be("1.0.1");
         }
 
         [Test]
@@ -302,17 +328,16 @@ namespace NStack
             // Assert
             first.ToString("S").Should().Be("1.0");
         }
-        
+
         [Test]
-        public void ToString_should_include_significant_version_including_patch()
+        public void ToString_should_include_significant_version_only()
         {
             // Arrange
-            var first = new SemanticVersion(1, 0, 1, SemanticVersion.Stage.Pre, 1, "build.001");
+            var first = new SemanticVersion(1, 0, 0, SemanticVersion.Stage.Pre, 1, "build.001");
 
             // Act
             // Assert
-            first.ToString("S").Should().Be("1.0.1");
-            first.ToString("S").Should().Be("1.0.1");
+            first.ToString("s").Should().Be("1.0.0");
         }
 
         [Test]
@@ -342,31 +367,6 @@ namespace NStack
             // Assert
             result.Should().BeTrue();
             actual.Should().Be(expected);
-        }
-
-        [Test]
-        public void Initialize_with_empty_prerelease_value_should_be_changed_to_null()
-        {
-            // Arrange
-            // Act
-            var actual = new SemanticVersion(1, 0, 0, string.Empty, string.Empty);
-
-            // Assert
-            actual.PreRelease.Should().BeNull();
-
-
-        }
-        
-        [Test]
-        public void Initialize_with_empty_build_value_should_be_changed_to_null()
-        {
-            // Arrange
-            // Act
-            var actual = new SemanticVersion(1, 0, 0, string.Empty, string.Empty);
-
-            // Assert
-            actual.Build.Should().BeNull();
-
         }
     }
 }

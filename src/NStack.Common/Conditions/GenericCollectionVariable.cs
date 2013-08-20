@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="GenericCollectionVariable.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ namespace NStack.Conditions
     public class GenericCollectionVariable<T> : CollectionVariable<IEnumerable<T>, T, GenericCollectionVariable<T>>
     {
         /// <summary>
-        ///   Initializes a new instance of the <see cref="T:System.Object" /> class.
+        ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
         public GenericCollectionVariable(IEnumerable<T> value, string name, bool postCondition)
             : base(value, name, postCondition)

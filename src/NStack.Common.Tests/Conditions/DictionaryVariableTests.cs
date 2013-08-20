@@ -1,6 +1,7 @@
 ﻿#region header
+
 // <copyright file="DictionaryVariableTests.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -14,6 +15,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System;
@@ -25,26 +27,43 @@ using NUnit.Framework;
 
 namespace NStack.Conditions
 {
-    public abstract class DictionaryVariableTests<T, TVariable, TKey, TValue, TPair> : CollectionVariableTests<T, TVariable, TPair>
+    public abstract class DictionaryVariableTests<T, TVariable, TKey, TValue, TPair>
+        : CollectionVariableTests<T, TVariable, TPair>
         where TVariable : IEnumerable
         where T : DictionaryVariable<TVariable, TKey, TValue, TPair, T>
     {
         protected abstract TKey GetItemKey();
 
-        [Test]
-        public void ContainsKey_should_pass()
-        {
-            // Act / Assert
-            NonEmptyCollection.Invoking(value => value.ContainsKey(GetItemKey()))
-                .ShouldNotThrow();
-        }
+        protected abstract TValue GetItemValue();
 
         [Test]
         public void ContainsKey_should_fail()
         {
             // Act / Assert
             EmptyCollection.Invoking(value => value.ContainsKey(GetItemKey()))
-                .ShouldThrow<ArgumentException>();
+                           .ShouldThrow<ArgumentException>();
+        }
+
+        [Test]
+        public void ContainsKey_should_pass()
+        {
+            // Act / Assert
+            NonEmptyCollection.Invoking(value => value.ContainsKey(GetItemKey()))
+                              .ShouldNotThrow();
+        }
+
+        [Test]
+        public void ContainsValue_should_fail()
+        {
+            NonEmptyCollection.Invoking(value => value.ContainsValue(GetItemValue()))
+                              .ShouldNotThrow();
+        }
+
+        [Test]
+        public void ContainsValue_should_pass()
+        {
+            NonEmptyCollection.Invoking(value => value.ContainsValue(GetItemValue()))
+                              .ShouldNotThrow();
         }
 
         [Test]
@@ -52,7 +71,7 @@ namespace NStack.Conditions
         {
             // Act / Assert
             NonEmptyCollection.Invoking(value => value.DoesNotContainKey(GetItemKey()))
-                .ShouldThrow<ArgumentException>();
+                              .ShouldThrow<ArgumentException>();
         }
 
         [Test]
@@ -60,41 +79,21 @@ namespace NStack.Conditions
         {
             // Act / Assert
             EmptyCollection.Invoking(value => value.DoesNotContainKey(GetItemKey()))
-                .ShouldNotThrow();
+                           .ShouldNotThrow();
         }
 
-        [Test]
-        public void ContainsValue_should_pass()
-        {
-            NonEmptyCollection.Invoking(value => value.ContainsValue(GetItemValue()))
-                .ShouldNotThrow();
-
-        }
-        
-        [Test]
-        public void ContainsValue_should_fail()
-        {
-            NonEmptyCollection.Invoking(value => value.ContainsValue(GetItemValue()))
-                .ShouldNotThrow();
-
-        }
-        
-        [Test]
-        public void DoesNotContainValue_should_pass()
-        {
-            EmptyCollection.Invoking(value => value.DoesNotContainValue(GetItemValue()))
-                .ShouldNotThrow();
-
-        }
-        
         [Test]
         public void DoesNotContainValue_should_fail()
         {
             NonEmptyCollection.Invoking(value => value.DoesNotContainValue(GetItemValue()))
-                .ShouldThrow<ArgumentException>();
-
+                              .ShouldThrow<ArgumentException>();
         }
 
-        protected abstract TValue GetItemValue();
+        [Test]
+        public void DoesNotContainValue_should_pass()
+        {
+            EmptyCollection.Invoking(value => value.DoesNotContainValue(GetItemValue()))
+                           .ShouldNotThrow();
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="Entity[TId].cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ using System;
 namespace NStack.Models
 {
     /// <summary>
-    ///   A generic root entity with a strongly typed ID.
+    ///     A generic root entity with a strongly typed ID.
     /// </summary>
     /// <typeparam name="TId"> The type of the ID property. </typeparam>
     public abstract class Entity<TId> : IEquatable<Entity<TId>>
@@ -31,16 +31,18 @@ namespace NStack.Models
         private int? _hashCode;
 
         /// <summary>
-        ///   Gets the ID of the entity.
+        ///     Gets the ID of the entity.
         /// </summary>
         public virtual TId Id { get; protected set; }
 
         #region IEquatable<Entity<TId>> Members
 
         /// <summary>
-        ///   Indicates whether the current object is equal to another object of the same type.
+        ///     Indicates whether the current object is equal to another object of the same type.
         /// </summary>
-        /// <returns> true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false. </returns>
+        /// <returns>
+        ///     true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.
+        /// </returns>
         /// <param name="other"> An object to compare with this object. </param>
         public bool Equals(Entity<TId> other)
         {
@@ -61,9 +63,11 @@ namespace NStack.Models
         }
 
         /// <summary>
-        ///   Serves as a hash function for a particular type.
+        ///     Serves as a hash function for a particular type.
         /// </summary>
-        /// <returns> A hash code for the current <see cref="T:System.Object" /> . </returns>
+        /// <returns>
+        ///     A hash code for the current <see cref="T:System.Object" /> .
+        /// </returns>
         /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
@@ -82,7 +86,7 @@ namespace NStack.Models
         }
 
         /// <summary>
-        ///   Returns whether or not the instance is transient; that is, whether or not it has been attached to a persistence medium.
+        ///     Returns whether or not the instance is transient; that is, whether or not it has been attached to a persistence medium.
         /// </summary>
         /// <returns> True if the instance is transient; otherwise, false. </returns>
         public bool IsTransient()
@@ -93,7 +97,7 @@ namespace NStack.Models
         }
 
         /// <summary>
-        ///   Returns the expected type, in the event that the current instance is a proxy.
+        ///     Returns the expected type, in the event that the current instance is a proxy.
         /// </summary>
         /// <returns> The unproxied type. </returns>
         public virtual Type GetTypeUnproxied()

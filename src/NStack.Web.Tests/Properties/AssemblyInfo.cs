@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="AssemblyInfo.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
 #endregion
 
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("NStack.Web.Tests")]
 [assembly: AssemblyDescription("NStack web unit tests library")]

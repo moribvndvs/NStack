@@ -1,10 +1,20 @@
 ﻿#region header
 
-// -----------------------------------------------------------------------
-//  <copyright file="Flake.cs" company="Family Bronze, LTD">
-//      © 2013 Mike Grabski and Family Bronze, LTD All rights reserved.
-//  </copyright>
-// -----------------------------------------------------------------------
+// <copyright file="Flake.cs" company="mikegrabski.com">
+//    Copyright 2013 Mike Grabski
+// 
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+// 
+//        http://www.apache.org/licenses/LICENSE-2.0
+// 
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+// </copyright>
 
 #endregion
 
@@ -12,12 +22,14 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 
+using NStack.ComponentModel;
+
 namespace NStack
 {
     /// <summary>
     ///     Represents an identifier that is unique and sequential, and can be generated in a non-coordinated, distributed environment.
     /// </summary>
-    [Serializable, TypeConverter(typeof(ComponentModel.FlakeConverter))]
+    [Serializable, TypeConverter(typeof (FlakeConverter))]
     public struct Flake : IEquatable<Flake>, IComparable<Flake>, IComparable, IFormattable
     {
         /// <summary>
@@ -194,6 +206,38 @@ namespace NStack
 
         #endregion
 
+        #region IFormattable Members
+
+        /// <summary>
+        ///     Formats the value of the current instance using the specified format.
+        /// </summary>
+        /// <returns>
+        ///     The value of the current instance in the specified format.
+        /// </returns>
+        /// <param name="format">
+        ///     The format to use.-or- A null reference (Nothing in Visual Basic) to use the default format defined for the type of the
+        ///     <see
+        ///         cref="T:System.IFormattable" />
+        ///     implementation.
+        /// </param>
+        /// <param name="formatProvider">The provider to use to format the value.-or- A null reference (Nothing in Visual Basic) to obtain the numeric format information from the current locale setting of the operating system. </param>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            format = format ?? "h";
+
+            switch (format)
+            {
+                case "h":
+                    return NumberBases.ToBase24String(_value);
+                case "d":
+                    return _value.ToString("#", formatProvider);
+                default:
+                    throw new FormatException(string.Format("Unrecognized format string: {0}.", format));
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// </summary>
         /// <param name="value"></param>
@@ -204,7 +248,6 @@ namespace NStack
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -235,10 +278,10 @@ namespace NStack
         }
 
         /// <summary>
-        /// Returns the flake as a string representation.
+        ///     Returns the flake as a string representation.
         /// </summary>
         /// <returns>
-        /// The string representation of the flake value.
+        ///     The string representation of the flake value.
         /// </returns>
         public override string ToString()
         {
@@ -246,11 +289,11 @@ namespace NStack
         }
 
         /// <summary>
-        /// Returns the flake as a string representation.
+        ///     Returns the flake as a string representation.
         /// </summary>
         /// <param name="format">The format.</param>
         /// <returns>
-        /// The string representation of the flake value.
+        ///     The string representation of the flake value.
         /// </returns>
         public string ToString(string format)
         {
@@ -258,33 +301,15 @@ namespace NStack
         }
 
         /// <summary>
-        /// Formats the value of the current instance using the specified format.
-        /// </summary>
-        /// <returns>
-        /// The value of the current instance in the specified format.
-        /// </returns>
-        /// <param name="format">The format to use.-or- A null reference (Nothing in Visual Basic) to use the default format defined for the type of the <see cref="T:System.IFormattable"/> implementation. </param><param name="formatProvider">The provider to use to format the value.-or- A null reference (Nothing in Visual Basic) to obtain the numeric format information from the current locale setting of the operating system. </param>
-        public string ToString(string format, IFormatProvider formatProvider)
-        {
-            format = format ?? "h";
-
-            switch (format)
-            {
-                case "h":
-                    return NumberBases.ToBase24String(_value);
-                case "d":
-                    return _value.ToString("#", formatProvider);
-                default:
-                    throw new FormatException(string.Format("Unrecognized format string: {0}.", format));
-            }
-        }
-
-        /// <summary>
-        /// Parses an encoded string for a flake value.
+        ///     Parses an encoded string for a flake value.
         /// </summary>
         /// <param name="value">The encoded flake value.</param>
-        /// <returns>A <see cref="Flake"/> representing the parsed value.</returns>
-        /// <exception cref="ArgumentNullException">The <paramref name="value"/> is null.</exception>
+        /// <returns>
+        ///     A <see cref="Flake" /> representing the parsed value.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     The <paramref name="value" /> is null.
+        /// </exception>
         /// <exception cref="ArgumentException">The value is an empty string.</exception>
         public static Flake Parse(string value)
         {
@@ -292,7 +317,7 @@ namespace NStack
             if (string.IsNullOrEmpty(value)) throw new ArgumentException();
             if (value == Unassigned.ToString()) return Unassigned;
 
-            var d = NumberBases.FromBase24String(value);
+            decimal? d = NumberBases.FromBase24String(value);
 
             if (!d.HasValue) throw new FormatException("The encoded flake value was invalid.");
 
@@ -300,7 +325,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Attempts to parse an encoded flake value without causing an exception.
+        ///     Attempts to parse an encoded flake value without causing an exception.
         /// </summary>
         /// <param name="value">The encoded flake value.</param>
         /// <param name="result">The variable receiving the result.</param>

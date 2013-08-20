@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="Entity.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 namespace NStack.Models
 {
     /// <summary>
-    ///   A generic root entity for entities that use an integer as an ID.
+    ///     A generic root entity for entities that use an integer as an ID.
     /// </summary>
     public abstract class Entity : Entity<int>
     {

@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="AutoMapper.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -34,21 +34,21 @@ using NStack.Models;
 namespace NStack.Data
 {
     /// <summary>
-    ///   Automatically maps persistable entities using conventions.
+    ///     Automatically maps persistable entities using conventions.
     /// </summary>
     public class AutoMapper
     {
-        private static readonly Func<Type, bool> Accept = type => true; 
+        private static readonly Func<Type, bool> Accept = type => true;
 
         /// <summary>
-        ///   Initializes a new instance of <see cref="AutoMapper" /> .
+        ///     Initializes a new instance of <see cref="AutoMapper" /> .
         /// </summary>
         public AutoMapper() : this(new DefaultNamingConvention())
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of <see cref="AutoMapper" /> .
+        ///     Initializes a new instance of <see cref="AutoMapper" /> .
         /// </summary>
         public AutoMapper(INamingConvention namingConvention)
         {
@@ -60,22 +60,22 @@ namespace NStack.Data
         }
 
         /// <summary>
-        ///   Gets the <see cref="INamingConvention" /> that will be used to derive names.
+        ///     Gets the <see cref="INamingConvention" /> that will be used to derive names.
         /// </summary>
         protected INamingConvention NamingConvention { get; private set; }
 
         /// <summary>
-        ///   Gets the <see cref="ModelMapper" /> .
+        ///     Gets the <see cref="ModelMapper" /> .
         /// </summary>
         protected ModelMapper ModelMapper { get; private set; }
 
         /// <summary>
-        ///   Gets or sets the base type for all entities that should be mapped.
+        ///     Gets or sets the base type for all entities that should be mapped.
         /// </summary>
         public Type EntityBaseType { get; set; }
 
         /// <summary>
-        ///   Gets a list of all mappings that have been added thus far.
+        ///     Gets a list of all mappings that have been added thus far.
         /// </summary>
         protected IList<HbmMapping> Mappings { get; private set; }
 
@@ -85,7 +85,7 @@ namespace NStack.Data
         }
 
         /// <summary>
-        ///   Creates and initializes the model mapper.
+        ///     Creates and initializes the model mapper.
         /// </summary>
         /// <returns> The model mapper. </returns>
         protected virtual ModelMapper CreateModelMapper()
@@ -93,125 +93,125 @@ namespace NStack.Data
             var mapper = new ConventionModelMapper();
 
             mapper.BeforeMapClass += (inspector, type, customizer) =>
-                                         {
-                                             customizer.Table(NamingConvention.Table(inspector, type));
+                {
+                    customizer.Table(NamingConvention.Table(inspector, type));
 
-                                             PropertyPath property = inspector.FindPersistentId(type);
+                    PropertyPath property = inspector.FindPersistentId(type);
 
-                                             if (property != null)
-                                             {
-                                                 customizer.Id(property.LocalMember, map =>
-                                                                                         {
-                                                                                             map.Column(
-                                                                                                 NamingConvention.Column
-                                                                                                     (inspector,
-                                                                                                      property));
+                    if (property != null)
+                    {
+                        customizer.Id(property.LocalMember, map =>
+                            {
+                                map.Column(
+                                    NamingConvention.Column
+                                        (inspector,
+                                         property));
 
-                                                                                             ApplyIdConventions(map,
-                                                                                                                property
-                                                                                                                    .
-                                                                                                                    LocalMember
-                                                                                                                as
-                                                                                                                PropertyInfo);
-                                                                                         });
-                                             }
-                                         };
+                                ApplyIdConventions(map,
+                                                   property
+                                                       .
+                                                       LocalMember
+                                                   as
+                                                   PropertyInfo);
+                            });
+                    }
+                };
 
             mapper.BeforeMapJoinedSubclass += (inspector, type, customizer) =>
-                                                  {
-                                                      var id = inspector.FindPersistentId(type.BaseType);
+                {
+                    PropertyPath id = inspector.FindPersistentId(type.BaseType);
 
-                                                      
-                                                      customizer.Table(NamingConvention.Table(inspector, type));
-                                                      customizer.Key(
-                                                          key =>
-                                                              {
-                                                                  key.Column(NamingConvention.KeyColumn(inspector, id,
-                                                                                                        type.BaseType));
-                                                                  key.ForeignKey(NamingConvention.ForeignKey(inspector, id, type, type.BaseType));
-                                                              });
-                                                  };
+
+                    customizer.Table(NamingConvention.Table(inspector, type));
+                    customizer.Key(
+                        key =>
+                            {
+                                key.Column(NamingConvention.KeyColumn(inspector, id,
+                                                                      type.BaseType));
+                                key.ForeignKey(NamingConvention.ForeignKey(inspector, id, type, type.BaseType));
+                            });
+                };
 
             mapper.BeforeMapProperty += (inspector, member, customizer) =>
-                                            {
-                                                if (!inspector.IsPersistentId(member.LocalMember) &&
-                                                    !inspector.IsPersistentProperty(member.LocalMember))
-                                                    return;
+                {
+                    if (!inspector.IsPersistentId(member.LocalMember) &&
+                        !inspector.IsPersistentProperty(member.LocalMember))
+                        return;
 
-                                                customizer.Column(NamingConvention.Column(inspector, member));
+                    customizer.Column(NamingConvention.Column(inspector, member));
 
-                                                Type type = member.LocalMember.GetPropertyOrFieldType();
+                    Type type = member.LocalMember.GetPropertyOrFieldType();
 
-                                                ApplyPropertyConventions(customizer, member, type, GetMemberAttributes(member.LocalMember));
-                                            };
+                    ApplyPropertyConventions(customizer, member, type, GetMemberAttributes(member.LocalMember));
+                };
 
             mapper.BeforeMapManyToOne += (inspector, member, customizer) =>
-                                             {
-                                                 customizer.Column(NamingConvention.Column(inspector, member));
-                                                 customizer.ForeignKey(NamingConvention
-                                                                           .ForeignKey(inspector, member));
-                                                 customizer.Index(NamingConvention.Index(inspector, member));
+                {
+                    customizer.Column(NamingConvention.Column(inspector, member));
+                    customizer.ForeignKey(NamingConvention
+                                              .ForeignKey(inspector, member));
+                    customizer.Index(NamingConvention.Index(inspector, member));
 
-                                                 Type type = member.LocalMember.GetPropertyOrFieldType();
+                    Type type = member.LocalMember.GetPropertyOrFieldType();
 
-                                                 ApplyManyToOneConventions(customizer, member, type, GetMemberAttributes(member.LocalMember));
-                                             };
+                    ApplyManyToOneConventions(customizer, member, type, GetMemberAttributes(member.LocalMember));
+                };
 
             mapper.BeforeMapBag += (inspector, member, customizer) =>
-                                       {
-                                           var inverse = GetLikelyInverseProperty(member);
+                {
+                    PropertyPath inverse = GetLikelyInverseProperty(member);
 
-                                           var keyColumn = inverse == null
-                                                               ? NamingConvention.KeyColumn(inspector, member)
-                                                               : NamingConvention.Column(inspector, inverse);
+                    string keyColumn = inverse == null
+                                           ? NamingConvention.KeyColumn(inspector, member)
+                                           : NamingConvention.Column(inspector, inverse);
 
 
-                                           customizer.Key(key => key.Column(keyColumn));
+                    customizer.Key(key => key.Column(keyColumn));
 
-                                           ApplyBagConventions(customizer, member);
-                                       };
+                    ApplyBagConventions(customizer, member);
+                };
 
             mapper.BeforeMapSet += (inspector, member, customizer) =>
-                                       {
-                                           var inverse = GetLikelyInverseProperty(member);
+                {
+                    PropertyPath inverse = GetLikelyInverseProperty(member);
 
-                                           var keyColumn = inverse == null
-                                                               ? NamingConvention.KeyColumn(inspector, member)
-                                                               : NamingConvention.Column(inspector, inverse);
+                    string keyColumn = inverse == null
+                                           ? NamingConvention.KeyColumn(inspector, member)
+                                           : NamingConvention.Column(inspector, inverse);
 
-                                           customizer.Key(key => key.Column(keyColumn));
+                    customizer.Key(key => key.Column(keyColumn));
 
-                                           ApplySetConventions(customizer, member);
-                                       };
+                    ApplySetConventions(customizer, member);
+                };
 
             mapper.BeforeMapList += (inspector, member, customizer) =>
-                                        {
-                                            var inverse = GetLikelyInverseProperty(member);
+                {
+                    PropertyPath inverse = GetLikelyInverseProperty(member);
 
-                                            var keyColumn = inverse == null
-                                                                ? NamingConvention.KeyColumn(inspector, member)
-                                                                : NamingConvention.Column(inspector, inverse);
+                    string keyColumn = inverse == null
+                                           ? NamingConvention.KeyColumn(inspector, member)
+                                           : NamingConvention.Column(inspector, inverse);
 
-                                            customizer.Key(key => key.Column(keyColumn));
-                                            customizer.Index(index => index.Column(NamingConvention.IndexColumn(inspector, member)));
+                    customizer.Key(key => key.Column(keyColumn));
+                    customizer.Index(index => index.Column(NamingConvention.IndexColumn(inspector, member)));
 
-                                            ApplyListConventions(customizer, member);
-                                        };
+                    ApplyListConventions(customizer, member);
+                };
 
             mapper.BeforeMapMap += (inspector, member, customizer) =>
-                                       {
-                                           var inverse = GetLikelyInverseProperty(member);
+                {
+                    PropertyPath inverse = GetLikelyInverseProperty(member);
 
-                                           var keyColumn = inverse == null
-                                                               ? NamingConvention.KeyColumn(inspector, member)
-                                                               : NamingConvention.Column(inspector, inverse);
+                    string keyColumn = inverse == null
+                                           ? NamingConvention.KeyColumn(inspector, member)
+                                           : NamingConvention.Column(inspector, inverse);
 
-                                           // TODO: figure out how to set the map key column (not just the foreign key)
+                    // TODO: figure out how to set the map key column (not just the foreign key)
 
-                                           customizer.Key(key => key.Column(keyColumn));
+                    customizer.Key(key => key.Column(keyColumn));
 
-                                           ApplyMapConventions(customizer, member);
-                                       };
+                    ApplyMapConventions(customizer, member);
+                };
 
 
             mapper.IsEntity(IsEntity);
@@ -237,7 +237,7 @@ namespace NStack.Data
         }
 
         /// <summary>
-        /// Applies any conventions to bag properties.
+        ///     Applies any conventions to bag properties.
         /// </summary>
         /// <param name="mapper">The mapper.</param>
         /// <param name="member"> </param>
@@ -247,7 +247,7 @@ namespace NStack.Data
         }
 
         /// <summary>
-        ///   Applies any conventions required for many-to-one properties.
+        ///     Applies any conventions required for many-to-one properties.
         /// </summary>
         /// <param name="mapper"> The mapper. </param>
         /// <param name="property"> The property. </param>
@@ -260,7 +260,7 @@ namespace NStack.Data
         }
 
         /// <summary>
-        ///   Applies any conventions required for persistable properties.
+        ///     Applies any conventions required for persistable properties.
         /// </summary>
         /// <param name="attributes"> Attributes present on the property. </param>
         /// <param name="mapper"> The property mapper. </param>
@@ -275,7 +275,7 @@ namespace NStack.Data
         }
 
         /// <summary>
-        ///   Applies any conventions required for the ID property.
+        ///     Applies any conventions required for the ID property.
         /// </summary>
         /// <param name="map"> The ID mapper. </param>
         /// <param name="property"> The ID property. </param>
@@ -287,7 +287,7 @@ namespace NStack.Data
         }
 
         /// <summary>
-        /// Returns whether or not a column may be nullable, given a property's type and attributes.
+        ///     Returns whether or not a column may be nullable, given a property's type and attributes.
         /// </summary>
         /// <param name="propertyType">Type of the property.</param>
         /// <param name="attributes">Attributes defined for the property.</param>
@@ -301,35 +301,36 @@ namespace NStack.Data
         }
 
         /// <summary>
-        /// Returns the most likely inverse property for a collection.
+        ///     Returns the most likely inverse property for a collection.
         /// </summary>
         /// <param name="member"></param>
         /// <returns></returns>
         protected virtual PropertyPath GetLikelyInverseProperty(PropertyPath member)
         {
-            var declared = member.LocalMember.DeclaringType;
-            var collectionType = member.LocalMember.GetPropertyOrFieldType();
+            Type declared = member.LocalMember.DeclaringType;
+            Type collectionType = member.LocalMember.GetPropertyOrFieldType();
 
             if (!collectionType.IsGenericCollection()) return null;
 
-            var elementType = collectionType.DetermineCollectionElementOrDictionaryValueType();
+            Type elementType = collectionType.DetermineCollectionElementOrDictionaryValueType();
 
-            var localSimplified = member.LocalMember.Name.Replace(elementType.Name.Pluralize(), string.Empty);
+            string localSimplified = member.LocalMember.Name.Replace(elementType.Name.Pluralize(), string.Empty);
 
-            var otherProperty = elementType
-                                    .GetFirstPropertyOfType(declared,
-                                                            property =>
-                                                                {
-                                                                    var otherSimplified =
-                                                                        property.Name.Replace(declared.Name,
-                                                                                              string.Empty);
+            MemberInfo otherProperty = elementType
+                                           .GetFirstPropertyOfType(declared,
+                                                                   property =>
+                                                                       {
+                                                                           string otherSimplified =
+                                                                               property.Name.Replace(declared.Name,
+                                                                                                     string.Empty);
 
-                                                                    return otherSimplified.Equals(localSimplified,
-                                                                                                  StringComparison.
-                                                                                                      InvariantCultureIgnoreCase);
-                                                                })
-                                ??
-                                elementType.GetFirstPropertyOfType(member.LocalMember.DeclaringType);
+                                                                           return otherSimplified.Equals(
+                                                                               localSimplified,
+                                                                               StringComparison.
+                                                                                   InvariantCultureIgnoreCase);
+                                                                       })
+                                       ??
+                                       elementType.GetFirstPropertyOfType(member.LocalMember.DeclaringType);
 
             return new PropertyPath(null, otherProperty);
         }
@@ -340,7 +341,7 @@ namespace NStack.Data
         }
 
         /// <summary>
-        ///   Determines whether or not the type represents a root entity (not a subclass).
+        ///     Determines whether or not the type represents a root entity (not a subclass).
         /// </summary>
         /// <param name="type"> </param>
         /// <param name="declared"> </param>
@@ -351,7 +352,7 @@ namespace NStack.Data
         }
 
         /// <summary>
-        ///   Determines whether or not the type is an entity that should be mapped.
+        ///     Determines whether or not the type is an entity that should be mapped.
         /// </summary>
         /// <param name="type"> </param>
         /// <param name="declared"> </param>
@@ -359,13 +360,13 @@ namespace NStack.Data
         protected virtual bool IsEntity(Type type, bool declared)
         {
             if (type == EntityBaseType || type.IsInterface
-                || type.ImplementsInterfaceDirectly(typeof(IEntityBase))) return false;
+                || type.ImplementsInterfaceDirectly(typeof (IEntityBase))) return false;
 
             return EntityBaseType.IsAssignableFrom(type);
         }
 
         /// <summary>
-        /// Allows manual mappings to be performed.
+        ///     Allows manual mappings to be performed.
         /// </summary>
         /// <param name="map">A delegate for the override mapping.</param>
         public void Override(Action<ModelMapper> map)
@@ -376,7 +377,7 @@ namespace NStack.Data
         }
 
         /// <summary>
-        /// Maps all explicit mappings, overrides, and entities found in the assembly of the specified type.
+        ///     Maps all explicit mappings, overrides, and entities found in the assembly of the specified type.
         /// </summary>
         /// <typeparam name="T">Type whose assembly should be inspected.</typeparam>
         /// <param name="entityFilter">Filters entities.</param>
@@ -385,31 +386,32 @@ namespace NStack.Data
         public void MapAssemblyOf<T>(Func<Type, bool> entityFilter = null, Func<Type, bool> mappingFilter = null,
                                      Func<Type, bool> overrideFilter = null)
         {
-            MapAssemblyOfType(typeof(T), entityFilter, mappingFilter, overrideFilter);
+            MapAssemblyOfType(typeof (T), entityFilter, mappingFilter, overrideFilter);
         }
 
         /// <summary>
-        /// Maps all explicit mappings, overrides, and entities found in the assembly of the specified type.
+        ///     Maps all explicit mappings, overrides, and entities found in the assembly of the specified type.
         /// </summary>
         /// <param name="type">Type whose assembly should be inspected.</param>
         /// <param name="entityFilter">Filters entities.</param>
         /// <param name="mappingFilter">Filters mappings.</param>
         /// <param name="overrideFilter">Filters overrides.</param>
-        public void MapAssemblyOfType(Type type, Func<Type, bool> entityFilter = null, Func<Type, bool> mappingFilter = null,
-                                     Func<Type, bool> overrideFilter = null)
+        public void MapAssemblyOfType(Type type, Func<Type, bool> entityFilter = null,
+                                      Func<Type, bool> mappingFilter = null,
+                                      Func<Type, bool> overrideFilter = null)
         {
-            var types = type.Assembly.GetExportedTypes().AsEnumerable();
+            IEnumerable<Type> types = type.Assembly.GetExportedTypes().AsEnumerable();
 
             var entityTypes = new List<Type>();
 
-            foreach (var t in types)
+            foreach (Type t in types)
             {
-                if (typeof(IConformistHoldersProvider).IsAssignableFrom(t)
+                if (typeof (IConformistHoldersProvider).IsAssignableFrom(t)
                     && (mappingFilter ?? Accept)(t)) ModelMapper.AddMapping(t);
-                else if (typeof(IMapperOverride).IsAssignableFrom(t)
-                    && (overrideFilter ?? Accept)(t))
+                else if (typeof (IMapperOverride).IsAssignableFrom(t)
+                         && (overrideFilter ?? Accept)(t))
                 {
-                    ((IMapperOverride)Activator.CreateInstance(t)).Override(ModelMapper);
+                    ((IMapperOverride) Activator.CreateInstance(t)).Override(ModelMapper);
                 }
                 else if ((entityFilter ?? Accept)(t)) entityTypes.Add(t);
             }
@@ -418,7 +420,7 @@ namespace NStack.Data
         }
 
         /// <summary>
-        ///   Returns all mappings configured thus far.
+        ///     Returns all mappings configured thus far.
         /// </summary>
         /// <returns> </returns>
         public IEnumerable<HbmMapping> Complete()

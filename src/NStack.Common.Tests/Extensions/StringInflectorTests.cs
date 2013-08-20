@@ -1,17 +1,33 @@
-﻿
+﻿#region header
 
-using NUnit.Framework;
+// <copyright file="StringInflectorTests.cs" company="mikegrabski.com">
+//    Copyright 2013 Mike Grabski
+// 
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+// 
+//        http://www.apache.org/licenses/LICENSE-2.0
+// 
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+// </copyright>
+
+#endregion
 
 using FluentAssertions;
 
-using Moq;
+using NUnit.Framework;
 
 namespace NStack.Extensions
 {
     [TestFixture]
     public class StringInflectorTests
     {
-        #region Setup/Teardown for fixture
+        #region Setup/Teardown
 
         [TestFixtureSetUp]
         public void SetUpFixture()
@@ -22,10 +38,6 @@ namespace NStack.Extensions
         public void TearDownFixture()
         {
         }
-
-        #endregion
-
-        #region Setup/Teardown for each test
 
         [SetUp]
         public void SetUpTest()
@@ -95,52 +107,52 @@ namespace NStack.Extensions
         [Test]
         public void Singularize_singularizes_known_word_patterns()
         {
-           "clowns".Singularize().Should().Be("clown");
-           "blows".Singularize().Should().Be("blow");
-           "axes".Singularize().Should().Be("axis");
-           "testes".Singularize().Should().Be("testis");
-           "octopi".Singularize().Should().Be("octopus");
-           "viri".Singularize().Should().Be("virus");
-           "alumni".Singularize().Should().Be("alumnus");
-           "fungi".Singularize().Should().Be("fungus");
-           "aliases".Singularize().Should().Be("alias");
-           "statuses".Singularize().Should().Be("status");
-           "buffaloes".Singularize().Should().Be("buffalo");
-           "tomatoes".Singularize().Should().Be("tomato");
-           "diagnoses".Singularize().Should().Be("diagnosis");
-           "halves".Singularize().Should().Be("half");
-           "bays".Singularize().Should().Be("bay");
-           "flies".Singularize().Should().Be("fly");
-           "hives".Singularize().Should().Be("hive");
-           "boxes".Singularize().Should().Be("box");
-           "trusses".Singularize().Should().Be("truss");
-           "churches".Singularize().Should().Be("church");
-           "washes".Singularize().Should().Be("wash");
-           "matrices".Singularize().Should().Be("matrix");
-           "vertices".Singularize().Should().Be("vertex");
-           "indices".Singularize().Should().Be("index");
-           "mice".Singularize().Should().Be("mouse");
-           "lice".Singularize().Should().Be("louse");
-           "oxen".Singularize().Should().Be("ox");
-           "quizzes".Singularize().Should().Be("quiz");
-           "people".Singularize().Should().Be("person");
-           "men".Singularize().Should().Be("man");
-           "women".Singularize().Should().Be("woman");
-           "children".Singularize().Should().Be("child");
-           "sexes".Singularize().Should().Be("sex");
-           "moves".Singularize().Should().Be("move");
-           "geese".Singularize().Should().Be("goose");
-           "moose".Singularize().Should().Be("moose");
-           "alumnae".Singularize().Should().Be("alumna");
-           "equipment".Singularize().Should().Be("equipment");
-           "information".Singularize().Should().Be("information");
-           "rice".Singularize().Should().Be("rice");
-           "money".Singularize().Should().Be("money");
-           "species".Singularize().Should().Be("species");
-           "sheep".Singularize().Should().Be("sheep");
-           "series".Singularize().Should().Be("series");
-           "deer".Singularize().Should().Be("deer");
-           "aircraft".Singularize().Should().Be("aircraft");
+            "clowns".Singularize().Should().Be("clown");
+            "blows".Singularize().Should().Be("blow");
+            "axes".Singularize().Should().Be("axis");
+            "testes".Singularize().Should().Be("testis");
+            "octopi".Singularize().Should().Be("octopus");
+            "viri".Singularize().Should().Be("virus");
+            "alumni".Singularize().Should().Be("alumnus");
+            "fungi".Singularize().Should().Be("fungus");
+            "aliases".Singularize().Should().Be("alias");
+            "statuses".Singularize().Should().Be("status");
+            "buffaloes".Singularize().Should().Be("buffalo");
+            "tomatoes".Singularize().Should().Be("tomato");
+            "diagnoses".Singularize().Should().Be("diagnosis");
+            "halves".Singularize().Should().Be("half");
+            "bays".Singularize().Should().Be("bay");
+            "flies".Singularize().Should().Be("fly");
+            "hives".Singularize().Should().Be("hive");
+            "boxes".Singularize().Should().Be("box");
+            "trusses".Singularize().Should().Be("truss");
+            "churches".Singularize().Should().Be("church");
+            "washes".Singularize().Should().Be("wash");
+            "matrices".Singularize().Should().Be("matrix");
+            "vertices".Singularize().Should().Be("vertex");
+            "indices".Singularize().Should().Be("index");
+            "mice".Singularize().Should().Be("mouse");
+            "lice".Singularize().Should().Be("louse");
+            "oxen".Singularize().Should().Be("ox");
+            "quizzes".Singularize().Should().Be("quiz");
+            "people".Singularize().Should().Be("person");
+            "men".Singularize().Should().Be("man");
+            "women".Singularize().Should().Be("woman");
+            "children".Singularize().Should().Be("child");
+            "sexes".Singularize().Should().Be("sex");
+            "moves".Singularize().Should().Be("move");
+            "geese".Singularize().Should().Be("goose");
+            "moose".Singularize().Should().Be("moose");
+            "alumnae".Singularize().Should().Be("alumna");
+            "equipment".Singularize().Should().Be("equipment");
+            "information".Singularize().Should().Be("information");
+            "rice".Singularize().Should().Be("rice");
+            "money".Singularize().Should().Be("money");
+            "species".Singularize().Should().Be("species");
+            "sheep".Singularize().Should().Be("sheep");
+            "series".Singularize().Should().Be("series");
+            "deer".Singularize().Should().Be("deer");
+            "aircraft".Singularize().Should().Be("aircraft");
         }
     }
 }

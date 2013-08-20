@@ -1,6 +1,7 @@
 ﻿#region header
+
 // <copyright file="TypeExtensions.ImplementsInterfaceDirectly.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -14,6 +15,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System;
@@ -22,28 +24,33 @@ using System.Linq;
 namespace NStack.Extensions
 {
     /// <summary>
-    /// 
     /// </summary>
     public static partial class TypeExtensions
     {
         /// <summary>
-        /// Returns whether or not the specified interface is directly implemented by the given type.
+        ///     Returns whether or not the specified interface is directly implemented by the given type.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="theInterface">The type of the interface.</param>
-        /// <returns>True, if <paramref name="type"/> directly implements <paramref name="theInterface"/>; otherwise, false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="theInterface"/> or <paramref name="type"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="theInterface"/> is not the type of an interface.</exception>
+        /// <returns>
+        ///     True, if <paramref name="type" /> directly implements <paramref name="theInterface" />; otherwise, false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="theInterface" /> or <paramref name="type" /> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="theInterface" /> is not the type of an interface.
+        /// </exception>
         public static bool ImplementsInterfaceDirectly(this Type type, Type theInterface)
         {
             Requires.That(type, "type")
-                .IsNotNull();
+                    .IsNotNull();
 
             Requires.That(theInterface, "theInterface")
-                .IsNotNull()
-                .IsMet(theInterface.IsInterface, "Must be the Type of an interface.");
+                    .IsNotNull()
+                    .IsMet(theInterface.IsInterface, "Must be the Type of an interface.");
 
-            if (type.BaseType != null 
+            if (type.BaseType != null
                 && ImplementsInterfaceDirectly(type.BaseType, theInterface))
                 return false;
 

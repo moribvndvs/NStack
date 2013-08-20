@@ -1,6 +1,7 @@
 ﻿#region header
+
 // <copyright file="AutoMapperTestEntities.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -14,6 +15,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System;
@@ -28,22 +30,18 @@ namespace NStack.Data
 {
     public abstract class AutoMapperTestEntityBase<T> : Entity<T>
     {
-
     }
 
     public class ParentWithGuid : AutoMapperTestEntityBase<Guid>
     {
-
     }
 
     public abstract class AutoMapperTestEntityBase : Entity
     {
-
     }
 
     public class EntityBase : AutoMapperTestEntityBase, IEntityBase
     {
-        
     }
 
     public class Address
@@ -62,6 +60,7 @@ namespace NStack.Data
     public enum TestEnum
     {
         ValueOne,
+
         ValueTwo
     }
 
@@ -104,7 +103,6 @@ namespace NStack.Data
 
     public class SeparateTable : Parent
     {
-
     }
 
     public abstract class SingleTableBase : AutoMapperTestEntityBase
@@ -145,15 +143,12 @@ namespace NStack.Data
         #region Implementation of IMapperOverride
 
         /// <summary>
-        /// When implemented, overrides mappings.
+        ///     When implemented, overrides mappings.
         /// </summary>
         /// <param name="mapper">The model mapper.</param>
         public void Override(ModelMapper mapper)
         {
-            mapper.Class<Parent>(m =>
-            {
-                m.List(c => c.ListChildren, c => { });
-            });
+            mapper.Class<Parent>(m => { m.List(c => c.ListChildren, c => { }); });
 
             mapper.Class<SingleTableBase>(m => m.Discriminator(d => d.Column("type")));
             mapper.Subclass<SingleTableA>(m => m.DiscriminatorValue("a"));

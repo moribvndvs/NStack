@@ -66,10 +66,14 @@ namespace NStack
             get { return _max; }
         }
 
+        #region IEquatable<Range<T>> Members
+
         /// <summary>
-        /// Determines whether <paramref name="other"/> is equivalent to the current <see cref="Range{T}"/>.
+        ///     Determines whether <paramref name="other" /> is equivalent to the current <see cref="Range{T}" />.
         /// </summary>
-        /// <param name="other">The other <see cref="Range{T}"/> to compare.</param>
+        /// <param name="other">
+        ///     The other <see cref="Range{T}" /> to compare.
+        /// </param>
         /// <returns>True if the ranges are equivalent; otherwise, false.</returns>
         public virtual bool Equals(Range<T> other)
         {
@@ -78,6 +82,8 @@ namespace NStack
             return EqualityComparer<T>.Default.Equals(_max, other._max) &&
                    EqualityComparer<T>.Default.Equals(_min, other._min);
         }
+
+        #endregion
 
         /// <summary>
         ///     Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.
@@ -96,10 +102,10 @@ namespace NStack
         }
 
         /// <summary>
-        /// Serves as a hash function for a particular type. 
+        ///     Serves as a hash function for a particular type.
         /// </summary>
         /// <returns>
-        /// A hash code for the current <see cref="T:System.Object"/>.
+        ///     A hash code for the current <see cref="T:System.Object" />.
         /// </returns>
         /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
@@ -112,22 +118,26 @@ namespace NStack
         }
 
         /// <summary>
-        /// Operator to deterine if two ranges are equivalent.
+        ///     Operator to deterine if two ranges are equivalent.
         /// </summary>
         /// <param name="left">The left range.</param>
         /// <param name="right">The right range.</param>
-        /// <returns>True if <paramref name="right"/> and <paramref name="left"/> are equivalent; otherwise, false.</returns>
+        /// <returns>
+        ///     True if <paramref name="right" /> and <paramref name="left" /> are equivalent; otherwise, false.
+        /// </returns>
         public static bool operator ==(Range<T> left, Range<T> right)
         {
             return Equals(left, right);
         }
 
         /// <summary>
-        /// Operator to determine if two ranges are not equal.
+        ///     Operator to determine if two ranges are not equal.
         /// </summary>
         /// <param name="left">The left range.</param>
         /// <param name="right">The right range.</param>
-        /// <returns>True if <paramref name="right"/> and <paramref name="left"/> are not equivalent; otherwise, false.</returns>
+        /// <returns>
+        ///     True if <paramref name="right" /> and <paramref name="left" /> are not equivalent; otherwise, false.
+        /// </returns>
         public static bool operator !=(Range<T> left, Range<T> right)
         {
             return !Equals(left, right);

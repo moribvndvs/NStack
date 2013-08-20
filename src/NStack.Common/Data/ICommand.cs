@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="ICommand.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 namespace NStack.Data
 {
     /// <summary>
-    ///   A base contract for types that execute a command against the persistence layer.
+    ///     A base contract for types that execute a command against the persistence layer.
     /// </summary>
     public interface ICommand
     {

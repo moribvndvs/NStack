@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="AutomapperTests.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -26,17 +26,15 @@ using FluentAssertions;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Type;
 
-using NUnit.Framework;
-
 using NStack.Extensions;
+
+using NUnit.Framework;
 
 namespace NStack.Data
 {
     [TestFixture]
     public class AutoMapperTests
     {
-        private HbmMapping _mapping, _guidMapping;
-
         #region Setup/Teardown
 
         [SetUp]
@@ -49,28 +47,23 @@ namespace NStack.Data
         {
         }
 
-        #endregion
-
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
             var automapper = new AutoMapper
-                                 {
-                                     EntityBaseType = typeof (AutoMapperTestEntityBase)
-                                 };
+                {
+                    EntityBaseType = typeof (AutoMapperTestEntityBase)
+                };
 
-            automapper.Override(mapper =>
-                                    {
-                                        
-                                    });
+            automapper.Override(mapper => { });
             automapper.MapAssemblyOf<AutoMapperTests>();
 
             _mapping = automapper.Complete().First();
 
             automapper = new AutoMapper
-                             {
-                                 EntityBaseType = typeof(AutoMapperTestEntityBase<Guid>)
-                             };
+                {
+                    EntityBaseType = typeof (AutoMapperTestEntityBase<Guid>)
+                };
             automapper.MapAssemblyOf<AutoMapperTests>();
             _guidMapping = automapper.Complete().First();
         }
@@ -80,19 +73,26 @@ namespace NStack.Data
         {
         }
 
-        [Test]
-        public void Should_not_add_classes_directly_marked_with_IEntityBase()
-        {
-            // Act / Assert
-            _mapping.RootClasses.Where(c => c.Name == "EntityBase").Should().BeEmpty();
+        #endregion
 
-        }
+        private HbmMapping _mapping, _guidMapping;
 
         [Test]
-        public void Should_add_root_classes_derived_from_EntityBaseType()
+        public void Override_mappings_should_take_affect()
         {
-            // Act / Assert
-            _mapping.RootClasses.Should().HaveCount(3);
+            // Arrange
+            var autoMapper = new AutoMapper();
+            HbmClass root;
+
+            // Act
+            autoMapper.EntityBaseType = typeof (AutoMapperTestEntityBase);
+            autoMapper.Override(map => map.Class<Parent>(mapper => mapper.Table("PARENT")));
+            autoMapper.MapAssemblyOf<AutoMapperTests>(overrideFilter: type => false);
+
+            root = autoMapper.Complete().First().RootClasses.First(c => c.name == "Parent");
+
+            // Assert
+            root.table.Should().Be("PARENT");
         }
 
         [Test]
@@ -103,21 +103,10 @@ namespace NStack.Data
         }
 
         [Test]
-        public void Should_map_component()
+        public void Should_add_root_classes_derived_from_EntityBaseType()
         {
-            // Arrange
-            HbmComponent component;
-
-            // Act
-            component = _mapping.RootClasses.First(c => c.Name == "Parent").Properties.ElementAt(1) as HbmComponent;
-
-            // Assert
-            component.Name.Should().Be("Address");
-
-            foreach (var property in component.Properties.Cast<HbmProperty>())
-            {
-                property.column.Should().Be(property.name.Underscore());
-            }
+            // Act / Assert
+            _mapping.RootClasses.Should().HaveCount(3);
         }
 
         [Test]
@@ -135,7 +124,7 @@ namespace NStack.Data
             column.name.Should().Be("id");
             map.Id.generator.@class.Should().Be("guid.comb");
         }
-        
+
         [Test]
         public void Should_map_Id_as_hilo()
         {
@@ -150,68 +139,6 @@ namespace NStack.Data
             // Assert
             column.name.Should().Be("id");
             map.Id.generator.@class.Should().Be("hilo");
-        }
-
-        [Test]
-        public void Should_map_property_conventions()
-        {
-            // Arrange
-            HbmClass map;
-            HbmProperty nullableProperty, notNullableProperty;
-
-            // Act
-            map = _mapping.RootClasses.First(m => m.Name == "Parent");
-            nullableProperty = map.Properties.Where(p => p.Name == "NullableValue").Cast<HbmProperty>().First();
-            notNullableProperty = map.Properties.Where(p => p.Name == "NotNullableValue").Cast<HbmProperty>().First();
-
-            // Assert
-            nullableProperty.notnull.Should().BeFalse();
-            nullableProperty.column.Should().Be("nullable_value");
-
-            notNullableProperty.notnull.Should().BeTrue();
-            notNullableProperty.column.Should().Be("not_nullable_value");
-
-        }
-
-        [Test]
-        public void Should_map_enum_property_conventions()
-        {
-            // Arrange
-            HbmClass map;
-            HbmProperty enumProperty;
-
-            // Act
-            map = _mapping.RootClasses.First(m => m.Name == "Parent");
-            enumProperty = map.Properties.Where(p => p.Name == "TestEnum").Cast<HbmProperty>().First();
-
-            // Assert
-            enumProperty.notnull.Should().BeTrue();
-            enumProperty.Type.name.Should().Be(typeof (Int32Type).AssemblyQualifiedName); // should be stored as integers rather than strings.
-
-        }
-
-        [Test]
-        public void Should_map_manytoone_conventions()
-        {
-            // Arrange
-            HbmClass map;
-            HbmManyToOne nullableProperty, notNullableProperty;
-
-            // Act
-            map = _mapping.RootClasses.First(m => m.Name == "Parent");
-            nullableProperty = map.Properties.Where(p => p.Name == "NullableReference").Cast<HbmManyToOne>().First();
-            notNullableProperty = map.Properties.Where(p => p.Name == "NotNullableReference").Cast<HbmManyToOne>().First();
-
-            // Assert
-            nullableProperty.notnull.Should().BeFalse();
-            nullableProperty.column.Should().Be("nullable_reference_id");
-            nullableProperty.index.Should().Be("ix_parents_nullable_reference_id");
-            nullableProperty.foreignkey.Should().Be("fk_parents_parents_nullable_reference_id");
-            
-            notNullableProperty.notnull.Should().BeTrue();
-            notNullableProperty.column.Should().Be("not_nullable_reference_id");
-            notNullableProperty.index.Should().Be("ix_parents_not_nullable_reference_id");
-            notNullableProperty.foreignkey.Should().Be("fk_parents_parents_not_nullable_reference_id");
         }
 
         [Test]
@@ -231,25 +158,42 @@ namespace NStack.Data
             property.inverse.Should().BeTrue();
             keyColumn.name.Should().Be("bag_parent_id");
         }
-        
+
         [Test]
-        public void Should_map_set_conventions()
+        public void Should_map_component()
+        {
+            // Arrange
+            HbmComponent component;
+
+            // Act
+            component = _mapping.RootClasses.First(c => c.Name == "Parent").Properties.ElementAt(1) as HbmComponent;
+
+            // Assert
+            component.Name.Should().Be("Address");
+
+            foreach (HbmProperty property in component.Properties.Cast<HbmProperty>())
+            {
+                property.column.Should().Be(property.name.Underscore());
+            }
+        }
+
+        [Test]
+        public void Should_map_enum_property_conventions()
         {
             // Arrange
             HbmClass map;
-            HbmSet property;
-            HbmColumn keyColumn;
+            HbmProperty enumProperty;
 
             // Act
             map = _mapping.RootClasses.First(m => m.Name == "Parent");
-            property = map.Properties.Where(p => p.Name == "SetChildren").Cast<HbmSet>().First();
-            keyColumn = property.key.Columns.First();
+            enumProperty = map.Properties.Where(p => p.Name == "TestEnum").Cast<HbmProperty>().First();
 
             // Assert
-            property.inverse.Should().BeTrue();
-            keyColumn.name.Should().Be("set_parent_id");
+            enumProperty.notnull.Should().BeTrue();
+            enumProperty.Type.name.Should().Be(typeof (Int32Type).AssemblyQualifiedName);
+                // should be stored as integers rather than strings.
         }
-        
+
         [Test]
         public void Should_map_list_conventions()
         {
@@ -270,6 +214,31 @@ namespace NStack.Data
             indexColumn.name.Should().Be("list_index");
         }
 
+        [Test]
+        public void Should_map_manytoone_conventions()
+        {
+            // Arrange
+            HbmClass map;
+            HbmManyToOne nullableProperty, notNullableProperty;
+
+            // Act
+            map = _mapping.RootClasses.First(m => m.Name == "Parent");
+            nullableProperty = map.Properties.Where(p => p.Name == "NullableReference").Cast<HbmManyToOne>().First();
+            notNullableProperty =
+                map.Properties.Where(p => p.Name == "NotNullableReference").Cast<HbmManyToOne>().First();
+
+            // Assert
+            nullableProperty.notnull.Should().BeFalse();
+            nullableProperty.column.Should().Be("nullable_reference_id");
+            nullableProperty.index.Should().Be("ix_parents_nullable_reference_id");
+            nullableProperty.foreignkey.Should().Be("fk_parents_parents_nullable_reference_id");
+
+            notNullableProperty.notnull.Should().BeTrue();
+            notNullableProperty.column.Should().Be("not_nullable_reference_id");
+            notNullableProperty.index.Should().Be("ix_parents_not_nullable_reference_id");
+            notNullableProperty.foreignkey.Should().Be("fk_parents_parents_not_nullable_reference_id");
+        }
+
         [Test, Ignore("Unable to set map key column from ModelMapper.BeginMapMap in current version of NHibernate.")]
         public void Should_map_map_conventions()
         {
@@ -288,6 +257,44 @@ namespace NStack.Data
             property.inverse.Should().BeTrue();
             keyColumn.name.Should().Be("dictionary_parent_id");
             mapKeyColumn.name.Should().Be("map_key");
+        }
+
+        [Test]
+        public void Should_map_property_conventions()
+        {
+            // Arrange
+            HbmClass map;
+            HbmProperty nullableProperty, notNullableProperty;
+
+            // Act
+            map = _mapping.RootClasses.First(m => m.Name == "Parent");
+            nullableProperty = map.Properties.Where(p => p.Name == "NullableValue").Cast<HbmProperty>().First();
+            notNullableProperty = map.Properties.Where(p => p.Name == "NotNullableValue").Cast<HbmProperty>().First();
+
+            // Assert
+            nullableProperty.notnull.Should().BeFalse();
+            nullableProperty.column.Should().Be("nullable_value");
+
+            notNullableProperty.notnull.Should().BeTrue();
+            notNullableProperty.column.Should().Be("not_nullable_value");
+        }
+
+        [Test]
+        public void Should_map_set_conventions()
+        {
+            // Arrange
+            HbmClass map;
+            HbmSet property;
+            HbmColumn keyColumn;
+
+            // Act
+            map = _mapping.RootClasses.First(m => m.Name == "Parent");
+            property = map.Properties.Where(p => p.Name == "SetChildren").Cast<HbmSet>().First();
+            keyColumn = property.key.Columns.First();
+
+            // Assert
+            property.inverse.Should().BeTrue();
+            keyColumn.name.Should().Be("set_parent_id");
         }
 
         [Test]
@@ -316,26 +323,13 @@ namespace NStack.Data
 
             // Assert
             map.discriminatorvalue.Should().Be("a");
-
         }
 
         [Test]
-        public void Override_mappings_should_take_affect()
+        public void Should_not_add_classes_directly_marked_with_IEntityBase()
         {
-            // Arrange
-            var autoMapper = new AutoMapper();
-            HbmClass root;
-
-            // Act
-            autoMapper.EntityBaseType = typeof (AutoMapperTestEntityBase);
-            autoMapper.Override(map => map.Class<Parent>(mapper => mapper.Table("PARENT")));
-            autoMapper.MapAssemblyOf<AutoMapperTests>(overrideFilter: type => false);
-
-            root = autoMapper.Complete().First().RootClasses.First(c => c.name == "Parent");
-
-            // Assert
-            root.table.Should().Be("PARENT");
-
+            // Act / Assert
+            _mapping.RootClasses.Where(c => c.Name == "EntityBase").Should().BeEmpty();
         }
     }
 }

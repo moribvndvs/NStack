@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="ICommandNoResult.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -21,12 +21,12 @@
 namespace NStack.Data
 {
     /// <summary>
-    ///   A contract for <see cref="ICommand" /> s that return no result.
+    ///     A contract for <see cref="ICommand" /> s that return no result.
     /// </summary>
     public interface ICommandNoResult : ICommand
     {
         /// <summary>
-        ///   Executes the command in its current state.
+        ///     Executes the command in its current state.
         /// </summary>
         void Execute();
     }

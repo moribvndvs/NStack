@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="StringExtensions.Formatted.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ namespace NStack.Extensions
     public static partial class StringExtensions
     {
         /// <summary>
-        ///   Builds a string using the specified string the format string.
+        ///     Builds a string using the specified string the format string.
         /// </summary>
         /// <param name="format"> The format string. </param>
         /// <param name="args"> The format arguments. </param>
@@ -42,7 +42,7 @@ namespace NStack.Extensions
         }
 
         /// <summary>
-        ///   Builds a string using the specified string the format string.
+        ///     Builds a string using the specified string the format string.
         /// </summary>
         /// <param name="format"> The format string. </param>
         /// <param name="provider"> The provider. </param>

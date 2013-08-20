@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="NullableVariable.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ namespace NStack.Conditions
         where TThis : NullableVariable<T, TThis>
     {
         /// <summary>
-        ///   Initializes a new instance of the <see cref="T:System.Object" /> class.
+        ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
         protected NullableVariable(T value, string name, bool postCondition) : base(value, name, postCondition)
         {
@@ -36,7 +36,7 @@ namespace NStack.Conditions
 
 
         /// <summary>
-        ///   Asserts that the specified argument is not null.
+        ///     Asserts that the specified argument is not null.
         /// </summary>
         /// <param name="message"> The exception message. </param>
         [AssertionMethod]
@@ -52,7 +52,7 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        ///   Asserts that the specified argument is null.
+        ///     Asserts that the specified argument is null.
         /// </summary>
         /// <param name="message"> The exception message. </param>
         [AssertionMethod]

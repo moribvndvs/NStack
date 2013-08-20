@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="CollectionVariableTests.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@
 
 using System;
 using System.Collections;
-using System.Linq;
 
 using FluentAssertions;
 
@@ -45,14 +44,6 @@ namespace NStack.Conditions
         {
         }
 
-        #endregion
-
-        protected T EmptyCollection { get; set; }
-
-        protected T NonEmptyCollection { get; set; }
-
-        protected TItem Item { get; set; }
-
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
@@ -64,6 +55,14 @@ namespace NStack.Conditions
         {
         }
 
+        #endregion
+
+        protected T EmptyCollection { get; set; }
+
+        protected T NonEmptyCollection { get; set; }
+
+        protected TItem Item { get; set; }
+
         protected abstract void InitializeCollections();
 
         [Test]
@@ -71,7 +70,7 @@ namespace NStack.Conditions
         {
             // Act / Assert
             EmptyCollection.Invoking(value => value.Contains(Item))
-                .ShouldThrow<ArgumentException>();
+                           .ShouldThrow<ArgumentException>();
         }
 
         [Test]
@@ -79,7 +78,7 @@ namespace NStack.Conditions
         {
             // Act / Assert
             NonEmptyCollection.Invoking(value => value.Contains(Item))
-                .ShouldNotThrow();
+                              .ShouldNotThrow();
         }
 
         [Test]
@@ -87,7 +86,7 @@ namespace NStack.Conditions
         {
             // Act / Assert
             NonEmptyCollection.Invoking(value => value.DoesNotContain(Item))
-                .ShouldThrow<ArgumentException>();
+                              .ShouldThrow<ArgumentException>();
         }
 
         [Test]
@@ -95,7 +94,7 @@ namespace NStack.Conditions
         {
             // Act / Assert
             EmptyCollection.Invoking(value => value.DoesNotContain(Item))
-                .ShouldNotThrow();
+                           .ShouldNotThrow();
         }
 
         [Test]
@@ -103,7 +102,7 @@ namespace NStack.Conditions
         {
             // Act / Assert
             EmptyCollection.Invoking(value => value.DoesNotHaveCountOf(0))
-                .ShouldThrow<ArgumentException>();
+                           .ShouldThrow<ArgumentException>();
         }
 
         [Test]
@@ -111,55 +110,42 @@ namespace NStack.Conditions
         {
             // Act / Assert
             EmptyCollection.Invoking(value => value.DoesNotHaveCountOf(1))
-                .ShouldNotThrow();
+                           .ShouldNotThrow();
         }
 
         [Test]
-        public void HasCountOf_should_fail()
+        public void HasCountGreaterThanOrEqualTo_should_fail()
         {
-            // Act / Assert
-            EmptyCollection.Invoking(value => value.HasCountOf(1))
-                .ShouldThrow<ArgumentException>();
+            EmptyCollection.Invoking(value => value.HasCountGreaterThanOrEqualTo(int.MaxValue))
+                           .ShouldThrow<ArgumentException>();
         }
 
         [Test]
-        public void HasCountOf_should_pass()
+        public void HasCountGreaterThanOrEqualTo_should_pass()
         {
-            // Act / Assert
-            NonEmptyCollection.Invoking(value => value.HasCountOf(1))
-                .ShouldNotThrow();
+            NonEmptyCollection.Invoking(value => value.HasCountGreaterThanOrEqualTo(1))
+                              .ShouldNotThrow();
         }
 
         [Test]
-        public void IsEmpty_should_fail()
+        public void HasCountGreaterThan_should_fail()
         {
-            // Act / Assert
-            NonEmptyCollection.Invoking(value => value.IsEmpty())
-                .ShouldThrow<ArgumentException>();
+            EmptyCollection.Invoking(value => value.HasCountGreaterThan(1))
+                           .ShouldThrow<ArgumentException>();
         }
 
         [Test]
-        public void IsEmpty_should_pass()
+        public void HasCountGreaterThan_should_pass()
         {
-            // Act / Assert
-            EmptyCollection.Invoking(value => value.IsEmpty())
-                .ShouldNotThrow();
+            NonEmptyCollection.Invoking(value => value.HasCountGreaterThan(0))
+                              .ShouldNotThrow();
         }
 
         [Test]
-        public void IsNotEmpty_should_fail()
+        public void HasCountLessThanOrEqualTo_should_fail()
         {
-            // Act / Assert
-            EmptyCollection.Invoking(value => value.IsNotEmpty())
-                .ShouldThrow<ArgumentException>();
-        }
-
-        [Test]
-        public void IsNotEmpty_should_pass()
-        {
-            // Act / Assert
-            NonEmptyCollection.Invoking(value => value.IsNotEmpty())
-                .ShouldNotThrow();
+            NonEmptyCollection.Invoking(value => value.HasCountLessThanOrEqualTo(0))
+                              .ShouldThrow<ArgumentException>();
         }
 
         [Test]
@@ -168,54 +154,67 @@ namespace NStack.Conditions
             EmptyCollection.Invoking(value => value.HasCountLessThanOrEqualTo(1))
                            .ShouldNotThrow();
         }
-        
-        [Test]
-        public void HasCountLessThanOrEqualTo_should_fail()
-        {
-            NonEmptyCollection.Invoking(value => value.HasCountLessThanOrEqualTo(0))
-                              .ShouldThrow<ArgumentException>();
-        }
-        
-        [Test]
-        public void HasCountGreaterThanOrEqualTo_should_pass()
-        {
-            NonEmptyCollection.Invoking(value => value.HasCountGreaterThanOrEqualTo(1))
-                              .ShouldNotThrow();
-        }
-        
-        [Test]
-        public void HasCountGreaterThanOrEqualTo_should_fail()
-        {
-            EmptyCollection.Invoking(value => value.HasCountGreaterThanOrEqualTo(int.MaxValue))
-                           .ShouldThrow<ArgumentException>();
-        }
-        
-        [Test]
-        public void HasCountLessThan_should_pass()
-        {
-            EmptyCollection.Invoking(value => value.HasCountLessThan(1))
-                           .ShouldNotThrow();
-        }
-        
+
         [Test]
         public void HasCountLessThan_should_fail()
         {
             NonEmptyCollection.Invoking(value => value.HasCountLessThan(1))
                               .ShouldThrow<ArgumentException>();
         }
-        
+
         [Test]
-        public void HasCountGreaterThan_should_pass()
+        public void HasCountLessThan_should_pass()
         {
-            NonEmptyCollection.Invoking(value => value.HasCountGreaterThan(0))
+            EmptyCollection.Invoking(value => value.HasCountLessThan(1))
+                           .ShouldNotThrow();
+        }
+
+        [Test]
+        public void HasCountOf_should_fail()
+        {
+            // Act / Assert
+            EmptyCollection.Invoking(value => value.HasCountOf(1))
+                           .ShouldThrow<ArgumentException>();
+        }
+
+        [Test]
+        public void HasCountOf_should_pass()
+        {
+            // Act / Assert
+            NonEmptyCollection.Invoking(value => value.HasCountOf(1))
                               .ShouldNotThrow();
         }
-        
+
         [Test]
-        public void HasCountGreaterThan_should_fail()
+        public void IsEmpty_should_fail()
         {
-            EmptyCollection.Invoking(value => value.HasCountGreaterThan(1))
+            // Act / Assert
+            NonEmptyCollection.Invoking(value => value.IsEmpty())
+                              .ShouldThrow<ArgumentException>();
+        }
+
+        [Test]
+        public void IsEmpty_should_pass()
+        {
+            // Act / Assert
+            EmptyCollection.Invoking(value => value.IsEmpty())
+                           .ShouldNotThrow();
+        }
+
+        [Test]
+        public void IsNotEmpty_should_fail()
+        {
+            // Act / Assert
+            EmptyCollection.Invoking(value => value.IsNotEmpty())
                            .ShouldThrow<ArgumentException>();
+        }
+
+        [Test]
+        public void IsNotEmpty_should_pass()
+        {
+            // Act / Assert
+            NonEmptyCollection.Invoking(value => value.IsNotEmpty())
+                              .ShouldNotThrow();
         }
     }
 }

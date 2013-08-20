@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="Requires.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -29,12 +29,12 @@ using NStack.Expressions;
 namespace NStack
 {
     /// <summary>
-    ///   A facade for asserting preconditions.
+    ///     A facade for asserting preconditions.
     /// </summary>
     public static class Requires
     {
         /// <summary>
-        ///   Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"> The value of the argument. </param>
         /// <param name="argumentName"> The name of the argument. </param>
@@ -45,7 +45,7 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"> THe value of the argument. </param>
         /// <param name="reference"> An expression used to find the argument's name in code. </param>
@@ -56,7 +56,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
@@ -67,7 +67,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="reference"></param>
@@ -76,10 +76,10 @@ namespace NStack
         {
             return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
         }
-        
-        
+
+
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
@@ -90,7 +90,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="reference"></param>
@@ -99,10 +99,10 @@ namespace NStack
         {
             return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
         }
-        
-        
+
+
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
@@ -113,7 +113,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="reference"></param>
@@ -122,10 +122,10 @@ namespace NStack
         {
             return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
         }
-        
-        
+
+
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
@@ -136,7 +136,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="reference"></param>
@@ -145,10 +145,10 @@ namespace NStack
         {
             return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
         }
-        
-        
+
+
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
@@ -159,7 +159,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="reference"></param>
@@ -168,10 +168,10 @@ namespace NStack
         {
             return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
         }
-        
-        
+
+
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
@@ -182,7 +182,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="reference"></param>
@@ -191,9 +191,9 @@ namespace NStack
         {
             return That(value, ExpressionUtil.GetFieldOrPropertyName(reference));
         }
-        
+
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
@@ -204,7 +204,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="reference"></param>
@@ -215,7 +215,7 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Begins fluenet assertion of preconditions on strings.
+        ///     Begins fluenet assertion of preconditions on strings.
         /// </summary>
         /// <param name="value"> </param>
         /// <param name="argumentName"> </param>
@@ -226,7 +226,7 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Begins fluenet assertion of preconditions on strings.
+        ///     Begins fluenet assertion of preconditions on strings.
         /// </summary>
         /// <param name="value"> </param>
         /// <param name="reference"> </param>
@@ -237,7 +237,7 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Begins fluent assertion of preconditions on generic dictionaries.
+        ///     Begins fluent assertion of preconditions on generic dictionaries.
         /// </summary>
         /// <typeparam name="TKey"> </typeparam>
         /// <typeparam name="TValue"> </typeparam>
@@ -251,7 +251,7 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Begins fluent assertion of preconditions on non-generic dictionaries.
+        ///     Begins fluent assertion of preconditions on non-generic dictionaries.
         /// </summary>
         /// <param name="dictionary"> </param>
         /// <param name="argumentName"> </param>
@@ -262,7 +262,7 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Begins fluent assertion of preconditions on generic collections.
+        ///     Begins fluent assertion of preconditions on generic collections.
         /// </summary>
         /// <typeparam name="T"> </typeparam>
         /// <param name="collection"> </param>
@@ -274,7 +274,7 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Begins fluent assertion of preconditions on generic collections.
+        ///     Begins fluent assertion of preconditions on generic collections.
         /// </summary>
         /// <typeparam name="T"> </typeparam>
         /// <param name="collection"> </param>
@@ -287,7 +287,7 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Begins fluent assertion of preconditions on non-generic collections.
+        ///     Begins fluent assertion of preconditions on non-generic collections.
         /// </summary>
         /// <param name="collection"> </param>
         /// <param name="argumentName"> </param>

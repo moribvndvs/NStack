@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="Ensures.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ namespace NStack
     public class Ensures
     {
         /// <summary>
-        ///   Begins fluent assertion of postconditions.
+        ///     Begins fluent assertion of postconditions.
         /// </summary>
         /// <param name="value"> The value of the argument. </param>
         /// <param name="argumentName"> The name of the argument. </param>
@@ -42,7 +42,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
@@ -53,7 +53,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="reference"></param>
@@ -65,7 +65,7 @@ namespace NStack
 
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
@@ -76,7 +76,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="reference"></param>
@@ -88,7 +88,7 @@ namespace NStack
 
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
@@ -99,7 +99,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="reference"></param>
@@ -111,7 +111,7 @@ namespace NStack
 
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
@@ -122,7 +122,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="reference"></param>
@@ -134,7 +134,7 @@ namespace NStack
 
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
@@ -145,7 +145,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="reference"></param>
@@ -157,7 +157,7 @@ namespace NStack
 
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
@@ -168,7 +168,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="reference"></param>
@@ -179,7 +179,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="argumentName"></param>
@@ -190,7 +190,7 @@ namespace NStack
         }
 
         /// <summary>
-        /// Begins fluent assertion of preconditions.
+        ///     Begins fluent assertion of preconditions.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="reference"></param>
@@ -201,7 +201,7 @@ namespace NStack
         }
 
         /// <summary>
-        ///   Begins fluent assertion of postconditions.
+        ///     Begins fluent assertion of postconditions.
         /// </summary>
         /// <typeparam name="T"> The type of the argument. </typeparam>
         /// <param name="value"> THe value of the argument. </param>

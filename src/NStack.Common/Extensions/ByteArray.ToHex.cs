@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="ByteArray.ToHex.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ namespace NStack.Extensions
     public static class ByteArray
     {
         /// <summary>
-        ///   Returns the contents of the byte array as a string of hex equivalents.
+        ///     Returns the contents of the byte array as a string of hex equivalents.
         /// </summary>
         /// <param name="array"> The array. </param>
         /// <returns> A string of hex values representing the original array. </returns>

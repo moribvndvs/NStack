@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 
 using FluentAssertions;
+using FluentAssertions.Primitives;
 
 using NUnit.Framework;
 
@@ -30,6 +31,8 @@ namespace NStack
     [TestFixture]
     public class SemanticVersionRangeTests
     {
+        #region Setup/Teardown
+
         [SetUp]
         public void SetUpTest()
         {
@@ -50,89 +53,8 @@ namespace NStack
         {
         }
 
-        [Test]
-        public void ExclusiveVersion_CompareTo_should_return_negative_values()
-        {
-            // Arrange
-            var version = (SemanticVersionRange.ExclusiveVersion)SemanticVersionRange.Exclusive(new SemanticVersion(1, 0, 0));
-            version.IsLowerBound = false;
+        #endregion
 
-            var a = (SemanticVersionRange.ExclusiveVersion) SemanticVersionRange.Exclusive(new SemanticVersion(1, 0, 0));
-            a.IsLowerBound = false;
-        
-            var b = (SemanticVersionRange.ExclusiveVersion)SemanticVersionRange.Exclusive(new SemanticVersion(1, 0, 1));
-            b.IsLowerBound = false;
-
-            // Act
-            // Assert
-            version.CompareTo(a).Should().BeLessThan(0);
-            version.CompareTo(b).Should().BeLessThan(0);
-        }
-        
-        [Test]
-        public void ExclusiveVersion_CompareTo_should_return_positive_value()
-        {
-            // Arrange
-            var version = SemanticVersionRange.Exclusive(new SemanticVersion(1, 0, 0));
-
-            // Act
-            // Assert
-            version.CompareTo(new SemanticVersion(0, 9, 0)).Should().BeGreaterThan(0);
-        }
-
-        [Test]
-        public void Compare_should_return_true_for_values_in_range()
-        {
-            // Arrange
-            var rules = new List<Tuple<SemanticVersionRange, SemanticVersion>>
-                {
-                    new Tuple<SemanticVersionRange, SemanticVersion>(
-                        new SemanticVersionRange(SemanticVersionRange.Inclusive(new SemanticVersion(1, 0, 0)),
-                                                 SemanticVersionRange.Inclusive(SemanticVersion.MaxValue)),
-                        new SemanticVersion(1, 0, 0)
-                        ),
-                    new Tuple<SemanticVersionRange, SemanticVersion>(
-                        new SemanticVersionRange(SemanticVersionRange.Exclusive(SemanticVersion.Unspecified),
-                                                 SemanticVersionRange.Inclusive(new SemanticVersion(1, 0, 0))),
-                        new SemanticVersion(1, 0, 0)
-                        ),
-                    new Tuple<SemanticVersionRange, SemanticVersion>(
-                        new SemanticVersionRange(SemanticVersionRange.Exclusive(SemanticVersion.Unspecified),
-                                                 SemanticVersionRange.Exclusive(new SemanticVersion(1, 0, 0))),
-                        new SemanticVersion(0, 9, 0)
-                        ),
-                    new Tuple<SemanticVersionRange, SemanticVersion>(
-                        new SemanticVersionRange(SemanticVersionRange.Inclusive(new SemanticVersion(1, 0, 0)),
-                                                 SemanticVersionRange.Inclusive(new SemanticVersion(1, 0, 0))),
-                        new SemanticVersion(1, 0, 0)
-                        ),
-                    new Tuple<SemanticVersionRange, SemanticVersion>(
-                        new SemanticVersionRange(SemanticVersionRange.Exclusive(new SemanticVersion(1, 0, 0)),
-                                                 SemanticVersionRange.Inclusive(SemanticVersion.MaxValue)),
-                        new SemanticVersion(1, 1, 0)
-                        ),
-                    new Tuple<SemanticVersionRange, SemanticVersion>(
-                        new SemanticVersionRange(SemanticVersionRange.Exclusive(new SemanticVersion(1, 0, 0)),
-                                                 SemanticVersionRange.Exclusive(new SemanticVersion(2, 0, 0))),
-                        new SemanticVersion(1, 5, 0)
-                        ),
-                    new Tuple<SemanticVersionRange, SemanticVersion>(
-                        new SemanticVersionRange(SemanticVersionRange.Inclusive(new SemanticVersion(1, 0, 0)),
-                                                 SemanticVersionRange.Inclusive(new SemanticVersion(2, 0, 0))),
-                        new SemanticVersion(1, 0, 0)
-                        )
-                };
-
-            foreach (var rule in rules)
-            {
-                // Act
-
-                // Assert
-
-                rule.Item1.Contains(rule.Item2).Should().BeTrue();
-            }
-        }
-        
         [Test]
         public void Compare_should_return_false_for_values_out_of_range()
         {
@@ -186,7 +108,7 @@ namespace NStack
                         )
                 };
 
-            foreach (var rule in rules)
+            foreach (Tuple<SemanticVersionRange, SemanticVersion> rule in rules)
             {
                 // Act
 
@@ -194,6 +116,90 @@ namespace NStack
 
                 rule.Item1.Contains(rule.Item2).Should().BeFalse("{0} -> {1}", rule.Item1, rule.Item2);
             }
+        }
+
+        [Test]
+        public void Compare_should_return_true_for_values_in_range()
+        {
+            // Arrange
+            var rules = new List<Tuple<SemanticVersionRange, SemanticVersion>>
+                {
+                    new Tuple<SemanticVersionRange, SemanticVersion>(
+                        new SemanticVersionRange(SemanticVersionRange.Inclusive(new SemanticVersion(1, 0, 0)),
+                                                 SemanticVersionRange.Inclusive(SemanticVersion.MaxValue)),
+                        new SemanticVersion(1, 0, 0)
+                        ),
+                    new Tuple<SemanticVersionRange, SemanticVersion>(
+                        new SemanticVersionRange(SemanticVersionRange.Exclusive(SemanticVersion.Unspecified),
+                                                 SemanticVersionRange.Inclusive(new SemanticVersion(1, 0, 0))),
+                        new SemanticVersion(1, 0, 0)
+                        ),
+                    new Tuple<SemanticVersionRange, SemanticVersion>(
+                        new SemanticVersionRange(SemanticVersionRange.Exclusive(SemanticVersion.Unspecified),
+                                                 SemanticVersionRange.Exclusive(new SemanticVersion(1, 0, 0))),
+                        new SemanticVersion(0, 9, 0)
+                        ),
+                    new Tuple<SemanticVersionRange, SemanticVersion>(
+                        new SemanticVersionRange(SemanticVersionRange.Inclusive(new SemanticVersion(1, 0, 0)),
+                                                 SemanticVersionRange.Inclusive(new SemanticVersion(1, 0, 0))),
+                        new SemanticVersion(1, 0, 0)
+                        ),
+                    new Tuple<SemanticVersionRange, SemanticVersion>(
+                        new SemanticVersionRange(SemanticVersionRange.Exclusive(new SemanticVersion(1, 0, 0)),
+                                                 SemanticVersionRange.Inclusive(SemanticVersion.MaxValue)),
+                        new SemanticVersion(1, 1, 0)
+                        ),
+                    new Tuple<SemanticVersionRange, SemanticVersion>(
+                        new SemanticVersionRange(SemanticVersionRange.Exclusive(new SemanticVersion(1, 0, 0)),
+                                                 SemanticVersionRange.Exclusive(new SemanticVersion(2, 0, 0))),
+                        new SemanticVersion(1, 5, 0)
+                        ),
+                    new Tuple<SemanticVersionRange, SemanticVersion>(
+                        new SemanticVersionRange(SemanticVersionRange.Inclusive(new SemanticVersion(1, 0, 0)),
+                                                 SemanticVersionRange.Inclusive(new SemanticVersion(2, 0, 0))),
+                        new SemanticVersion(1, 0, 0)
+                        )
+                };
+
+            foreach (Tuple<SemanticVersionRange, SemanticVersion> rule in rules)
+            {
+                // Act
+
+                // Assert
+
+                rule.Item1.Contains(rule.Item2).Should().BeTrue();
+            }
+        }
+
+        [Test]
+        public void ExclusiveVersion_CompareTo_should_return_negative_values()
+        {
+            // Arrange
+            var version =
+                (SemanticVersionRange.ExclusiveVersion) SemanticVersionRange.Exclusive(new SemanticVersion(1, 0, 0));
+            version.IsLowerBound = false;
+
+            var a = (SemanticVersionRange.ExclusiveVersion) SemanticVersionRange.Exclusive(new SemanticVersion(1, 0, 0));
+            a.IsLowerBound = false;
+
+            var b = (SemanticVersionRange.ExclusiveVersion) SemanticVersionRange.Exclusive(new SemanticVersion(1, 0, 1));
+            b.IsLowerBound = false;
+
+            // Act
+            // Assert
+            version.CompareTo(a).Should().BeLessThan(0);
+            version.CompareTo(b).Should().BeLessThan(0);
+        }
+
+        [Test]
+        public void ExclusiveVersion_CompareTo_should_return_positive_value()
+        {
+            // Arrange
+            SemanticVersion version = SemanticVersionRange.Exclusive(new SemanticVersion(1, 0, 0));
+
+            // Act
+            // Assert
+            version.CompareTo(new SemanticVersion(0, 9, 0)).Should().BeGreaterThan(0);
         }
 
         [Test]
@@ -246,14 +252,43 @@ namespace NStack
                     }
                 };
 
-            foreach (var rule in rules)
+            foreach (KeyValuePair<string, Tuple<SemanticVersion, SemanticVersion>> rule in rules)
             {
                 // Act
-                var actual = SemanticVersionRange.ParseRangeString(rule.Key);
+                Tuple<SemanticVersion, SemanticVersion> actual = SemanticVersionRange.ParseRangeString(rule.Key);
 
                 // Assert
                 actual.Item1.Should().Be(rule.Value.Item1);
                 actual.Item2.Should().Be(rule.Value.Item2);
+            }
+        }
+
+        [Test]
+        public void Parse_should_return_parsed_range()
+        {
+            // Arrange
+            var expected = new SemanticVersionRange("1.0");
+
+            // Act
+            SemanticVersionRange actual = SemanticVersionRange.Parse("1.0");
+
+            // Assert
+            actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void ToString_should_render_proper_NuGet_style_range_strings()
+        {
+            // Arrange
+            var formats = new[] {"1.0", "(,1.0]", "(,1.0)", "[1.0]", "(1.0,)", "(1.0,2.0)", "[1.0,2.0]"};
+
+            foreach (string format in formats)
+            {
+                // Act
+                var range = new SemanticVersionRange(format);
+
+                // Assert
+                AndConstraint<StringAssertions> actual = range.ToString().Should().Be(format);
             }
         }
 
@@ -265,7 +300,7 @@ namespace NStack
             SemanticVersionRange result = null;
             bool success = false;
 
-            foreach (var value in values)
+            foreach (string value in values)
             {
                 // Act
                 Assert.DoesNotThrow(() => success = SemanticVersionRange.TryParse(value, out result));
@@ -283,40 +318,11 @@ namespace NStack
             SemanticVersionRange result = null;
 
             // Act
-            var actual = SemanticVersionRange.TryParse("1.0", out result);
+            bool actual = SemanticVersionRange.TryParse("1.0", out result);
 
             // Assert
             actual.Should().BeTrue();
             result.Should().Be(new SemanticVersionRange("1.0"));
-        }
-
-        [Test]
-        public void Parse_should_return_parsed_range()
-        {
-            // Arrange
-            var expected = new SemanticVersionRange("1.0");
-
-            // Act
-            var actual = SemanticVersionRange.Parse("1.0");
-
-            // Assert
-            actual.Should().Be(expected);
-        }
-
-        [Test]
-        public void ToString_should_render_proper_NuGet_style_range_strings()
-        {
-            // Arrange
-            var formats = new[] {"1.0", "(,1.0]", "(,1.0)", "[1.0]", "(1.0,)", "(1.0,2.0)", "[1.0,2.0]"};
-
-            foreach (var format in formats)
-            {
-                // Act
-                var range = new SemanticVersionRange(format);
-
-                // Assert
-                var actual = range.ToString().Should().Be(format);
-            }
         }
     }
 }

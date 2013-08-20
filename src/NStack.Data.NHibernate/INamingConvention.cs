@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="INamingConvention.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -25,12 +25,12 @@ using NHibernate.Mapping.ByCode;
 namespace NStack.Data
 {
     /// <summary>
-    /// A contract for NHibernate mapping-by-code naming conventions.
+    ///     A contract for NHibernate mapping-by-code naming conventions.
     /// </summary>
     public interface INamingConvention
     {
         /// <summary>
-        /// Returns the name of the table for the model.
+        ///     Returns the name of the table for the model.
         /// </summary>
         /// <param name="modelInspector">The model inspector.</param>
         /// <param name="type">The model type.</param>
@@ -38,7 +38,7 @@ namespace NStack.Data
         string Table(IModelInspector modelInspector, Type type);
 
         /// <summary>
-        /// Returns the name of the table column for an entity's property.
+        ///     Returns the name of the table column for an entity's property.
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member">The entity property.</param>
@@ -47,17 +47,18 @@ namespace NStack.Data
         string Column(IModelInspector inspector, PropertyPath member, Type declaringType = null);
 
         /// <summary>
-        /// Returns the name of the foreign key in a relationship.
+        ///     Returns the name of the foreign key in a relationship.
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member">The entity property.</param>
         /// <param name="declaringType"> </param>
         /// <param name="idDeclaringType"> </param>
         /// <returns>The name of the foreign key.</returns>
-        string ForeignKey(IModelInspector inspector, PropertyPath member, Type declaringType = null, Type idDeclaringType = null);
+        string ForeignKey(IModelInspector inspector, PropertyPath member, Type declaringType = null,
+                          Type idDeclaringType = null);
 
         /// <summary>
-        /// Returns the name of the index for the column.
+        ///     Returns the name of the index for the column.
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member">The entity property.</param>
@@ -65,7 +66,7 @@ namespace NStack.Data
         string Index(IModelInspector inspector, PropertyPath member);
 
         /// <summary>
-        /// Returns the name of a key column.
+        ///     Returns the name of a key column.
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member"></param>
@@ -74,7 +75,7 @@ namespace NStack.Data
         string KeyColumn(IModelInspector inspector, PropertyPath member, Type declaringType = null);
 
         /// <summary>
-        /// Returns the name of the index column in an ordered collection.
+        ///     Returns the name of the index column in an ordered collection.
         /// </summary>
         /// <param name="inspector">The model inspector.</param>
         /// <param name="member">The collection property.</param>

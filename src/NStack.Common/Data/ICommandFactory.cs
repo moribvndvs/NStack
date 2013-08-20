@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="ICommandFactory.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -21,12 +21,12 @@
 namespace NStack.Data
 {
     /// <summary>
-    ///   A contract for factory types that create <see cref="ICommand" /> .
+    ///     A contract for factory types that create <see cref="ICommand" /> .
     /// </summary>
     public interface ICommandFactory
     {
         /// <summary>
-        ///   Creates a new instance of the command specified by type.
+        ///     Creates a new instance of the command specified by type.
         /// </summary>
         /// <typeparam name="TCommand"> The type of the command to create. </typeparam>
         /// <returns> The command. </returns>

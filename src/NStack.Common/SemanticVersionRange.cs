@@ -190,6 +190,8 @@ namespace NStack
             return version;
         }
 
+        #region Nested type: ExclusiveVersion
+
         internal class ExclusiveVersion : SemanticVersion
         {
             internal bool? IsLowerBound;
@@ -216,5 +218,7 @@ namespace NStack
                            : value;
             }
         }
+
+        #endregion
     }
 }

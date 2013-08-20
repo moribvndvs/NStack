@@ -1,6 +1,7 @@
 ﻿#region header
+
 // <copyright file="EnumerableExtensions.ForEach.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -14,6 +15,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #endregion
 
 using System;
@@ -22,12 +24,12 @@ using System.Collections.Generic;
 namespace NStack.Extensions
 {
     /// <summary>
-    /// Extensions for enumerable.
+    ///     Extensions for enumerable.
     /// </summary>
-    public static partial class EnumerableExtensions
+    public static class EnumerableExtensions
     {
         /// <summary>
-        /// Enumerates each item in the collection and invokes the specified action.
+        ///     Enumerates each item in the collection and invokes the specified action.
         /// </summary>
         /// <typeparam name="T">The type of the element in the collection.</typeparam>
         /// <param name="enumerable">The collection.</param>
@@ -37,16 +39,16 @@ namespace NStack.Extensions
 // ReSharper disable PossibleMultipleEnumeration
             Requires.That(enumerable, () => enumerable)
 // ReSharper restore PossibleMultipleEnumeration
-                .IsNotNull();
+                    .IsNotNull();
 
-            foreach (var element in enumerable)
+            foreach (T element in enumerable)
             {
                 action(element);
             }
         }
 
         /// <summary>
-        /// Enumerates each item in the collection and invokes the specified action, which also provides the index of the element.
+        ///     Enumerates each item in the collection and invokes the specified action, which also provides the index of the element.
         /// </summary>
         /// <typeparam name="T">The type of the element in the collection.</typeparam>
         /// <param name="enumerable">The collection.</param>
@@ -56,11 +58,11 @@ namespace NStack.Extensions
 // ReSharper disable PossibleMultipleEnumeration
             Requires.That(enumerable, () => enumerable)
 // ReSharper restore PossibleMultipleEnumeration
-                .IsNotNull();
+                    .IsNotNull();
 
-            var c = 0;
+            int c = 0;
 
-            foreach (var element in enumerable)
+            foreach (T element in enumerable)
             {
                 action(element, c++);
             }

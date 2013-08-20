@@ -1,7 +1,7 @@
 ﻿#region header
 
 // <copyright file="ObjectVariable.cs" company="mikegrabski.com">
-//    Copyright 2012 Mike Grabski
+//    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -25,14 +25,14 @@ namespace NStack.Conditions
     public class ObjectVariable : NullableVariable<object, ObjectVariable>
     {
         /// <summary>
-        ///   Initializes a new instance of the <see cref="T:System.Object" /> class.
+        ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
         public ObjectVariable(object value, string name, bool postCondition) : base(value, name, postCondition)
         {
         }
 
         /// <summary>
-        ///   Asserts that the argument is an instance of the specified type.
+        ///     Asserts that the argument is an instance of the specified type.
         /// </summary>
         /// <typeparam name="TType"> A type. </typeparam>
         /// <param name="message"> The exception message. </param>
@@ -47,7 +47,7 @@ namespace NStack.Conditions
         }
 
         /// <summary>
-        ///   Asserts that the object is not an instance of the specified type.
+        ///     Asserts that the object is not an instance of the specified type.
         /// </summary>
         /// <typeparam name="TType"> A type. </typeparam>
         /// <param name="message"> The exception message. </param>
