@@ -70,6 +70,8 @@
     <Compile Include="Conditions\NumericVariableTests.cs" />
     <Compile Include="Conditions\ObjectVariableTests.cs" />
     <Compile Include="Conditions\StringVariableTests.cs" />
+    <Compile Include="Data\InMemoryRepositoryTests.cs" />
+    <Compile Include="Data\UnitOfWorkScopeTests.cs" />
     <Compile Include="NumberBasesTests.cs" />
     <Compile Include="Extensions\StringCapitalizeTests.cs" />
     <Compile Include="Extensions\StringConvertToTests.cs" />
@@ -95,9 +97,7 @@
       <Name>NStack.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

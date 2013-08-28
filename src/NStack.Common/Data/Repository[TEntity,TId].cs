@@ -1,25 +1,18 @@
 ﻿#region header
 
-// <copyright file="Repository[TEntity,TId].cs" company="mikegrabski.com">
-//    Copyright 2013 Mike Grabski
-// 
-//    Licensed under the Apache License, Version 2.0 (the "License");
-//    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-// 
-//        http://www.apache.org/licenses/LICENSE-2.0
-// 
-//    Unless required by applicable law or agreed to in writing, software
-//    distributed under the License is distributed on an "AS IS" BASIS,
-//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//    See the License for the specific language governing permissions and
-//    limitations under the License.
-// </copyright>
+// -----------------------------------------------------------------------
+//  <copyright file="Repository[TEntity,TId].cs" company="Family Bronze, LTD">
+//      © 2013 Mike Grabski and Family Bronze, LTD All rights reserved.
+//  </copyright>
+// -----------------------------------------------------------------------
 
 #endregion
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace NStack.Data
 {
@@ -30,7 +23,25 @@ namespace NStack.Data
     /// <typeparam name="TId"> The type of the entity's ID property. </typeparam>
     public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
     {
+        
+       /// <summary>
+        ///     When implemented, creates a new <see cref="IQueryable{TEntity}" />.
+        /// </summary>
+        /// <returns></returns>
+        protected abstract IQueryable<TEntity> Query();
+
         #region Implementation of IRepository<TEntity,in TId>
+
+        /// <summary>
+        ///     Refreshes the specified entity.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        public abstract void Refresh(TEntity entity);
+
+        /// <summary>
+        ///     Gets the <see cref="IUnitOfWork" /> responsible for managing unit of work transactions.
+        /// </summary>
+        public abstract IUnitOfWork UnitOfWork { get; }
 
         /// <summary>
         ///     Adds the specified entity to the repository.
@@ -68,13 +79,6 @@ namespace NStack.Data
         public abstract void Remove(TEntity entity);
 
         /// <summary>
-        ///     Returns whether or not the specified entity exists in the repository.
-        /// </summary>
-        /// <param name="entity"> The entity. </param>
-        /// <returns> True if the entity exists in the repository; otherwise, false. </returns>
-        public abstract bool Contains(TEntity entity);
-
-        /// <summary>
         ///     Returns the total number of entities in the repository.
         /// </summary>
         /// <returns> The total number of entities in the repository. </returns>
@@ -92,11 +96,74 @@ namespace NStack.Data
         /// <param name="entity"> </param>
         public abstract void Detach(TEntity entity);
 
+        #endregion
+
+        #region Implementation of IEnumerable
+
         /// <summary>
-        ///     Begins a LINQ query against the repository.
+        ///     Returns an enumerator that iterates through the collection.
         /// </summary>
-        /// <returns> A LINQ query. </returns>
-        public abstract IQueryable<TEntity> Query();
+        /// <returns>
+        ///     A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.
+        /// </returns>
+        public IEnumerator<TEntity> GetEnumerator()
+        {
+            return Query().GetEnumerator();
+        }
+
+        /// <summary>
+        ///     Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>
+        ///     An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.
+        /// </returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        #endregion
+
+        #region Implementation of IQueryable
+
+        /// <summary>
+        ///     Gets the expression tree that is associated with the instance of <see cref="T:System.Linq.IQueryable" />.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="T:System.Linq.Expressions.Expression" /> that is associated with this instance of
+        ///     <see
+        ///         cref="T:System.Linq.IQueryable" />
+        ///     .
+        /// </returns>
+        public Expression Expression
+        {
+            get { return Query().Expression; }
+        }
+
+        /// <summary>
+        ///     Gets the type of the element(s) that are returned when the expression tree associated with this instance of
+        ///     <see
+        ///         cref="T:System.Linq.IQueryable" />
+        ///     is executed.
+        /// </summary>
+        /// <returns>
+        ///     A <see cref="T:System.Type" /> that represents the type of the element(s) that are returned when the expression tree associated with this object is executed.
+        /// </returns>
+        public Type ElementType
+        {
+            get { return Query().ElementType; }
+        }
+
+        /// <summary>
+        ///     Gets the query provider that is associated with this data source.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="T:System.Linq.IQueryProvider" /> that is associated with this data source.
+        /// </returns>
+        public IQueryProvider Provider
+        {
+            get { return Query().Provider; }
+        }
 
         #endregion
     }

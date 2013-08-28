@@ -23,7 +23,7 @@ namespace NStack.Models
     /// <summary>
     ///     A generic root entity for entities that use an integer as an ID.
     /// </summary>
-    public abstract class Entity : Entity<int>
+    public abstract class Entity : Entity<Flake>
     {
     }
 }

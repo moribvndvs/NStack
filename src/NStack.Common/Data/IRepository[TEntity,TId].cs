@@ -28,8 +28,13 @@ namespace NStack.Data
     /// </summary>
     /// <typeparam name="TEntity"> The type of the entity the repository contains. </typeparam>
     /// <typeparam name="TId"> The type of the identifier property on the entity, used to identify a particular instance. </typeparam>
-    public interface IRepository<TEntity, in TId>
+    public interface IRepository<TEntity, in TId> : IQueryable<TEntity>
     {
+        /// <summary>
+        /// Gets the <see cref="IUnitOfWork"/> responsible for managing unit of work transactions.
+        /// </summary>
+        IUnitOfWork UnitOfWork { get; }
+
         /// <summary>
         ///     Attaches the specified entity to the repository.
         /// </summary>
@@ -66,13 +71,6 @@ namespace NStack.Data
         void Remove(TEntity entity);
 
         /// <summary>
-        ///     Returns whether or not the specified entity exists in the repository.
-        /// </summary>
-        /// <param name="entity"> The entity. </param>
-        /// <returns> True if the entity exists in the repository; otherwise, false. </returns>
-        bool Contains(TEntity entity);
-
-        /// <summary>
         ///     Returns the total number of entities in the repository.
         /// </summary>
         /// <returns> The total number of entities in the repository. </returns>
@@ -91,9 +89,9 @@ namespace NStack.Data
         void Detach(TEntity entity);
 
         /// <summary>
-        ///     Begins a LINQ query against the repository.
+        /// Refreshes the specified entity.
         /// </summary>
-        /// <returns> A LINQ query. </returns>
-        IQueryable<TEntity> Query();
+        /// <param name="entity">The entity.</param>
+        void Refresh(TEntity entity);
     }
 }

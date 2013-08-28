@@ -9,9 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{03EDE2D3-F66
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{87DE6C7B-A6FE-45E1-956E-0F9109683BB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.Data.NHibernate", "NStack.Data.NHibernate\NStack.Data.NHibernate.csproj", "{4ED046DC-68AF-4851-B9F4-F40F25739E0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.NHibernate", "NStack.NHibernate\NStack.NHibernate.csproj", "{4ED046DC-68AF-4851-B9F4-F40F25739E0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.Data.NHibernate.Tests", "NStack.Data.NHibernate.Tests\NStack.Data.NHibernate.Tests.csproj", "{3C7BD1B2-F051-41F2-BA01-5CBA3103A2EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.NHibernate.Tests", "NStack.NHibernate.Tests\NStack.NHibernate.Tests.csproj", "{3C7BD1B2-F051-41F2-BA01-5CBA3103A2EB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{716D97F9-B417-43C0-AE4D-B59041DCCDC1}"
 	ProjectSection(SolutionItems) = preProject
@@ -29,9 +29,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.Web", "NStack.Web\NS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.Web.Tests", "NStack.Web.Tests\NStack.Web.Tests.csproj", "{4F9B0C74-9E03-4FC6-8ADE-730AB18FF600}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.Web.WebApi", "NStack.Web.WebApi\NStack.Web.WebApi.csproj", "{95C3DC8F-C1E1-4830-90F0-0BE8EA176DBC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.WebApi", "NStack.WebApi\NStack.WebApi.csproj", "{95C3DC8F-C1E1-4830-90F0-0BE8EA176DBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.Web.WebApi.Tests", "NStack.Web.WebApi.Tests\NStack.Web.WebApi.Tests.csproj", "{6EA51D42-64C7-479F-A63F-BD8B683003F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStack.WebApi.Tests", "NStack.WebApi.Tests\NStack.WebApi.Tests.csproj", "{6EA51D42-64C7-479F-A63F-BD8B683003F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
