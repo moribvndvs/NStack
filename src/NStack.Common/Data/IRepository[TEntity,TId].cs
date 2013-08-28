@@ -31,7 +31,7 @@ namespace NStack.Data
     public interface IRepository<TEntity, in TId> : IQueryable<TEntity>
     {
         /// <summary>
-        /// Gets the <see cref="IUnitOfWork"/> responsible for managing unit of work transactions.
+        ///     Gets the <see cref="IUnitOfWork" /> responsible for managing unit of work transactions.
         /// </summary>
         IUnitOfWork UnitOfWork { get; }
 
@@ -89,7 +89,7 @@ namespace NStack.Data
         void Detach(TEntity entity);
 
         /// <summary>
-        /// Refreshes the specified entity.
+        ///     Refreshes the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
         void Refresh(TEntity entity);

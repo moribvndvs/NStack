@@ -29,16 +29,19 @@ namespace NStack.Data
     public interface IUnitOfWork : IDisposable
     {
         /// <summary>
-        /// Returns an <see cref="IUnitOfWorkScope"/> based on the <paramref name="option"/>.
+        ///     Returns an <see cref="IUnitOfWorkScope" /> based on the <paramref name="option" />.
         /// </summary>
         /// <param name="option">Option for transaction handling.</param>
         /// <param name="isolationLevel">The isolation level for the transaction.</param>
         /// <param name="autoCommit">Whether or not the scope should be automatically committed when it is disposed.</param>
-        /// <returns>An <see cref="IUnitOfWork"/>.</returns>
-        IUnitOfWorkScope Scope(TransactionOption option = TransactionOption.Required, IsolationLevel isolationLevel = IsolationLevel.Unspecified, bool autoCommit = false);
+        /// <returns>
+        ///     An <see cref="IUnitOfWork" />.
+        /// </returns>
+        IUnitOfWorkScope Scope(TransactionOption option = TransactionOption.Required,
+                               IsolationLevel isolationLevel = IsolationLevel.Unspecified, bool autoCommit = false);
 
         /// <summary>
-        /// Flushes outstanding changes to the persistence store, without committing any pending transactions.
+        ///     Flushes outstanding changes to the persistence store, without committing any pending transactions.
         /// </summary>
         void Flush();
     }

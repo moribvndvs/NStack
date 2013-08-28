@@ -1,10 +1,20 @@
 ﻿#region header
 
-// -----------------------------------------------------------------------
-//  <copyright file="NHRepository[TEntity,TId].cs" company="Family Bronze, LTD">
-//      © 2013 Mike Grabski and Family Bronze, LTD All rights reserved.
-//  </copyright>
-// -----------------------------------------------------------------------
+// <copyright file="NHRepository[TEntity,TId].cs" company="mikegrabski.com">
+//    Copyright 2013 Mike Grabski
+// 
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+// 
+//        http://www.apache.org/licenses/LICENSE-2.0
+// 
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+// </copyright>
 
 #endregion
 
@@ -12,20 +22,21 @@ using System;
 using System.Linq;
 
 using NHibernate;
-
 using NHibernate.Linq;
 
 namespace NStack.Data
 {
     /// <summary>
-    /// A generic implementation of <see cref="Repository{TEntity, TId}"/> that wraps NHibernate <see cref="ISession"/>.
+    ///     A generic implementation of <see cref="Repository{TEntity, TId}" /> that wraps NHibernate <see cref="ISession" />.
     /// </summary>
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
     /// <typeparam name="TId">The entity's ID type.</typeparam>
     public class NHRepository<TEntity, TId> : Repository<TEntity, TId>
     {
+        private readonly NHUnitOfWork _unitOfWork;
+
         /// <summary>
-        /// Initializes a new instance of <see cref="NHRepository{TEntity, TId}"/>.
+        ///     Initializes a new instance of <see cref="NHRepository{TEntity, TId}" />.
         /// </summary>
         /// <param name="unitOfWork">The unit of work.</param>
         public NHRepository(NHUnitOfWork unitOfWork)
@@ -33,10 +44,8 @@ namespace NStack.Data
             _unitOfWork = unitOfWork;
         }
 
-        private readonly NHUnitOfWork _unitOfWork;
-
         /// <summary>
-        /// Gets the <see cref="ISession"/> used by the repository.
+        ///     Gets the <see cref="ISession" /> used by the repository.
         /// </summary>
         protected ISession Session
         {
@@ -46,20 +55,20 @@ namespace NStack.Data
         #region Overrides of Repository<TEntity,TId>
 
         /// <summary>
-        /// When implemented, creates a new <see cref="IQueryable{TEntity}"/>.
+        ///     Gets the <see cref="IUnitOfWork" /> responsible for managing unit of work transactions.
+        /// </summary>
+        public override IUnitOfWork UnitOfWork
+        {
+            get { return _unitOfWork; }
+        }
+
+        /// <summary>
+        ///     When implemented, creates a new <see cref="IQueryable{TEntity}" />.
         /// </summary>
         /// <returns></returns>
         protected override IQueryable<TEntity> Query()
         {
             return Session.Query<TEntity>();
-        }
-
-        /// <summary>
-        /// Gets the <see cref="IUnitOfWork"/> responsible for managing unit of work transactions.
-        /// </summary>
-        public override IUnitOfWork UnitOfWork
-        {
-            get { return _unitOfWork; }
         }
 
         /// <summary>
@@ -137,7 +146,7 @@ namespace NStack.Data
         }
 
         /// <summary>
-        /// Refreshes the specified entity.
+        ///     Refreshes the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
         public override void Refresh(TEntity entity)

@@ -1,9 +1,21 @@
 ﻿#region header
-// -----------------------------------------------------------------------
-//  <copyright file="InMemoryRepository[TEntity, TId].cs" company="Family Bronze, LTD">
-//      © 2013 Mike Grabski and Family Bronze, LTD All rights reserved.
-//  </copyright>
-// -----------------------------------------------------------------------
+
+// <copyright file="InMemoryRepository[TEntity, TId].cs" company="mikegrabski.com">
+//    Copyright 2013 Mike Grabski
+// 
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+// 
+//        http://www.apache.org/licenses/LICENSE-2.0
+// 
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+// </copyright>
+
 #endregion
 
 using System;
@@ -15,7 +27,7 @@ using NStack.Models;
 namespace NStack.Data
 {
     /// <summary>
-    /// A generic, in-memory repository with a <see cref="Flake"/> identifier.
+    ///     A generic, in-memory repository with a <see cref="Flake" /> identifier.
     /// </summary>
     /// <typeparam name="TEntity">The entity type.</typeparam>
     /// <typeparam name="TId">The type of the id.</typeparam>
@@ -23,10 +35,11 @@ namespace NStack.Data
         where TEntity : Entity<TId>
     {
         private readonly IList<TEntity> _list;
+
         private readonly InMemoryUnitOfWork _uow;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="InMemoryRepository{TEntity, TId}"/>.
+        ///     Initializes a new instance of <see cref="InMemoryRepository{TEntity, TId}" />.
         /// </summary>
         /// <param name="items">The list to use as the backing list of the repository.</param>
         public InMemoryRepository(IList<TEntity> items = null)
@@ -36,6 +49,14 @@ namespace NStack.Data
         }
 
         #region Overrides of Repository<TEntity,TId>
+
+        /// <summary>
+        ///     Gets the <see cref="IUnitOfWork" /> responsible for managing unit of work transactions.
+        /// </summary>
+        public override IUnitOfWork UnitOfWork
+        {
+            get { return _uow; }
+        }
 
         /// <summary>
         ///     When implemented, creates a new <see cref="IQueryable{TEntity}" />.
@@ -52,7 +73,7 @@ namespace NStack.Data
         /// <param name="entity"> </param>
         public override void Detach(TEntity entity)
         {
-           // no op
+            // no op
         }
 
         /// <summary>
@@ -62,14 +83,6 @@ namespace NStack.Data
         public override void Refresh(TEntity entity)
         {
             // no op
-        }
-
-        /// <summary>
-        ///     Gets the <see cref="IUnitOfWork" /> responsible for managing unit of work transactions.
-        /// </summary>
-        public override IUnitOfWork UnitOfWork
-        {
-            get { return _uow; }
         }
 
         /// <summary>

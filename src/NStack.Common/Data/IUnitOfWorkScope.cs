@@ -28,12 +28,12 @@ namespace NStack.Data
     public interface IUnitOfWorkScope : IDisposable
     {
         /// <summary>
-        /// Gets the ID of the scope.
+        ///     Gets the ID of the scope.
         /// </summary>
         Guid Id { get; }
 
         /// <summary>
-        /// Commits the changes made in this scope to the underlying transaction.
+        ///     Commits the changes made in this scope to the underlying transaction.
         /// </summary>
         void Commit();
     }
