@@ -69,6 +69,8 @@
     <Compile Include="Data\TransactionOption.cs" />
     <Compile Include="Data\UnitOfWorkScope.cs" />
     <Compile Include="Data\UnitOfWorkSettings.cs" />
+    <Compile Include="InMemoryResolver.cs" />
+    <Compile Include="IResolver.cs" />
     <Compile Include="NumberBases.cs" />
     <Compile Include="Ensures.cs" />
     <Compile Include="Expressions\ExpressionUtil.cs" />

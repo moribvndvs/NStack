@@ -239,6 +239,16 @@ namespace NStack
         #endregion
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator decimal(Flake value)
+        {
+            return value._value;
+        }
+
+        /// <summary>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>

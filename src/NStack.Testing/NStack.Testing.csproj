@@ -1,16 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4ED046DC-68AF-4851-B9F4-F40F25739E0F}</ProjectGuid>
+    <ProjectGuid>{088600E4-41EB-47C5-A835-439D6CDC1B90}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NStack</RootNamespace>
-    <AssemblyName>NStack.NHibernate</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>NStack.Testing</RootNamespace>
+    <AssemblyName>NStack.Testing</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -39,19 +38,11 @@
     <AssemblyOriginatorKeyFile>..\NStack.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\lib\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\NHibernate.3.3.2.4000\lib\Net35\NHibernate.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -62,19 +53,8 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Data\FlakeGenerator.cs" />
-    <Compile Include="Data\FlakeGeneratorDef.cs" />
-    <Compile Include="Data\FlakeType.cs" />
-    <Compile Include="Data\IOxidation.cs" />
-    <Compile Include="Data\NHRepository[TEntity,TId].cs" />
-    <Compile Include="Data\NHUnitOfWork.cs" />
-    <Compile Include="Data\OxidationAdapter.cs" />
+    <Compile Include="InMemoryServiceLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RustFlakes\BigIntegerOxidation.cs" />
-    <Compile Include="RustFlakes\DecimalOxidation.cs" />
-    <Compile Include="RustFlakes\Oxidation.cs" />
-    <Compile Include="RustFlakes\SqlServerBigIntOxidation.cs" />
-    <Compile Include="RustFlakes\UInt64Oxidation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\NStack.snk">
@@ -84,13 +64,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NStack.Common\NStack.Common.csproj">
-      <Project>{647D81A7-01E7-4074-B28A-D5284A1C4196}</Project>
+      <Project>{647d81a7-01e7-4074-b28a-d5284a1c4196}</Project>
       <Name>NStack.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
