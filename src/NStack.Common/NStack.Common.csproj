@@ -62,6 +62,15 @@
     <Compile Include="Conditions\ObjectVariable.cs" />
     <Compile Include="Conditions\PostConditionException.cs" />
     <Compile Include="Conditions\StringVariable.cs" />
+    <Compile Include="Configuration\ConfigurationAspect.cs" />
+    <Compile Include="Configuration\Configure.cs" />
+    <Compile Include="Configuration\DefaultConfiguration.cs" />
+    <Compile Include="Configuration\IConfiguration.cs" />
+    <Compile Include="Configuration\IConfigurationAspect.cs" />
+    <Compile Include="Configuration\IContainerAdapter.cs" />
+    <Compile Include="Configuration\IDataAspect.cs" />
+    <Compile Include="Configuration\ILoggingAspect.cs" />
+    <Compile Include="Configuration\NullContainerAdapter.cs" />
     <Compile Include="Data\InMemoryRepository[TEntity, TId].cs" />
     <Compile Include="Data\InMemoryRepository[TEntity].cs" />
     <Compile Include="Data\InMemoryUnitOfWork.cs" />
@@ -69,6 +78,7 @@
     <Compile Include="Data\TransactionOption.cs" />
     <Compile Include="Data\UnitOfWorkScope.cs" />
     <Compile Include="Data\UnitOfWorkSettings.cs" />
+    <Compile Include="DelegatedResolver.cs" />
     <Compile Include="InMemoryResolver.cs" />
     <Compile Include="IResolver.cs" />
     <Compile Include="NumberBases.cs" />

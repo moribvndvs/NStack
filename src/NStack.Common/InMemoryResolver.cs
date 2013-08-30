@@ -81,9 +81,11 @@ namespace NStack
         /// <typeparam name="T">The type of the service.</typeparam>
         /// <param name="name">The name of the service.</param>
         /// <returns>True if the service has been registered; otherwise, false.</returns>
-        public T IsRegistered<T>(string name = null)
+        public bool IsRegistered<T>(string name = null)
         {
-            throw new NotImplementedException();
+            if (!string.IsNullOrEmpty(name)) return _namedServices.ContainsKey(name);
+
+            return _services.ContainsKey(typeof (T));
         }
 
         #endregion

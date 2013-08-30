@@ -1,5 +1,5 @@
 ﻿#region header
-// <copyright file="IResolver.cs" company="mikegrabski.com">
+// <copyright file="DelegatedResolver.cs" company="mikegrabski.com">
 //    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,18 +20,33 @@ using System;
 
 namespace NStack
 {
-    /// <summary>
-    /// A contract for a type that resolves services.
-    /// </summary>
-    public interface IResolver
+    public class DelegatedResolver : IResolver
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:System.Object"/> class.
+        /// </summary>
+        public DelegatedResolver(Func<Type, string, object> get, Func<Type, string, bool> isRegistered)
+        {
+            _get = get;
+            _isRegistered = isRegistered;
+        }
+
+        private readonly Func<Type, string, object> _get;
+
+        private readonly Func<Type, string, bool> _isRegistered; 
+
+        #region Implementation of IResolver
+
         /// <summary>
         /// Resolves the specified service.
         /// </summary>
         /// <typeparam name="T">The type of the service to resolve.</typeparam>
         /// <param name="name">The name of the service.</param>
         /// <returns>The resolved service instance.</returns>
-        T Get<T>(string name = null);
+        public T Get<T>(string name = null)
+        {
+            return (T)_get(typeof (T), name);
+        }
 
         /// <summary>
         /// Resolves the specified service.
@@ -39,7 +54,10 @@ namespace NStack
         /// <param name="type">The type of the service to resolve.</param>
         /// <param name="name">The name of the service.</param>
         /// <returns>The resolved service instance.</returns>
-        object Get(Type type, string name = null);
+        public object Get(Type type, string name = null)
+        {
+            return _get(type, name);
+        }
 
         /// <summary>
         /// Returns whether or not the specified service is registered.
@@ -47,6 +65,11 @@ namespace NStack
         /// <typeparam name="T">The type of the service.</typeparam>
         /// <param name="name">The name of the service.</param>
         /// <returns>True if the service has been registered; otherwise, false.</returns>
-        bool IsRegistered<T>(string name = null);
+        public bool IsRegistered<T>(string name = null)
+        {
+            return _isRegistered(typeof (T), name);
+        }
+
+        #endregion
     }
 }
