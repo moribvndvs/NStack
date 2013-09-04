@@ -20,10 +20,9 @@
 
 using System.Net;
 using System.Web.Http.Filters;
-
 using System.Net.Http;
 
-namespace NStack.Web.WebApi.Filters
+namespace NStack.WebApi.Filters
 {
     /// <summary>
     /// An <see cref="ActionFilterAttribute"/> that will ensure models are validated and appropriate HTTP responses are sent to the client.

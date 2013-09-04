@@ -7,8 +7,8 @@
     <ProjectGuid>{95C3DC8F-C1E1-4830-90F0-0BE8EA176DBC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NStack.Web.WebApi</RootNamespace>
-    <AssemblyName>NStack.Web.WebApi</AssemblyName>
+    <RootNamespace>NStack.WebApi</RootNamespace>
+    <AssemblyName>NStack.WebApi</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -61,6 +61,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Filters\UnitOfWorkScopeAttribute.cs" />
     <Compile Include="Filters\ValidateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

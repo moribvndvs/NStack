@@ -28,7 +28,7 @@ using FluentAssertions;
 
 using NUnit.Framework;
 
-namespace NStack.Web.WebApi.Filters
+namespace NStack.WebApi.Filters
 {
     [TestFixture]
     public class ValidateModelAttributeTests

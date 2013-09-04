@@ -23,4 +23,4 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("NStack.Web.WebApi")]
 [assembly: AssemblyDescription("NStack WebApi library")]
-[assembly: InternalsVisibleTo("NStack.Web.WebApi.Tests, PublicKey=" + AssemblyInfo.PublicKey)]
+[assembly: InternalsVisibleTo("NStack.WebApi.Tests, PublicKey=" + AssemblyInfo.PublicKey)]
