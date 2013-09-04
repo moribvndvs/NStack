@@ -17,13 +17,16 @@
 #endregion
 
 using System;
+using System.ComponentModel;
+
+using NStack.Fluent;
 
 namespace NStack.Configuration
 {
     /// <summary>
     /// A contract for types that build an application's configuration.
     /// </summary>
-    public interface IConfiguration
+    public interface IConfiguration : IFluent
     {
         /// <summary>
         /// Fluently configures an aspect of an application.
@@ -33,5 +36,11 @@ namespace NStack.Configuration
         /// <returns>The current configuration.</returns>
         IConfiguration Aspect<T>(Action<T> config = null)
             where T : IConfigurationAspect;
+
+        /// <summary>
+        /// Gets the <see cref="IContainerAdapter"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        IContainerAdapter ContainerAdapter { get; }
     }
 }

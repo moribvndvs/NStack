@@ -79,6 +79,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\NHDataAspectTests.cs" />
     <Compile Include="Data\FlakeGeneratorTests.cs" />
     <Compile Include="Data\NHRepositoryTests.cs" />
     <Compile Include="Data\NHUnitOfWorkTests.cs" />

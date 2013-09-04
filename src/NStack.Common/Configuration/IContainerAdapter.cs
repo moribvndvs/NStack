@@ -61,6 +61,14 @@ namespace NStack.Configuration
             where TImplementation : TService;
 
         /// <summary>
+        /// Registers a single instance of an instance as the specified type.
+        /// </summary>
+        /// <param name="type">The type the instance should be registered as.</param>
+        /// <param name="instance">The service instance.</param>
+        /// <param name="name">The name of the service instance.</param>
+        void RegisterSingleInstance(Type type, object instance, string name = null);
+
+        /// <summary>
         /// Registers an instance of the specified service type as the single instance.
         /// </summary>
         /// <typeparam name="TService">The type of the service.</typeparam>

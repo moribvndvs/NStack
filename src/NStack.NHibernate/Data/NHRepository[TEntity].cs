@@ -1,6 +1,5 @@
 ﻿#region header
-
-// <copyright file="IConfigurationAspect.cs" company="mikegrabski.com">
+// <copyright file="NHRepository[TEntity].cs" company="mikegrabski.com">
 //    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,21 +14,17 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
-
 #endregion
-
-using NStack.Fluent;
-
-namespace NStack.Configuration
+namespace NStack.Data
 {
-    /// <summary>
-    ///     A contract for types that help configure an aspect of an application.
-    /// </summary>
-    public interface IConfigurationAspect : IFluent
+    public class NHRepository<TEntity> : NHRepository<TEntity, Flake>, IRepository<TEntity>
     {
         /// <summary>
-        ///     Builds the configuration for the aspect.
+        ///     Initializes a new instance of <see cref="NHRepository{TEntity, TId}" />.
         /// </summary>
-        void Build();
+        /// <param name="unitOfWork">The unit of work.</param>
+        public NHRepository(NHUnitOfWork unitOfWork) : base(unitOfWork)
+        {
+        }
     }
 }

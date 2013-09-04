@@ -60,6 +60,6 @@ namespace NStack.Configuration
         /// <summary>
         /// Gets or sets the current <see cref="IContainerAdapter"/>.
         /// </summary>
-        protected IContainerAdapter ContainerAdapter { get; private set; }
+        public IContainerAdapter ContainerAdapter { get; private set; }
     }
 }

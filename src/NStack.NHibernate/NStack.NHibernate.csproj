@@ -62,11 +62,13 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\NHDataAspect.cs" />
     <Compile Include="Data\FlakeGenerator.cs" />
     <Compile Include="Data\FlakeGeneratorDef.cs" />
     <Compile Include="Data\FlakeType.cs" />
     <Compile Include="Data\IOxidation.cs" />
     <Compile Include="Data\NHRepository[TEntity,TId].cs" />
+    <Compile Include="Data\NHRepository[TEntity].cs" />
     <Compile Include="Data\NHUnitOfWork.cs" />
     <Compile Include="Data\OxidationAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -43,8 +43,23 @@ namespace NStack.Configuration
         /// <summary>
         ///     Builds the configuration for the aspect.
         /// </summary>
-        public abstract void Build();
+        public void Build()
+        {
+            Configure();
+            ConfigureContainer(Configuration.ContainerAdapter);
+        }
 
         #endregion
+
+        /// <summary>
+        /// Where any configuration for the aspect should be done prior to configuring the adapter.
+        /// </summary>
+        protected abstract void Configure();
+
+        /// <summary>
+        /// Configures the container with any services resulting from the configuration.
+        /// </summary>
+        /// <param name="container"></param>
+        protected abstract void ConfigureContainer(IContainerAdapter container);
     }
 }
