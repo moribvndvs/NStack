@@ -38,6 +38,14 @@ namespace NStack.Configuration
         /// </summary>
         protected IConfiguration Configuration { get; private set; }
 
+        /// <summary>
+        /// Gets the configuration environment.
+        /// </summary>
+        protected IConfigurationEnvironment Environment
+        {
+            get { return Configuration.Environment; }
+        }
+
         #region Implementation of IConfigurationAspect
 
         /// <summary>

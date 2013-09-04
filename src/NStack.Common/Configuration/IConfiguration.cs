@@ -29,6 +29,20 @@ namespace NStack.Configuration
     public interface IConfiguration : IFluent
     {
         /// <summary>
+        /// Indicates application should be configured for a debug environment.
+        /// </summary>
+        /// <param name="value">Whether or not debugging should be enabled.</param>
+        /// <returns>The current configuration.</returns>
+        IConfiguration Debugging(bool value = true);
+
+        /// <summary>
+        /// Indicates configuration is being loaded in a testing harness.
+        /// </summary>
+        /// <param name="value">Whether or not configuration is being loaded in a testing harness.</param>
+        /// <returns>The current configuration.</returns>
+        IConfiguration Testing(bool value = true);
+
+        /// <summary>
         /// Fluently configures an aspect of an application.
         /// </summary>
         /// <typeparam name="T">The aspect type.</typeparam>
@@ -42,5 +56,10 @@ namespace NStack.Configuration
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         IContainerAdapter ContainerAdapter { get; }
+
+        /// <summary>
+        /// Gets the configuration environment.
+        /// </summary>
+        IConfigurationEnvironment Environment { get; }
     }
 }

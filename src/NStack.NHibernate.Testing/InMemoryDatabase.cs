@@ -72,18 +72,20 @@ namespace NStack.Testing
             NHibernate.Cfg.Configuration config = null;
 
             Configure.Using(new NullContainerAdapter())
+                     .Debugging()
+                     .Testing()
                      .Aspect<TDataAspect>(aspect =>
-                                           aspect.Database(db =>
-                                               {
-                                                   db.ConnectionReleaseMode =
-                                                       ConnectionReleaseMode
-                                                           .OnClose;
-                                                   db.Dialect<SQLiteDialect>();
-                                                   db.ConnectionString =
-                                                       "Data Source=:memory:;Version=3;New=True";
-                                                   db.LogSqlInConsole = true;
-                                               })
-                                                 .ExposeConfig(cfg => config = cfg));
+                                          aspect.Database(db =>
+                                              {
+                                                  db.ConnectionReleaseMode =
+                                                      ConnectionReleaseMode
+                                                          .OnClose;
+                                                  db.Dialect<SQLiteDialect>();
+                                                  db.ConnectionString =
+                                                      "Data Source=:memory:;Version=3;New=True";
+                                                  db.LogSqlInConsole = true;
+                                              })
+                                                .ExposeConfig(cfg => config = cfg));
 
             return config;
         }
