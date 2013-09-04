@@ -39,15 +39,6 @@ namespace NStack.Configuration
         protected bool TestingEnabled { get; private set; }
 
         /// <summary>
-        /// Reads environmental variables from the app or web.config if they are available.
-        /// </summary>
-        /// <returns></returns>
-        public IConfiguration EnvironmentFromAppConfig()
-        {
-            
-        }
-
-        /// <summary>
         ///     Indicates application should be configured for a debug environment.
         /// </summary>
         /// <param name="value">Whether or not debugging should be enabled.</param>
