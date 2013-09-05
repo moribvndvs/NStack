@@ -69,7 +69,7 @@ namespace NStack.Configuration
         /// <param name="name">Optional name of hte service implementation.</param>
         public void Register<TService, TImplementation>(Func<IResolver, TImplementation> @delegate, string name = null)
         {
-            if (!string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
             {
                 Builder.Register(c => @delegate(new AutofacResolver(c)))
                     .As<TService>()
@@ -91,7 +91,7 @@ namespace NStack.Configuration
         /// <param name="name">The name of the service implementation.</param>
         public void Register<TService, TImplementation>(string name = null) where TImplementation : TService
         {
-            if (!string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
             {
                 Builder.RegisterType<TImplementation>()
                     .As<TService>()
@@ -113,7 +113,7 @@ namespace NStack.Configuration
         /// <param name="name">The name of the service implementation.</param>
         public void RegisterGeneric(Type service, Type implementation, string name = null)
         {
-            if (!string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
             {
                 Builder.RegisterGeneric(implementation)
                     .As(service)
@@ -135,7 +135,7 @@ namespace NStack.Configuration
         /// <param name="name">The name of the service implementation.</param>
         public void RegisterSingleInstance<TService, TImplementation>(string name = null) where TImplementation : TService
         {
-            if (!string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
             {
                 Builder.RegisterType<TImplementation>()
                     .As<TService>()
@@ -157,7 +157,7 @@ namespace NStack.Configuration
         /// <param name="name">The name of the service instance.</param>
         public void RegisterSingleInstance(Type type, object instance, string name = null)
         {
-             if (!string.IsNullOrEmpty(name))
+             if (string.IsNullOrEmpty(name))
              {
                  Builder.RegisterInstance(instance)
                         .As(type)
@@ -180,7 +180,7 @@ namespace NStack.Configuration
         /// <param name="name">Optional name of the service implementation.</param>
         public void RegisterSingleInstance<TService, TImplementation>(TImplementation instance, string name = null) where TImplementation : class, TService
         {
-            if (!string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
             {
                 Builder.RegisterInstance(instance)
                     .As<TService>()
@@ -203,7 +203,7 @@ namespace NStack.Configuration
         /// <param name="name">The name of the service implementation.</param>
         public void RegisterSingleInstance<TService, TImplementation>(Func<IResolver, TImplementation> @delegate, string name = null) where TImplementation : TService
         {
-            if (!string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
             {
                 Builder.Register(context => @delegate(new AutofacResolver(context)))
                      .As<TService>()
