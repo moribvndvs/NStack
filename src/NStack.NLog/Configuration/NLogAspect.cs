@@ -45,9 +45,10 @@ namespace NStack.Configuration
         /// <param name="registry"></param>
         protected override void ConfigureContainer(IContainerRegistry registry)
         {
-            LogProvider.Provider = new NLogLogProvider();
+            var provider = new NLogLogProvider();
+            LogProvider.Provider = provider;
 
-            registry.RegisterSingleInstance<ILogProvider, NLogLogProvider>(LogProvider.Provider);
+            registry.RegisterSingleInstance<ILogProvider, NLogLogProvider>(provider);
         }
 
         #endregion

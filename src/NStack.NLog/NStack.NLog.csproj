@@ -48,6 +48,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\NLogAspect.cs" />
     <Compile Include="Logging\NLogLog.cs" />
     <Compile Include="Logging\NLogLogProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
