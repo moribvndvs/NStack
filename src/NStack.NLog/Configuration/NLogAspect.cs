@@ -36,7 +36,7 @@ namespace NStack.Configuration
         /// </summary>
         protected override void Configure()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         /// <summary>
