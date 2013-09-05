@@ -67,6 +67,7 @@
     <Compile Include="Configuration\DefaultConfiguration.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationAspect.cs" />
+    <Compile Include="Configuration\IConfigurationEnvironment.cs" />
     <Compile Include="Configuration\IContainerRegistry.cs" />
     <Compile Include="Configuration\IDataAspect.cs" />
     <Compile Include="Configuration\ILoggingAspect.cs" />

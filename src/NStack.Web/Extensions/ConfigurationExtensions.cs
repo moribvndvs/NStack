@@ -32,7 +32,7 @@ namespace NStack.Extensions
             configuration.Debugging(ConfigurationManager.AppSettings[ConfigDebuggingKey].ConvertTo<bool>());
             configuration.Debugging(ConfigurationManager.AppSettings[ConfigTestingKey].ConvertTo<bool>());
 
-            return this;
+            return configuration;
         }
     }
 }
