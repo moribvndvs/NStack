@@ -87,7 +87,7 @@
     </ProjectReference>
     <ProjectReference Include="..\NStack.WebApi\NStack.WebApi.csproj">
       <Project>{95c3dc8f-c1e1-4830-90f0-0be8ea176dbc}</Project>
-      <Name>NStack.Web.WebApi</Name>
+      <Name>NStack.WebApi</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
