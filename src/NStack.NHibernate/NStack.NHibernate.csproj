@@ -67,6 +67,8 @@
     <Compile Include="Data\FlakeGeneratorDef.cs" />
     <Compile Include="Data\FlakeType.cs" />
     <Compile Include="Data\IOxidation.cs" />
+    <Compile Include="Logging\NHLogger.cs" />
+    <Compile Include="Logging\NHLoggerFactory.cs" />
     <Compile Include="Data\NHRepository[TEntity,TId].cs" />
     <Compile Include="Data\NHRepository[TEntity].cs" />
     <Compile Include="Data\NHUnitOfWork.cs" />
