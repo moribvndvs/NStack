@@ -18,15 +18,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Cfg.Loquacious;
 
 using NStack.Data;
-
-using RustFlakes;
 
 namespace NStack.Configuration
 {
@@ -110,28 +107,28 @@ namespace NStack.Configuration
             return (TThis) this;
         }
 
-        protected internal void RegisterOxidations(IContainerAdapter container)
+        protected internal void RegisterOxidations(IContainerRegistry registry)
         {
             foreach (var type in _oxidationParams.Keys)
             {
                 var parameters = _oxidationParams[type](Configuration);
                 var oxidation = (IOxidation) Activator.CreateInstance(type, parameters);
 
-                container.RegisterSingleInstance(type, oxidation);
+                registry.RegisterSingleInstance(type, oxidation);
             }
         }
 
-        protected internal void RegisterNHibernate(IContainerAdapter container)
+        protected internal void RegisterNHibernate(IContainerRegistry registry)
         {
             var sessionFactory = Config.BuildSessionFactory();
 
-            container.RegisterSingleInstance<ISessionFactory, ISessionFactory>(sessionFactory);
-            container.Register<ISession, ISession>(resolver => resolver.Get<ISessionFactory>().OpenSession());
-            container.Register<IStatelessSession, IStatelessSession>(
+            registry.RegisterSingleInstance<ISessionFactory, ISessionFactory>(sessionFactory);
+            registry.Register<ISession, ISession>(resolver => resolver.Get<ISessionFactory>().OpenSession());
+            registry.Register<IStatelessSession, IStatelessSession>(
                 resolver => resolver.Get<ISessionFactory>().OpenStatelessSession());
-            container.Register<IUnitOfWork, NHUnitOfWork>();
-            container.RegisterGeneric(typeof(IRepository<>), typeof(NHRepository<>));
-            container.RegisterGeneric(typeof(IRepository<,>), typeof(NHRepository<,>));
+            registry.Register<IUnitOfWork, NHUnitOfWork>();
+            registry.RegisterGeneric(typeof(IRepository<>), typeof(NHRepository<>));
+            registry.RegisterGeneric(typeof(IRepository<,>), typeof(NHRepository<,>));
         }
 
         #region Overrides of ConfigurationAspect
@@ -160,10 +157,10 @@ namespace NStack.Configuration
             
         }
 
-        protected override void ConfigureContainer(IContainerAdapter container)
+        protected override void ConfigureContainer(IContainerRegistry registry)
         {
-            RegisterNHibernate(container);
-            RegisterOxidations(container);
+            RegisterNHibernate(registry);
+            RegisterOxidations(registry);
         }
 
     }

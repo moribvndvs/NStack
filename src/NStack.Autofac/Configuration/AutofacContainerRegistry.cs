@@ -1,5 +1,5 @@
 ﻿#region header
-// <copyright file="AutofacContainerAdapter.cs" company="mikegrabski.com">
+// <copyright file="AutofacContainerRegistry.cs" company="mikegrabski.com">
 //    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,14 +23,14 @@ using Autofac;
 namespace NStack.Configuration
 {
     /// <summary>
-    /// Represents an implementation of <see cref="IContainerAdapter"/> that integrates with Autofac.
+    /// Represents an implementation of <see cref="IContainerRegistry"/> that integrates with Autofac.
     /// </summary>
-    public class AutofacContainerAdapter : IContainerAdapter
+    public class AutofacContainerRegistry : IContainerRegistry
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
-        public AutofacContainerAdapter(ContainerBuilder builder)
+        public AutofacContainerRegistry(ContainerBuilder builder)
         {
             Builder = builder;
         }
@@ -38,9 +38,9 @@ namespace NStack.Configuration
         /// <summary>
         /// Gets the container builder where configuration is stored.
         /// </summary>
-        protected ContainerBuilder Builder { get; private set; }
+        public ContainerBuilder Builder { get; private set; }
 
-        #region Implementation of IContainerAdapter
+        #region Implementation of IContainerRegistry
 
         /// <summary>
         /// Registers an implementation of a service using an @delegate in the default scope.

@@ -87,7 +87,7 @@ namespace NStack.Configuration
 
             IOxidation actual = null;
 
-            var container = new Mock<IContainerAdapter>();
+            var container = new Mock<IContainerRegistry>();
             container.Setup(
                 c =>
                 c.RegisterSingleInstance(typeof (OxidationAdapter.BigInteger), It.IsAny<OxidationAdapter.BigInteger>(),
@@ -118,7 +118,7 @@ namespace NStack.Configuration
                     db.ConnectionString = "Data Source=:memory:;Version=3;New=True";
                 });
 
-            var container = new Mock<IContainerAdapter>();
+            var container = new Mock<IContainerRegistry>();
             
             container.Setup(
                 c => c.RegisterSingleInstance<ISessionFactory, ISessionFactory>(It.IsAny<ISessionFactory>(), null))

@@ -1,5 +1,5 @@
 ﻿#region header
-// <copyright file="IContainerAdapter.cs" company="mikegrabski.com">
+// <copyright file="NullContainerRegistry.cs" company="mikegrabski.com">
 //    Copyright 2013 Mike Grabski
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,11 +20,10 @@ using System;
 
 namespace NStack.Configuration
 {
-    /// <summary>
-    /// A contract implemented by an adapter for a specific IoC container implementation.
-    /// </summary>
-    public interface IContainerAdapter
+    public class NullContainerRegistry : IContainerRegistry
     {
+        #region Implementation of IContainerRegistry
+
         /// <summary>
         /// Registers an implementation of a service using an @delegate in the default scope.
         /// </summary>
@@ -32,7 +31,10 @@ namespace NStack.Configuration
         /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
         /// <param name="delegate">The @delegate that will be invoked when the service needs to be resolved.</param>
         /// <param name="name">Optional name of hte service implementation.</param>
-        void Register<TService, TImplementation>(Func<IResolver, TImplementation> @delegate, string name = null);
+        public void Register<TService, TImplementation>(Func<IResolver, TImplementation> @delegate, string name = null)
+        {
+            
+        }
 
         /// <summary>
         /// Registers an implementation type of the specified service type in the default scope.
@@ -40,8 +42,10 @@ namespace NStack.Configuration
         /// <typeparam name="TService">The type of the service.</typeparam>
         /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
         /// <param name="name">The name of the service implementation.</param>
-        void Register<TService, TImplementation>(string name = null)
-            where TImplementation : TService;
+        public void Register<TService, TImplementation>(string name = null) where TImplementation : TService
+        {
+         
+        }
 
         /// <summary>
         /// Registers a generic implementation type of the specified generic service type in the default scope.
@@ -49,7 +53,10 @@ namespace NStack.Configuration
         /// <param name="service">The generic type of the service.</param>
         /// <param name="implementation">The generic type of the implementation.</param>
         /// <param name="name">The name of the service implementation.</param>
-        void RegisterGeneric(Type service, Type implementation, string name = null);
+        public void RegisterGeneric(Type service, Type implementation, string name = null)
+        {
+           
+        }
 
         /// <summary>
         /// Registers a single instance of the implementation type for the specified service type.
@@ -57,8 +64,10 @@ namespace NStack.Configuration
         /// <typeparam name="TService">The type of the service.</typeparam>
         /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
         /// <param name="name">The name of the service implementation.</param>
-        void RegisterSingleInstance<TService, TImplementation>(string name = null)
-            where TImplementation : TService;
+        public void RegisterSingleInstance<TService, TImplementation>(string name = null)
+            where TImplementation : TService
+        {
+        }
 
         /// <summary>
         /// Registers a single instance of an instance as the specified type.
@@ -66,7 +75,10 @@ namespace NStack.Configuration
         /// <param name="type">The type the instance should be registered as.</param>
         /// <param name="instance">The service instance.</param>
         /// <param name="name">The name of the service instance.</param>
-        void RegisterSingleInstance(Type type, object instance, string name = null);
+        public void RegisterSingleInstance(Type type, object instance, string name = null)
+        {
+            
+        }
 
         /// <summary>
         /// Registers an instance of the specified service type as the single instance.
@@ -75,8 +87,10 @@ namespace NStack.Configuration
         /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
         /// <param name="instance">The service instance.</param>
         /// <param name="name">Optional name of the service implementation.</param>
-        void RegisterSingleInstance<TService, TImplementation>(TImplementation instance, string name = null)
-            where TImplementation : class, TService;
+        public void RegisterSingleInstance<TService, TImplementation>(TImplementation instance, string name = null) where TImplementation : class, TService
+        {
+            
+        }
 
         /// <summary>
         /// Registers a single instance of the implementation type for the specified service type, where the implementation is constructed using the specified delegate.
@@ -85,7 +99,11 @@ namespace NStack.Configuration
         /// <typeparam name="TImplementation">The implementation type.</typeparam>
         /// <param name="delegate">The delegate invoked to construct the implementation.</param>
         /// <param name="name">The name of the service implementation.</param>
-        void RegisterSingleInstance<TService, TImplementation>(Func<IResolver, TImplementation> @delegate, string name = null)
-            where TImplementation : TService;
+        public void RegisterSingleInstance<TService, TImplementation>(Func<IResolver, TImplementation> @delegate, string name = null) where TImplementation : TService
+        {
+           
+        }
+
+        #endregion
     }
 }

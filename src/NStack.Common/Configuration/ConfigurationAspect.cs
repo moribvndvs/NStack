@@ -54,7 +54,7 @@ namespace NStack.Configuration
         public void Build()
         {
             Configure();
-            ConfigureContainer(Configuration.ContainerAdapter);
+            ConfigureContainer(Configuration.ContainerRegistry);
         }
 
         #endregion
@@ -67,7 +67,7 @@ namespace NStack.Configuration
         /// <summary>
         /// Configures the container with any services resulting from the configuration.
         /// </summary>
-        /// <param name="container"></param>
-        protected abstract void ConfigureContainer(IContainerAdapter container);
+        /// <param name="registry"></param>
+        protected abstract void ConfigureContainer(IContainerRegistry registry);
     }
 }

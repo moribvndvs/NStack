@@ -52,10 +52,10 @@ namespace NStack.Configuration
             where T : IConfigurationAspect;
 
         /// <summary>
-        /// Gets the <see cref="IContainerAdapter"/>.
+        /// Gets the <see cref="IContainerRegistry"/>.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        IContainerAdapter ContainerAdapter { get; }
+		IContainerRegistry ContainerRegistry { get; }
 
         /// <summary>
         /// Gets the configuration environment.

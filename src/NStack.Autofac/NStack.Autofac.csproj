@@ -47,7 +47,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Configuration\AutofacContainerAdapter.cs" />
+    <Compile Include="Configuration\AutofacContainerRegistry.cs" />
     <Compile Include="Configuration\AutofacResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

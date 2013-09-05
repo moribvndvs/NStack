@@ -71,7 +71,7 @@ namespace NStack.Testing
         {
             NHibernate.Cfg.Configuration config = null;
 
-            Configure.Using(new NullContainerAdapter())
+            Configure.Using(new NullContainerRegistry())
                      .Debugging()
                      .Testing()
                      .Aspect<TDataAspect>(aspect =>

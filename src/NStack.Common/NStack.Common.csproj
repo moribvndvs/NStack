@@ -67,10 +67,10 @@
     <Compile Include="Configuration\DefaultConfiguration.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationAspect.cs" />
-    <Compile Include="Configuration\IContainerAdapter.cs" />
+    <Compile Include="Configuration\IContainerRegistry.cs" />
     <Compile Include="Configuration\IDataAspect.cs" />
     <Compile Include="Configuration\ILoggingAspect.cs" />
-    <Compile Include="Configuration\NullContainerAdapter.cs" />
+    <Compile Include="Configuration\NullContainerRegistry.cs" />
     <Compile Include="Data\InMemoryRepository[TEntity, TId].cs" />
     <Compile Include="Data\InMemoryRepository[TEntity].cs" />
     <Compile Include="Data\InMemoryUnitOfWork.cs" />

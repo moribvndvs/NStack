@@ -23,15 +23,15 @@ namespace NStack.Configuration
     public static class Configure
     {
         /// <summary>
-        /// Begins configuration using the specified container.
+        /// Begins configuration using the specified container registry.
         /// </summary>
-        /// <param name="containerAdapter">The container adapter.</param>
+        /// <param name="containerRegistry">The container registry.</param>
         /// <returns>The current config.</returns>
-        public static IConfiguration Using(IContainerAdapter containerAdapter)
+        public static IConfiguration Using(IContainerRegistry containerRegistry)
         {
-            Requires.That(containerAdapter).IsNotNull();
+            Requires.That(containerRegistry).IsNotNull();
 
-            return new DefaultConfiguration(containerAdapter);
+            return new DefaultConfiguration(containerRegistry);
         }
     }
 }

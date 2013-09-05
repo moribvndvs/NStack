@@ -20,10 +20,10 @@ namespace NStack.Configuration
         /// <summary>
         ///     Initializes a new instance of <see cref="DefaultConfiguration" />.
         /// </summary>
-        /// <param name="containerAdapter">The container adapter.</param>
-        public DefaultConfiguration(IContainerAdapter containerAdapter)
+        /// <param name="containerRegistry">The container registry.</param>
+        public DefaultConfiguration(IContainerRegistry containerRegistry)
         {
-            ContainerAdapter = containerAdapter;
+            ContainerRegistry = containerRegistry;
         }
 
         #region Implementation of IConfiguration
@@ -84,9 +84,9 @@ namespace NStack.Configuration
         #region IConfiguration Members
 
         /// <summary>
-        ///     Gets or sets the current <see cref="IContainerAdapter" />.
+        /// Gets or sets the current <see cref="IContainerRegistry"/>.
         /// </summary>
-        public IContainerAdapter ContainerAdapter { get; private set; }
+        public IContainerRegistry ContainerRegistry { get; private set; }
 
         /// <summary>
         ///     Gets the configuration environment.
