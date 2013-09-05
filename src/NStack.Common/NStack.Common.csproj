@@ -83,6 +83,13 @@
     <Compile Include="DelegatedResolver.cs" />
     <Compile Include="InMemoryResolver.cs" />
     <Compile Include="IResolver.cs" />
+    <Compile Include="Logging\ILog.cs" />
+    <Compile Include="Logging\ILogProvider.cs" />
+    <Compile Include="Logging\LogExtensions.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
+    <Compile Include="Logging\LogProvider.cs" />
+    <Compile Include="Logging\NullLogProvider.cs" />
+    <Compile Include="Logging\NullLog.cs" />
     <Compile Include="NumberBases.cs" />
     <Compile Include="Ensures.cs" />
     <Compile Include="Expressions\ExpressionUtil.cs" />

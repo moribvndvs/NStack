@@ -55,6 +55,7 @@
     </Compile>
     <Compile Include="Configuration\AutofacContainerRegistry.cs" />
     <Compile Include="Configuration\AutofacResolver.cs" />
+    <Compile Include="Configuration\LoggingModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

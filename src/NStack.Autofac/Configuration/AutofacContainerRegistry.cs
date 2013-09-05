@@ -42,6 +42,8 @@ namespace NStack.Configuration
         public AutofacContainerRegistry(ContainerBuilder builder)
         {
             Builder = builder;
+
+            builder.RegisterAssemblyModules<LoggingModule>(); // added to handle special activation requirements for logging.
         }
 
         /// <summary>
