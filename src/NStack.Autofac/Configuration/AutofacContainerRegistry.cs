@@ -25,8 +25,17 @@ namespace NStack.Configuration
     /// <summary>
     /// Represents an implementation of <see cref="IContainerRegistry"/> that integrates with Autofac.
     /// </summary>
-    public class AutofacContainerRegistry : IContainerRegistry
+    public class AutofacContainerRegistry : IContainerRegistry<IContainer>
     {
+        /// <summary>
+        /// Initializes a new instance of <see cref="AutofacContainerRegistry"/>, creating a new container builder.
+        /// </summary>
+        public AutofacContainerRegistry()
+            : this(new ContainerBuilder())
+        {
+            
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
@@ -41,6 +50,15 @@ namespace NStack.Configuration
         public ContainerBuilder Builder { get; private set; }
 
         #region Implementation of IContainerRegistry
+
+        /// <summary>
+        /// Returns the container.
+        /// </summary>
+        /// <returns>The container.</returns>
+        public IContainer Container()
+        {
+            return Builder.Build();
+        }
 
         /// <summary>
         /// Registers an implementation of a service using an @delegate in the default scope.
