@@ -28,6 +28,8 @@ namespace NStack.Data
 
         public static readonly FlakeGeneratorDef Instance = new FlakeGeneratorDef();
 
+
+
         public string Class { get { return typeof(FlakeGenerator).AssemblyQualifiedName; } }
 
         public object Params { get { return null; } }

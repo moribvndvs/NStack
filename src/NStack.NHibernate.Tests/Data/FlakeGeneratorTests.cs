@@ -69,6 +69,9 @@ namespace NStack.Data
         private const uint LongIdentifier = 0x12345678;
 
         private const ushort ShortIdentifier = 1;
+        private const string OxidationTypeParamKey = "oxidation_type";
+        private const string WorkerIdParamKey = "worker_id";
+        private const string EpochParamKey = "epoch";
 
         private readonly IType _flakeType = new CustomType(typeof (FlakeType), new Dictionary<string, string>());
 
@@ -100,6 +103,8 @@ namespace NStack.Data
                 {typeof (OxidationAdapter.BigInteger), new OxidationAdapter.BigInteger(VeryLongIdentifier)}
             };
 
+        
+
         [TestCase(typeof(DecimalOxidation))]
         [TestCase(typeof(UInt64Oxidation))]
         [TestCase(typeof(SqlServerBigIntOxidation))]
@@ -112,7 +117,7 @@ namespace NStack.Data
             // Act
             generator.Configure(_flakeType, new Dictionary<string, string>
                 {
-                    {"oxidation-type", oxidationType.Name}
+                    {OxidationTypeParamKey, oxidationType.Name}
                 }, new GenericDialect());
 
             IOxidation oxidation = generator.Oxidation();
@@ -134,9 +139,9 @@ namespace NStack.Data
             // Act
             generator.Configure(_flakeType, new Dictionary<string, string>
                 {
-                    {"oxidation-type", oxidationType.Name},
-                    {"worker-id", _workerIds[oxidationType]},
-                    {"epoch", epoch.ToString("u")}
+                    {OxidationTypeParamKey, oxidationType.Name},
+                    {WorkerIdParamKey, _workerIds[oxidationType]},
+                    {EpochParamKey, epoch.ToString("u")}
                 }, new GenericDialect());
 
             IOxidation oxidation = generator.Oxidation();
@@ -164,8 +169,8 @@ namespace NStack.Data
             // Act / Assert
             generator.Invoking(g => g.Configure(_flakeType, new Dictionary<string, string>
                 {
-                    {"oxidation-type", oxidationType.Name},
-                    {"epoch", epoch.ToString("u")}
+                    {OxidationTypeParamKey, oxidationType.Name},
+                    {EpochParamKey, epoch.ToString("u")}
                 }, new GenericDialect()))
                      .ShouldThrow<MappingException>();
         }
@@ -196,7 +201,7 @@ namespace NStack.Data
 
             generator.Invoking(g => generator.Configure(_flakeType, new Dictionary<string, string>
                 {
-                    {"oxidation-type", "unknown"}
+                    {OxidationTypeParamKey, "unknown"}
                 }, new GenericDialect()))
                      .ShouldThrow<MappingException>();
 
@@ -212,7 +217,7 @@ namespace NStack.Data
 
             generator.Configure(_flakeType, new Dictionary<string, string>
                 {
-                    {"oxidation-type", oxidationType.Name}
+                    {OxidationTypeParamKey, oxidationType.Name}
                 }, new GenericDialect());
 
             // Act
@@ -231,7 +236,7 @@ namespace NStack.Data
 
             generator.Configure(_flakeType, new Dictionary<string, string>
                 {
-                    {"oxidation-type", "bigintegeroxidation"}
+                    {OxidationTypeParamKey, "bigintegeroxidation"}
                 }, new GenericDialect());
 
             // Act

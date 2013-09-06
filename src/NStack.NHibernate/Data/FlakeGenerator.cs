@@ -43,9 +43,9 @@ namespace NStack.Data
     {
         private const string EpochParamName = "epoch";
 
-        private const string WorkerIdParamName = "worker-id";
+        private const string WorkerIdParamName = "worker_id";
 
-        private const string OxidationTypeParamName = "oxidation-type";
+        private const string OxidationTypeParamName = "oxidation_type";
 
 
         private static readonly IInternalLogger Log = LoggerProvider.LoggerFor(typeof (FlakeGenerator));
