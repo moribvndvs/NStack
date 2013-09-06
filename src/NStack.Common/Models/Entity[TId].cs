@@ -44,7 +44,7 @@ namespace NStack.Models
         ///     true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.
         /// </returns>
         /// <param name="other"> An object to compare with this object. </param>
-        public bool Equals(Entity<TId> other)
+        public virtual bool Equals(Entity<TId> other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -89,7 +89,7 @@ namespace NStack.Models
         ///     Returns whether or not the instance is transient; that is, whether or not it has been attached to a persistence medium.
         /// </summary>
         /// <returns> True if the instance is transient; otherwise, false. </returns>
-        public bool IsTransient()
+        public virtual bool IsTransient()
         {
 // ReSharper disable CompareNonConstrainedGenericWithNull
             return Id == null || default(TId).Equals(Id);
