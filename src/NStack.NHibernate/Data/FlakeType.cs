@@ -107,6 +107,8 @@ namespace NStack.Data
         /// </summary>
         public void SetParameterValues(IDictionary<string, string> parameters)
         {
+            if (parameters == null) return;
+
             var size = parameters.ContainsKey("flake-size") ? parameters["flake-size"] : "96";
 
             switch (size)
