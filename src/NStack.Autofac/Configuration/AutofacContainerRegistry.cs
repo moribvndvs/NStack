@@ -51,6 +51,11 @@ namespace NStack.Configuration
         /// </summary>
         public ContainerBuilder Builder { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the lifetime scope tag used by default.
+        /// </summary>
+        public string DefaultLifetimeScopeTag { get; set; }
+
         #region Implementation of IContainerRegistry
 
         /// <summary>
@@ -74,14 +79,14 @@ namespace NStack.Configuration
             if (string.IsNullOrEmpty(name))
             {
                 Builder.Register(c => @delegate(new AutofacResolver(c)))
-                    .As<TService>()
-                    .InstancePerLifetimeScope();
+                       .As<TService>()
+                       .InstancePerMatchingLifetimeScope(DefaultLifetimeScopeTag);
             }
             else
             {
                 Builder.Register(c => @delegate(new AutofacResolver(c)))
                        .Named<TService>(name)
-                       .InstancePerLifetimeScope();
+                       .InstancePerMatchingLifetimeScope(DefaultLifetimeScopeTag);
             }
         }
 
@@ -97,13 +102,13 @@ namespace NStack.Configuration
             {
                 Builder.RegisterType<TImplementation>()
                     .As<TService>()
-                    .InstancePerLifetimeScope();
+                    .InstancePerMatchingLifetimeScope(DefaultLifetimeScopeTag);
             }
             else
             {
                 Builder.RegisterType<TImplementation>()
                     .Named<TService>(name)
-                    .InstancePerLifetimeScope();
+                    .InstancePerMatchingLifetimeScope(DefaultLifetimeScopeTag);
             }
         }
 
@@ -119,13 +124,13 @@ namespace NStack.Configuration
             {
                 Builder.RegisterGeneric(implementation)
                     .As(service)
-                    .InstancePerLifetimeScope();
+                    .InstancePerMatchingLifetimeScope(DefaultLifetimeScopeTag);
             }
             else
             {
                 Builder.RegisterGeneric(implementation)
                     .Named(name, service)
-                    .InstancePerLifetimeScope();
+                    .InstancePerMatchingLifetimeScope(DefaultLifetimeScopeTag);
             }
         }
 
