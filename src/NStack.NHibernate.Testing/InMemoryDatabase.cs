@@ -20,8 +20,9 @@
 
 using System;
 
+using Microsoft.Practices.ServiceLocation;
+
 using NHibernate;
-using NHibernate.Dialect;
 using NHibernate.Tool.hbm2ddl;
 
 using NStack.Configuration;
@@ -53,6 +54,10 @@ namespace NStack.Testing
         {
             Session = SessionFactory.OpenSession();
 
+            var locator = new InMemoryServiceLocator();
+
+            ServiceLocator.SetLocatorProvider(() => locator);
+
             BuildSchema(Session);
         }
 
@@ -67,6 +72,29 @@ namespace NStack.Testing
 
         #endregion
 
+        /// <summary>
+        /// Executes work in a transaction.
+        /// </summary>
+        /// <param name="work">A delegate containing the work to execute.</param>
+        protected virtual void Tx(Action<ISession, ITransaction> work)
+        {
+            using (var tx = Session.BeginTransaction())
+            {
+                work(Session, tx);
+                tx.Commit();
+            }
+        }
+
+        /// <summary>
+        /// Executes work in a transaction, then clears the session.
+        /// </summary>
+        /// <param name="work">A delegate containing the work to execute.</param>
+        protected virtual void TxThenClear(Action<ISession, ITransaction> work)
+        {
+            Tx(work);
+            Session.Clear();
+        }
+
         private static NHibernate.Cfg.Configuration CreateConfiguration()
         {
             NHibernate.Cfg.Configuration config = null;
@@ -75,17 +103,7 @@ namespace NStack.Testing
                      .Debugging()
                      .Testing()
                      .Aspect<TDataAspect>(aspect =>
-                                          aspect.Database(db =>
-                                              {
-                                                  db.ConnectionReleaseMode =
-                                                      ConnectionReleaseMode
-                                                          .OnClose;
-                                                  db.Dialect<SQLiteDialect>();
-                                                  db.ConnectionString =
-                                                      "Data Source=:memory:;Version=3;New=True";
-                                                  db.LogSqlInConsole = true;
-                                              })
-                                                .ExposeConfig(cfg => config = cfg));
+                                          aspect.ExposeConfig(cfg => config = cfg));
 
             return config;
         }
