@@ -133,7 +133,10 @@ namespace NStack.Configuration
                 c.Register<IStatelessSession, IStatelessSession>(It.IsAny<Func<IResolver, IStatelessSession>>(), null))
                      .Verifiable("Did not register transient IStatelessSession");
 
-            container.Setup(c => c.Register<IUnitOfWork, NHUnitOfWork>(null))
+            container.Setup(c => c.Register<NHUnitOfWork, NHUnitOfWork>(null))
+                     .Verifiable("Did not register transient NHUnitOfWork");
+
+            container.Setup(c => c.Register<IUnitOfWork, IUnitOfWork>(It.IsAny<Func<IResolver, IUnitOfWork>>(), null))
                      .Verifiable("Did not register transient IUnitOfWork");
 
             container.Setup(c => c.RegisterGeneric(typeof(IRepository<>), typeof(NHRepository<>), null))
