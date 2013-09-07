@@ -71,6 +71,7 @@
     <Compile Include="Data\FlakeType.cs" />
     <Compile Include="Data\IOxidation.cs" />
     <Compile Include="Data\ModelMapperExtensions.cs" />
+    <Compile Include="Data\UnsupportedDateTimeOffsetType.cs" />
     <Compile Include="Logging\NHLogger.cs" />
     <Compile Include="Logging\NHLoggerFactory.cs" />
     <Compile Include="Data\NHRepository[TEntity,TId].cs" />
