@@ -18,12 +18,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Cfg.Loquacious;
+using NHibernate.Tool.hbm2ddl;
 
 using NStack.Data;
+
+using NStack.Extensions;
 
 namespace NStack.Configuration
 {
@@ -67,6 +72,18 @@ namespace NStack.Configuration
         protected internal NHibernate.Cfg.Configuration Config { get; private set; }
 
         /// <summary>
+        /// Configures the default schema.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>The aspect configuration.</returns>
+        public TThis DefaultSchema(string value)
+        {
+            Config.SessionFactory().Mapping.UsingDefaultSchema(value);
+
+            return (TThis) this;
+        }
+
+        /// <summary>
         /// Configures the database properties used by NHibernate. 
         /// </summary>
         /// <param name="configure">Action that is invoked to configure the database properties.</param>
@@ -107,6 +124,42 @@ namespace NStack.Configuration
             return (TThis) this;
         }
 
+        /// <summary>
+        /// Exports the database schema.
+        /// </summary>
+        /// <param name="export">The delegate invoked to handle the export process.</param>
+        /// <returns></returns>
+        public TThis ExportSchema(Action<SchemaExport> export)
+        {
+            Requires.That(export).IsNotNull();
+
+            EnsurePrepared();
+
+            var exporter = new SchemaExport(Config);
+
+            export(exporter);
+
+            return (TThis) this;
+        }
+
+        /// <summary>
+        /// Updates the database schema.
+        /// </summary>
+        /// <param name="update">The delegate invoked to handle the update process.</param>
+        /// <returns></returns>
+        public TThis UpdateSchema(Action<SchemaUpdate> update)
+        {
+            Requires.That(update).IsNotNull();
+
+            EnsurePrepared();
+
+            var updater = new SchemaUpdate(Config);
+
+            update(updater);
+
+            return (TThis) this;
+        }
+
         protected internal void RegisterOxidations(IContainerRegistry registry)
         {
             foreach (var type in _oxidationParams.Keys)
@@ -126,7 +179,8 @@ namespace NStack.Configuration
             registry.Register<ISession, ISession>(resolver => resolver.Get<ISessionFactory>().OpenSession());
             registry.Register<IStatelessSession, IStatelessSession>(
                 resolver => resolver.Get<ISessionFactory>().OpenStatelessSession());
-            registry.Register<IUnitOfWork, NHUnitOfWork>();
+            registry.Register<NHUnitOfWork, NHUnitOfWork>();
+            registry.Register<IUnitOfWork, IUnitOfWork>(resolver => resolver.Get<NHUnitOfWork>());
             registry.RegisterGeneric(typeof(IRepository<>), typeof(NHRepository<>));
             registry.RegisterGeneric(typeof(IRepository<,>), typeof(NHRepository<,>));
         }
@@ -139,6 +193,66 @@ namespace NStack.Configuration
         protected override void Configure()
         {
             EnsurePrepared();
+            DoSchemaInit();
+        }
+
+        private static bool HasSchemaActionFlag(SchemaAction action, SchemaAction flag)
+        {
+            return (action & flag) != 0;
+        }
+
+        private void DoSchemaInit()
+        {
+            var action =
+                ConfigurationManager.AppSettings["NStack.Data:SchemaAction"].ConvertTo<SchemaAction>();
+            var scriptPath = ConfigurationManager.AppSettings["NStack.Data:SchemaScriptPath"];
+            var script = action.HasFlag(SchemaAction.Script);
+            var execute = action.HasFlag(SchemaAction.Execute);
+
+            if (!script && !execute) return; // nothing to do
+            if (action.HasFlag(SchemaAction.Verify)) throw new NotImplementedException("Schema Verification is not implemented yet.");
+            if (script && string.IsNullOrEmpty(scriptPath))
+                throw new InvalidOperationException(
+                    "A script path must be specified by adding the key NStack.Data:SchemaScriptPath.");
+
+            if (action.HasFlag(SchemaAction.Drop | SchemaAction.Create))
+            {
+                ExportSchema(export =>
+                    {
+                        if (script) export.SetOutputFile(scriptPath);
+                        export.Execute(script, execute, false);
+                    });
+            }
+            else if (action.HasFlag(SchemaAction.Drop))
+            {
+                ExportSchema(export =>
+                    {
+                        if (script) export.SetOutputFile(scriptPath);
+                        export.Drop(script, execute);
+                    });
+            }
+            else if (action.HasFlag(SchemaAction.Create))
+            {
+                ExportSchema(export =>
+                    {
+                        if (script) export.SetOutputFile(scriptPath);
+                        export.Create(script, execute);
+                    });
+            }
+            else if (action.HasFlag(SchemaAction.Update))
+            {
+                UpdateSchema(update =>
+                    {
+                        if (script)
+                        {
+                            using (var file = new StreamWriter(scriptPath))
+                            {
+                                update.Execute(file.WriteLine, execute);
+                            }
+                        }
+                        else update.Execute(false, execute);
+                    });
+            }
         }
 
         #endregion

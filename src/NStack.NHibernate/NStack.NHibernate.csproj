@@ -51,6 +51,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
@@ -64,10 +65,12 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\NHDataAspect.cs" />
+    <Compile Include="Configuration\SchemaAction.cs" />
     <Compile Include="Data\FlakeGenerator.cs" />
     <Compile Include="Data\FlakeGeneratorDef.cs" />
     <Compile Include="Data\FlakeType.cs" />
     <Compile Include="Data\IOxidation.cs" />
+    <Compile Include="Data\ModelMapperExtensions.cs" />
     <Compile Include="Logging\NHLogger.cs" />
     <Compile Include="Logging\NHLoggerFactory.cs" />
     <Compile Include="Data\NHRepository[TEntity,TId].cs" />
@@ -79,6 +82,7 @@
     <Compile Include="RustFlakes\DecimalOxidation.cs" />
     <Compile Include="RustFlakes\Oxidation.cs" />
     <Compile Include="RustFlakes\SqlServerBigIntOxidation.cs" />
+    <Compile Include="RustFlakes\TestOxidation.cs" />
     <Compile Include="RustFlakes\UInt64Oxidation.cs" />
   </ItemGroup>
   <ItemGroup>

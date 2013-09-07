@@ -124,12 +124,12 @@ namespace NStack.Data
 
             IOxidation instance;
 
-            if (typeof (T) == typeof (OxidationAdapter.Decimal))
+            if (typeof(T) == typeof(OxidationAdapter.Decimal))
                 instance = epoch.HasValue
                                ? new OxidationAdapter.Decimal(workerIdRaw.ConvertTo<uint>(), epoch.Value)
                                : new OxidationAdapter.Decimal(workerIdRaw.ConvertTo<uint>());
 
-            else if (typeof (T) == typeof (OxidationAdapter.BigInteger))
+            else if (typeof(T) == typeof(OxidationAdapter.BigInteger))
             {
                 var bytes = workerIdRaw.ConvertTo<byte[]>();
 
@@ -146,15 +146,19 @@ namespace NStack.Data
                                    ? new OxidationAdapter.BigInteger(bytes, epoch.Value)
                                    : new OxidationAdapter.BigInteger(bytes);
             }
-            else if (typeof (T) == typeof (OxidationAdapter.UInt64))
+            else if (typeof(T) == typeof(OxidationAdapter.UInt64))
                 instance = epoch.HasValue
                                ? new OxidationAdapter.UInt64(workerIdRaw.ConvertTo<ushort>(), epoch.Value)
                                : new OxidationAdapter.UInt64(workerIdRaw.ConvertTo<ushort>());
-            else if (typeof (T) == typeof (OxidationAdapter.SqlBigInt))
+            else if (typeof(T) == typeof(OxidationAdapter.SqlBigInt))
                 instance = epoch.HasValue
                                ? new OxidationAdapter.SqlBigInt(workerIdRaw.ConvertTo<ushort>(), epoch.Value)
                                : new OxidationAdapter.SqlBigInt(workerIdRaw.ConvertTo<ushort>());
-            else throw new NotSupportedException("Unsupported oxidation adapter: " + typeof (T).FullName);
+            else if (typeof (T) == typeof (OxidationAdapter.Test))
+                instance = epoch.HasValue
+                               ? new OxidationAdapter.Test(epoch.Value)
+                               : new OxidationAdapter.Test();
+            else throw new NotSupportedException("Unsupported oxidation adapter: " + typeof(T).FullName);
 
             return () => instance;
         }
@@ -211,6 +215,9 @@ namespace NStack.Data
                 case "":
                 case "decimaloxidation":
                     Oxidation = CreateOxidationProvider<OxidationAdapter.Decimal>(epoch, workerIdRaw);
+                    break;
+                case "testoxidation":
+                    Oxidation = CreateOxidationProvider<OxidationAdapter.Test>(epoch, workerIdRaw);
                     break;
                 default:
                     string msg = "The \"oxidation-type\" parameter for FlakeGenerator is unsupported: " + oxidationType;

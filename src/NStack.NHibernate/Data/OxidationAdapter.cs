@@ -182,5 +182,29 @@ namespace NStack.Data
 
             #endregion
         }
+
+        public class Test : TestOxidation, IOxidation 
+        {
+            public Test()
+            {
+            }
+
+            public Test(DateTime epoch) : base(epoch)
+            {
+            }
+
+            #region Implementation of IOxidation
+
+            object IOxidation.Oxidize()
+            {
+                return Oxidize();
+            }
+
+            DateTime IOxidation.Epoch { get { return Epoch; } }
+            object IOxidation.WorkerId { get { return 0; } }
+
+            #endregion
+        }
+
     }
 }
