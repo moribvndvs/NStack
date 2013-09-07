@@ -61,6 +61,11 @@ namespace NStack.Models
             {
                 Id = id;
             }
+
+            public void SetId(int id)
+            {
+                Id = id;
+            }
         }
 
         private class EntityB : Entity<int>

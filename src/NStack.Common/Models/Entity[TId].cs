@@ -71,9 +71,13 @@ namespace NStack.Models
         /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
+// ReSharper disable NonReadonlyFieldInGetHashCode
             if (_hashCode.HasValue) return _hashCode.Value;
 
+
+// ReSharper disable BaseObjectGetHashCodeCallInGetHashCode
             if (IsTransient()) _hashCode = base.GetHashCode();
+// ReSharper restore BaseObjectGetHashCodeCallInGetHashCode
             else
             {
                 unchecked
@@ -83,6 +87,7 @@ namespace NStack.Models
             }
 
             return _hashCode.Value;
+// ReSharper restore NonReadonlyFieldInGetHashCode
         }
 
         /// <summary>
