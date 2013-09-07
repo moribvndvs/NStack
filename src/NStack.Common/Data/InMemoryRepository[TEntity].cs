@@ -28,7 +28,7 @@ namespace NStack.Data
     ///     A generic, in-memory repository with a <see cref="Flake" /> identifier.
     /// </summary>
     /// <typeparam name="TEntity">The entity type.</typeparam>
-    public class InMemoryRepository<TEntity> : InMemoryRepository<TEntity, Flake>
+    public class InMemoryRepository<TEntity> : InMemoryRepository<TEntity, Flake>, IRepository<TEntity>
         where TEntity : Entity<Flake>
     {
         /// <summary>
