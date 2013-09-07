@@ -31,6 +31,7 @@ namespace NStack.Data
     /// <summary>
     /// An implementation of <see cref="IUserType"/> for handling <see cref="Flake"/> values.
     /// </summary>
+    [Serializable]
     public class FlakeType : IUserType, IParameterizedType
     {
         private byte _precision = 29;
