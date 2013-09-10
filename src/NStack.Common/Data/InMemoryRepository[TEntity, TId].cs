@@ -152,5 +152,10 @@ namespace NStack.Data
         }
 
         #endregion
+
+        public void Clear()
+        {
+            _list.Clear();
+        }
     }
 }
