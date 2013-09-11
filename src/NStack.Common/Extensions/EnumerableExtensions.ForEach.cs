@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace NStack.Extensions
 {
@@ -34,6 +35,7 @@ namespace NStack.Extensions
         /// <typeparam name="T">The type of the element in the collection.</typeparam>
         /// <param name="enumerable">The collection.</param>
         /// <param name="action">The action invoked for each element.</param>
+        [DebuggerStepThrough]
         public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
         {
 // ReSharper disable PossibleMultipleEnumeration
@@ -53,6 +55,7 @@ namespace NStack.Extensions
         /// <typeparam name="T">The type of the element in the collection.</typeparam>
         /// <param name="enumerable">The collection.</param>
         /// <param name="action">The action invoked for each element.</param>
+        [DebuggerStepThrough]
         public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T, int> action)
         {
 // ReSharper disable PossibleMultipleEnumeration
