@@ -66,7 +66,7 @@ namespace NStack.Data
             }
 
             var storedTime = (DateTime)r;
-            return new DateTimeOffset(storedTime, _databaseTimeZone.BaseUtcOffset);
+            return new DateTimeOffset(storedTime, _databaseTimeZone.GetUtcOffset(DateTimeOffset.UtcNow));
         }
 
         public virtual void NullSafeSet(IDbCommand cmd, object value, int
@@ -83,7 +83,7 @@ namespace NStack.Data
                 {
                     var dateTimeOffset = (DateTimeOffset)value;
                     DateTime paramVal =
-                        dateTimeOffset.ToOffset(_databaseTimeZone.BaseUtcOffset).DateTime;
+                        dateTimeOffset.ToOffset(_databaseTimeZone.GetUtcOffset(DateTimeOffset.UtcNow)).DateTime;
 
                     parameter.Value = paramVal;
                 }
