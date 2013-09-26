@@ -81,6 +81,7 @@
     <Compile Include="Data\UnitOfWorkScope.cs" />
     <Compile Include="Data\UnitOfWorkSettings.cs" />
     <Compile Include="DelegatedResolver.cs" />
+    <Compile Include="Extensions\ByteArray.Combine.cs" />
     <Compile Include="InMemoryResolver.cs" />
     <Compile Include="IResolver.cs" />
     <Compile Include="Logging\ILog.cs" />

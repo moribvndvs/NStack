@@ -22,7 +22,7 @@ using System.Text;
 
 namespace NStack.Extensions
 {
-    public static class ByteArray
+    public static partial class ByteArray
     {
         /// <summary>
         ///     Returns the contents of the byte array as a string of hex equivalents.
